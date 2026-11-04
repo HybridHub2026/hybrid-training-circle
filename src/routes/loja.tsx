@@ -15,17 +15,17 @@ export const Route = createFileRoute("/loja")({
 
 // Estrutura preparada para receber produtos de uma futura loja online.
 const products = [
-  { name: "Bucket Hat Hybrid Hub" },
-  { name: "T-shirt Hybrid Hub" },
+  { name: "Bucket hat reversível Hybrid Hub" },
+  { name: "T-shirt oficial Hybrid Hub" },
 ];
 
 function Loja() {
   return (
     <section className="mx-auto max-w-7xl px-5 pb-24 pt-32 md:px-10 md:pt-40">
       <p className="eyebrow">Loja · Em breve</p>
-      <h1 className="mt-6 text-5xl md:text-8xl">MERCH HYBRID HUB.</h1>
+      <h1 className="mt-6 text-5xl md:text-8xl">VESTE A COMUNIDADE.</h1>
       <p className="mt-6 max-w-xl text-muted-foreground md:text-lg">
-        Estamos a preparar a nossa primeira coleção. Volta em breve.
+        A Hybrid Hub também se vive fora dos treinos. A primeira coleção está a caminho.
       </p>
       <div className="mt-16 grid gap-8 sm:grid-cols-2">
         {products.map((p) => (
@@ -34,7 +34,7 @@ function Loja() {
               <img src={merch} alt={p.name} loading="lazy" width={1280} height={960} className="aspect-[4/3] w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105" />
               <span className="absolute left-4 top-4 rounded-sm bg-primary px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary-foreground">Em breve</span>
             </div>
-            <h2 className="mt-5 font-sans text-lg font-semibold">{p.name}</h2>
+            <h2 className="mt-5 text-lg">{p.name}</h2>
             <p className="text-sm text-muted-foreground">Disponível em breve</p>
           </article>
         ))}

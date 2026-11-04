@@ -1,14 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 
 // Ligações das redes sociais por definir: preencher `href` quando existirem.
-const socials = [
-  { label: "Instagram", icon: Instagram, href: "" },
-  { label: "Facebook", icon: Facebook, href: "" },
-  { label: "LinkedIn", icon: Linkedin, href: "" },
-  { label: "YouTube", icon: Youtube, href: "" },
-];
+const socials = [{ label: "Instagram", icon: Instagram, href: "" }];
 
 export function Footer() {
   return (
@@ -17,7 +12,7 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Logo />
-            <span className="font-display text-2xl">HYBRID HUB</span>
+            <span className="text-xl font-extrabold">HYBRID HUB</span>
           </div>
           <p className="mt-4 text-sm tracking-[0.3em] text-primary">TRAIN • CONNECT • COMPETE</p>
         </div>
@@ -25,10 +20,12 @@ export function Footer() {
           <span className="eyebrow mb-2">Legal</span>
           <Link to="/privacidade" className="hover:text-foreground">Política de Privacidade</Link>
           <Link to="/termos" className="hover:text-foreground">Termos e Condições</Link>
-          <Link to="/contactos" className="hover:text-foreground">Contactos</Link>
+          <Link to="/cookies" className="hover:text-foreground">Cookies</Link>
+          <Link to="/faq" className="hover:text-foreground">FAQ</Link>
+          <Link to="/contactos" className="hover:text-foreground">Contacto</Link>
         </div>
         <div>
-          <span className="eyebrow">Redes sociais</span>
+          <span className="eyebrow">Instagram</span>
           <div className="mt-4 flex gap-3">
             {socials.map(({ label, icon: Icon, href }) =>
               href ? (
