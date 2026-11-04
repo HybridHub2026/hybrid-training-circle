@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, Dumbbell, Trophy, Globe2, Whistle, Smartphone, ArrowRight } from "lucide-react";
+import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/hero-run.jpg";
 import train from "@/assets/train-together.jpg";
 import merch from "@/assets/merch.jpg";
@@ -21,7 +21,7 @@ const features = [
   { icon: Dumbbell, title: "Descobrir treinos", text: "Explora oportunidades de treino perto de ti." },
   { icon: Trophy, title: "Encontrar provas", text: "Procura provas de corrida, HYROX e treino híbrido." },
   { icon: Globe2, title: "Comunidades", text: "Junta-te a grupos que partilham a mesma paixão." },
-  { icon: Whistle, title: "Coaches", text: "Descobre coaches que te ajudam a evoluir." },
+  { icon: UserCheck, title: "Coaches", text: "Descobre coaches que te ajudam a evoluir." },
 ];
 
 const steps = [
