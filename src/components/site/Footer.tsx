@@ -21,7 +21,7 @@ export function Footer() {
             <Logo />
             <img src={wordmark.url} alt="Hybrid Hub" className="h-7 w-auto" />
           </div>
-          <p className="mt-4 text-sm tracking-[0.3em] text-primary">TRAIN • CONNECT • COMPETE</p>
+          <p className="mt-4 text-center text-sm tracking-[0.3em] text-foreground">TRAIN • CONNECT • COMPETE</p>
         </div>
         <div className="flex flex-col gap-3 text-sm text-muted-foreground">
           <span className="eyebrow mb-2">Legal</span>
