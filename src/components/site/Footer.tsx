@@ -1,0 +1,52 @@
+import { Link } from "@tanstack/react-router";
+import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
+import { Logo } from "./Logo";
+
+// Ligações das redes sociais por definir: preencher `href` quando existirem.
+const socials = [
+  { label: "Instagram", icon: Instagram, href: "" },
+  { label: "Facebook", icon: Facebook, href: "" },
+  { label: "LinkedIn", icon: Linkedin, href: "" },
+  { label: "YouTube", icon: Youtube, href: "" },
+];
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-3 md:px-10">
+        <div>
+          <div className="flex items-center gap-3">
+            <Logo />
+            <span className="font-display text-2xl">HYBRID HUB</span>
+          </div>
+          <p className="mt-4 text-sm tracking-[0.3em] text-primary">TRAIN • CONNECT • COMPETE</p>
+        </div>
+        <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+          <span className="eyebrow mb-2">Legal</span>
+          <Link to="/privacidade" className="hover:text-foreground">Política de Privacidade</Link>
+          <Link to="/termos" className="hover:text-foreground">Termos e Condições</Link>
+          <Link to="/contactos" className="hover:text-foreground">Contactos</Link>
+        </div>
+        <div>
+          <span className="eyebrow">Redes sociais</span>
+          <div className="mt-4 flex gap-3">
+            {socials.map(({ label, icon: Icon, href }) =>
+              href ? (
+                <a key={label} href={href} aria-label={label} target="_blank" rel="noreferrer" className="flex h-11 w-11 items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary">
+                  <Icon size={18} />
+                </a>
+              ) : (
+                <span key={label} aria-label={`${label} (em breve)`} title="Em breve" className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground">
+                  <Icon size={18} />
+                </span>
+              ),
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-border px-5 py-6 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} Hybrid Hub. Todos os direitos reservados.
+      </div>
+    </footer>
+  );
+}
