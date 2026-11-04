@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <img src={hero.url} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-background/65" />
+      <div className="absolute inset-0 bg-background/72 md:bg-background/60" />
       <div className={`relative w-full pb-16 pt-28 ${wrap}`}>
         <h1 className="text-6xl sm:text-7xl md:text-9xl">
           TRAIN<br /><span className="text-primary">CONNECT</span><br />COMPETE.
