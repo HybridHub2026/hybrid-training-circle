@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
-import hero from "@/assets/hero-run.jpg";
+import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
 import merch from "@/assets/merch.jpg";
 
@@ -9,7 +9,7 @@ const wrap = "mx-auto max-w-7xl px-5 md:px-10";
 export function Hero() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
-      <img src={hero} alt="Pessoas de diferentes idades a correr juntas na cidade" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
+      <img src={hero.url} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-background/65" />
       <div className={`relative w-full pb-16 pt-28 ${wrap}`}>
         <h1 className="text-6xl sm:text-7xl md:text-9xl">
