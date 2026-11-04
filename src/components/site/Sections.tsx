@@ -16,7 +16,7 @@ export function Hero() {
           TRAIN•<br /><span className="text-primary">CONNECT•</span><br />COMPETE•
         </h1>
         <p className="mt-6 max-w-xl text-lg font-medium md:text-xl">
-          O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se.
+          O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrarem-se.
         </p>
         <p className="mt-3 max-w-xl text-muted-foreground">
           Encontra parceiros, descobre treinos, explora provas e faz parte de uma comunidade que partilha a tua paixão pelo desporto.
