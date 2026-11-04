@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 
-// Ligações das redes sociais por definir: preencher `href` quando existirem.
+// Redes sociais: o ícone só fica clicável quando `href` está preenchido.
 const socials = [
   {
     label: "Instagram",
