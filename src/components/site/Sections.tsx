@@ -13,7 +13,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-background/65" />
       <div className={`relative w-full pb-16 pt-28 ${wrap}`}>
         <h1 className="text-6xl sm:text-7xl md:text-9xl">
-          TRAIN.<br /><span className="text-primary">CONNECT.</span><br />COMPETE.
+          TRAIN<br /><span className="text-primary">CONNECT</span><br />COMPETE.
         </h1>
         <p className="mt-8 max-w-xl text-lg font-medium md:text-xl">
           O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se.
