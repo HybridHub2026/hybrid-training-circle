@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Rubik Dirt", system-ui, sans-serif;
+  --font-display: "Poppins", system-ui, sans-serif;
   --font-sans: "Poppins", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -36,7 +36,7 @@
   --radius: 0.25rem;
   --background: oklch(0 0 0);
   --foreground: oklch(1 0 0);
-  --card: oklch(0.16 0 0);
+  --card: oklch(0.163 0 0);
   --card-foreground: oklch(1 0 0);
   --popover: oklch(0.16 0 0);
   --popover-foreground: oklch(1 0 0);
@@ -44,8 +44,8 @@
   --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.2 0 0);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.14 0 0);
-  --muted-foreground: oklch(0.68 0 0);
+  --muted: oklch(0.163 0 0);
+  --muted-foreground: oklch(0.715 0 0);
   --accent: oklch(0.83 0.165 88);
   --accent-foreground: oklch(0 0 0);
   --destructive: oklch(0.6 0.22 27);
@@ -53,7 +53,6 @@
   --border: oklch(1 0 0 / 14%);
   --input: oklch(1 0 0 / 18%);
   --ring: oklch(0.83 0.165 88);
-  --gradient-fade: linear-gradient(to top, oklch(0 0 0) 0%, oklch(0 0 0 / 60%) 45%, oklch(0 0 0 / 20%) 100%);
 }
 
 @layer base {
@@ -65,10 +64,10 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.01em; line-height: 0.95; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.95; }
+  h3 { font-weight: 700; letter-spacing: 0; }
 }
 
-@utility bg-fade { background-image: var(--gradient-fade); }
 @utility eyebrow {
   font-family: var(--font-sans);
   font-size: 0.75rem;
@@ -80,7 +79,7 @@
 @utility btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   background: var(--color-primary); color: var(--color-primary-foreground);
-  padding: 0.9rem 1.75rem; font-weight: 600; font-size: 0.875rem;
+  padding: 0.9rem 1.75rem; font-weight: 500; font-size: 0.875rem;
   letter-spacing: 0.08em; text-transform: uppercase; border-radius: var(--radius);
   transition: transform .2s, opacity .2s;
   &:hover { transform: translateY(-2px); opacity: .92; }
@@ -88,7 +87,7 @@
 @utility btn-ghost {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   border: 1px solid var(--color-foreground); color: var(--color-foreground);
-  padding: 0.9rem 1.75rem; font-weight: 600; font-size: 0.875rem;
+  padding: 0.9rem 1.75rem; font-weight: 500; font-size: 0.875rem;
   letter-spacing: 0.08em; text-transform: uppercase; border-radius: var(--radius);
   transition: background .2s, color .2s;
   &:hover { background: var(--color-foreground); color: var(--color-background); }

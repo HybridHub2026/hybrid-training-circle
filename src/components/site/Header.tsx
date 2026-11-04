@@ -5,6 +5,9 @@ import { Logo } from "./Logo";
 
 const nav = [
   { to: "/", label: "Início" },
+  { to: "/app", label: "A app" },
+  { to: "/como-funciona", label: "Como funciona" },
+  { to: "/comunidade", label: "Comunidade" },
   { to: "/loja", label: "Loja" },
   { to: "/contactos", label: "Contactos" },
 ] as const;
@@ -16,23 +19,23 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-10">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <Logo />
-          <span className="font-display text-xl tracking-wide">HYBRID HUB</span>
+          <span className="text-lg font-extrabold tracking-wide">HYBRID HUB</span>
         </Link>
-        <nav className="hidden items-center gap-10 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {nav.map((n) => (
-            <Link key={n.to} to={n.to} className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground" activeProps={{ className: "text-primary" }} activeOptions={{ exact: true }}>
+            <Link key={n.to} to={n.to} className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground" activeProps={{ className: "text-primary" }} activeOptions={{ exact: true }}>
               {n.label}
             </Link>
           ))}
         </nav>
-        <button className="md:hidden" aria-label="Menu" onClick={() => setOpen(!open)}>
+        <button className="lg:hidden" aria-label="Menu" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-border bg-background px-5 py-4 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-border bg-background px-5 py-4 lg:hidden">
           {nav.map((n) => (
-            <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="py-3 font-display text-2xl">
+            <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="py-3 text-2xl font-extrabold uppercase">
               {n.label}
             </Link>
           ))}

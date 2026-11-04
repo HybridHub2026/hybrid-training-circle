@@ -34,7 +34,7 @@ function Loja() {
               <img src={merch} alt={p.name} loading="lazy" width={1280} height={960} className="aspect-[4/3] w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105" />
               <span className="absolute left-4 top-4 rounded-sm bg-primary px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary-foreground">Em breve</span>
             </div>
-            <h2 className="mt-5 font-sans text-lg font-semibold">{p.name}</h2>
+            <h2 className="mt-5 text-lg">{p.name}</h2>
             <p className="text-sm text-muted-foreground">Disponível em breve</p>
           </article>
         ))}

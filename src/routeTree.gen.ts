@@ -10,7 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
+import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as ContactosRouteImport } from './routes/contactos'
+import { Route as CookiesRouteImport } from './routes/cookies'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as TermosRouteImport } from './routes/termos'
@@ -20,9 +25,34 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
+  id: '/como-funciona',
+  path: '/como-funciona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeRoute = ComunidadeRouteImport.update({
+  id: '/comunidade',
+  path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactosRoute = ContactosRouteImport.update({
   id: '/contactos',
   path: '/contactos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LojaRoute = LojaRouteImport.update({
@@ -43,14 +73,24 @@ const TermosRoute = TermosRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
+  '/cookies': typeof CookiesRoute
+  '/faq': typeof FaqRoute
   '/loja': typeof LojaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
+  '/cookies': typeof CookiesRoute
+  '/faq': typeof FaqRoute
   '/loja': typeof LojaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
@@ -58,22 +98,63 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
+  '/como-funciona': typeof ComoFuncionaRoute
+  '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
+  '/cookies': typeof CookiesRoute
+  '/faq': typeof FaqRoute
   '/loja': typeof LojaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contactos' | '/loja' | '/privacidade' | '/termos'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/como-funciona'
+    | '/comunidade'
+    | '/contactos'
+    | '/cookies'
+    | '/faq'
+    | '/loja'
+    | '/privacidade'
+    | '/termos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contactos' | '/loja' | '/privacidade' | '/termos'
-  id: '__root__' | '/' | '/contactos' | '/loja' | '/privacidade' | '/termos'
+  to:
+    | '/'
+    | '/app'
+    | '/como-funciona'
+    | '/comunidade'
+    | '/contactos'
+    | '/cookies'
+    | '/faq'
+    | '/loja'
+    | '/privacidade'
+    | '/termos'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/como-funciona'
+    | '/comunidade'
+    | '/contactos'
+    | '/cookies'
+    | '/faq'
+    | '/loja'
+    | '/privacidade'
+    | '/termos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRoute
+  ComoFuncionaRoute: typeof ComoFuncionaRoute
+  ComunidadeRoute: typeof ComunidadeRoute
   ContactosRoute: typeof ContactosRoute
+  CookiesRoute: typeof CookiesRoute
+  FaqRoute: typeof FaqRoute
   LojaRoute: typeof LojaRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   TermosRoute: typeof TermosRoute
@@ -88,11 +169,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/como-funciona': {
+      id: '/como-funciona'
+      path: '/como-funciona'
+      fullPath: '/como-funciona'
+      preLoaderRoute: typeof ComoFuncionaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade': {
+      id: '/comunidade'
+      path: '/comunidade'
+      fullPath: '/comunidade'
+      preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contactos': {
       id: '/contactos'
       path: '/contactos'
       fullPath: '/contactos'
       preLoaderRoute: typeof ContactosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loja': {
@@ -121,7 +237,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRoute,
+  ComoFuncionaRoute: ComoFuncionaRoute,
+  ComunidadeRoute: ComunidadeRoute,
   ContactosRoute: ContactosRoute,
+  CookiesRoute: CookiesRoute,
+  FaqRoute: FaqRoute,
   LojaRoute: LojaRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   TermosRoute: TermosRoute,
