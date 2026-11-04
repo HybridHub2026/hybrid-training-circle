@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
-import hero from "@/assets/hero-run.jpg";
+import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
 import merch from "@/assets/merch.jpg";
 
@@ -9,19 +9,19 @@ const wrap = "mx-auto max-w-7xl px-5 md:px-10";
 export function Hero() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
-      <img src={hero} alt="Pessoas de diferentes idades a correr juntas na cidade" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-background/65" />
-      <div className={`relative w-full pb-16 pt-28 ${wrap}`}>
-        <h1 className="text-6xl sm:text-7xl md:text-9xl">
+      <img src={hero.url} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-background/72 md:bg-background/60" />
+        <div className={`relative w-full pb-8 pt-20 md:pb-16 md:pt-28 ${wrap}`}>
+          <h1 className="text-5xl sm:text-6xl lg:text-9xl">
           TRAIN<br /><span className="text-primary">CONNECT</span><br />COMPETE.
         </h1>
-        <p className="mt-8 max-w-xl text-lg font-medium md:text-xl">
+        <p className="mt-6 max-w-xl text-lg font-medium md:text-xl">
           O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se.
         </p>
-        <p className="mt-4 max-w-xl text-muted-foreground">
+        <p className="mt-3 max-w-xl text-muted-foreground">
           Encontra parceiros, descobre treinos, explora provas e faz parte de uma comunidade que partilha a tua paixão pelo desporto.
         </p>
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
           <Link to="/app" className="btn-primary">Descobre a Hybrid Hub <ArrowRight size={16} /></Link>
           <Link to="/como-funciona" className="btn-ghost">Como funciona</Link>
         </div>
