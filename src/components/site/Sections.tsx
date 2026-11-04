@@ -11,17 +11,17 @@ export function Hero() {
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <img src={hero.url} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-background/72 md:bg-background/60" />
-        <div className={`relative w-full pb-10 pt-24 md:pb-16 md:pt-28 ${wrap}`}>
-          <h1 className="text-5xl sm:text-6xl md:text-9xl">
+        <div className={`relative w-full pb-8 pt-20 md:pb-16 md:pt-28 ${wrap}`}>
+          <h1 className="text-5xl sm:text-6xl lg:text-9xl">
           TRAIN<br /><span className="text-primary">CONNECT</span><br />COMPETE.
         </h1>
-        <p className="mt-8 max-w-xl text-lg font-medium md:text-xl">
+        <p className="mt-6 max-w-xl text-lg font-medium md:text-xl">
           O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se.
         </p>
-        <p className="mt-4 max-w-xl text-muted-foreground">
+        <p className="mt-3 max-w-xl text-muted-foreground">
           Encontra parceiros, descobre treinos, explora provas e faz parte de uma comunidade que partilha a tua paixão pelo desporto.
         </p>
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
           <Link to="/app" className="btn-primary">Descobre a Hybrid Hub <ArrowRight size={16} /></Link>
           <Link to="/como-funciona" className="btn-ghost">Como funciona</Link>
         </div>
