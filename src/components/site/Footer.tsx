@@ -3,7 +3,13 @@ import { Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 
 // Ligações das redes sociais por definir: preencher `href` quando existirem.
-const socials = [{ label: "Instagram", icon: Instagram, href: "" }];
+const socials = [
+  {
+    label: "Instagram",
+    icon: Instagram,
+    href: "https://www.instagram.com/hybridhub.app?utm_source=qr&exln=MWI5MTZwZTRjeTZtbA==",
+  },
+];
 
 export function Footer() {
   return (
