@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram } from "lucide-react";
 import { Logo } from "./Logo";
+import wordmark from "@/assets/hybrid-hub-wordmark.png.asset.json";
 
 // Redes sociais: o ícone só fica clicável quando `href` está preenchido.
 const socials = [
@@ -18,7 +19,7 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <Logo />
-            <span className="text-xl font-extrabold">HYBRID HUB</span>
+            <img src={wordmark.url} alt="Hybrid Hub" className="h-7 w-auto" />
           </div>
           <p className="mt-4 text-sm tracking-[0.3em] text-primary">TRAIN • CONNECT • COMPETE</p>
         </div>
