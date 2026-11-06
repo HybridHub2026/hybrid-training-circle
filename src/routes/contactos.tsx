@@ -56,12 +56,12 @@ function Contactos() {
 
   function validate() {
     const next: Record<string, string> = {};
-    if (!name.trim()) next.name = "Indica o teu nome.";
-    if (!email.trim()) next.email = "Indica o teu email.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = "O formato do email não é válido.";
-    if (!subject) next.subject = "Escolhe um assunto.";
-    if (!message.trim()) next.message = "Escreve a tua mensagem.";
-    if (!consent) next.consent = "É necessário aceitar a Política de Privacidade.";
+    if (!name.trim()) next["name"] = "Indica o teu nome.";
+    if (!email.trim()) next["email"] = "Indica o teu email.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next["email"] = "O formato do email não é válido.";
+    if (!subject) next["subject"] = "Escolhe um assunto.";
+    if (!message.trim()) next["message"] = "Escreve a tua mensagem.";
+    if (!consent) next["consent"] = "É necessário aceitar a Política de Privacidade.";
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -183,7 +183,7 @@ function Contactos() {
                   maxLength={100}
                   className={inputClass}
                 />
-                {errors.name && <p className="mt-2 text-sm text-destructive">{errors.name}</p>}
+                {errors["name"] && <p className="mt-2 text-sm text-destructive">{errors["name"]}</p>}
               </div>
 
               <div>
@@ -197,7 +197,7 @@ function Contactos() {
                   maxLength={255}
                   className={inputClass}
                 />
-                {errors.email && <p className="mt-2 text-sm text-destructive">{errors.email}</p>}
+                {errors["email"] && <p className="mt-2 text-sm text-destructive">{errors["email"]}</p>}
               </div>
 
               <div>
@@ -217,7 +217,7 @@ function Contactos() {
                     </option>
                   ))}
                 </select>
-                {errors.subject && <p className="mt-2 text-sm text-destructive">{errors.subject}</p>}
+                {errors["subject"] && <p className="mt-2 text-sm text-destructive">{errors["subject"]}</p>}
               </div>
 
               <div>
@@ -231,7 +231,7 @@ function Contactos() {
                   maxLength={2000}
                   className={`${inputClass} resize-y`}
                 />
-                {errors.message && <p className="mt-2 text-sm text-destructive">{errors.message}</p>}
+                {errors["message"] && <p className="mt-2 text-sm text-destructive">{errors["message"]}</p>}
               </div>
 
               <div>
@@ -250,7 +250,7 @@ function Contactos() {
                     e compreendo que os meus dados serão utilizados para responder ao meu contacto.
                   </span>
                 </label>
-                {errors.consent && <p className="mt-2 text-sm text-destructive">{errors.consent}</p>}
+                {errors["consent"] && <p className="mt-2 text-sm text-destructive">{errors["consent"]}</p>}
               </div>
 
               {status === "error" && (
