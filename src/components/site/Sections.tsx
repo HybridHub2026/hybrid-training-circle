@@ -159,7 +159,7 @@ export function AppShowcase() {
   );
 }
 
-const merchItems = ["Bucket hats reversíveis", "T-shirts oficiais", "Novos artigos"];
+const merchItems = ["Bucket hats reversíveis", "T-shirts oficiais", "Hoodies oficiais"];
 
 export function Shop() {
   return (
