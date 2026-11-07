@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
+import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
 import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
@@ -76,8 +77,14 @@ export function Features() {
   );
 }
 
-function PhoneSlot({ label }: { label: string }) {
-  // Substituir por <img src=... /> com a captura real da app.
+function PhoneSlot({ label, src }: { label: string; src?: string }) {
+  if (src) {
+    return (
+      <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[260px]">
+        <img src={src} alt={label} loading="lazy" width={864} height={1920} className="aspect-[9/19] w-full rounded-[2rem] object-cover" />
+      </div>
+    );
+  }
   return (
     <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[260px]">
       <div className="flex aspect-[9/19] flex-col items-center justify-center gap-3 rounded-[2rem] border border-dashed border-border text-center text-muted-foreground">
@@ -145,7 +152,9 @@ export function AppShowcase() {
         </p>
       </div>
       <div className="mt-16 flex snap-x gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
-        {[1, 2, 3].map((i) => <PhoneSlot key={i} label={`Captura de ecrã ${i}`} />)}
+        {[1, 2, 3].map((i) => (
+          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : undefined} />
+        ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
       <div className="mt-12 flex flex-col gap-4 sm:flex-row">
