@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
-import merch from "@/assets/merch.jpg";
+import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
 
@@ -165,7 +165,7 @@ export function Shop() {
   return (
     <section className="bg-muted">
       <div className={`grid gap-12 py-24 md:grid-cols-2 md:items-center md:py-32 ${wrap}`}>
-        <img src={merch} alt="Bucket hat e t-shirt Hybrid Hub" loading="lazy" width={1280} height={960} className="w-full rounded-sm object-cover" />
+        <img src={merch.url} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>
           <h2 className="mt-6 text-4xl md:text-6xl">VESTE A <span className="text-primary">COMUNIDADE.</span></h2>
