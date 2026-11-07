@@ -77,7 +77,7 @@ export function Features() {
   );
 }
 
-function PhoneSlot({ label, src }: { label: string; src?: string }) {
+function PhoneSlot({ label, src }: { label: string; src?: string | undefined }) {
   if (src) {
     return (
       <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[260px]">
