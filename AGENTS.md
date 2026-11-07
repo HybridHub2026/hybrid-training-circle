@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep FAQ content in a browser-safe category data module and use one accessible single-open accordion across all categories, so answers stay editable without requiring a service.
