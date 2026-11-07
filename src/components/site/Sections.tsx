@@ -111,7 +111,6 @@ export function HowItWorks() {
           <div key={s.n} className="border-t border-primary pt-8">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
-            <p className="mt-3 text-muted-foreground">{s.text}</p>
             <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} /></div>
           </div>
         ))}
