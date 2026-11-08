@@ -85,13 +85,13 @@ export function Features() {
 function PhoneSlot({ label, src }: { label: string; src?: string | undefined }) {
   if (src) {
     return (
-      <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[260px]">
+      <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[220px]">
         <img src={src} alt={label} loading="lazy" width={864} height={1920} className="aspect-[9/19] w-full rounded-[2rem] object-cover" />
       </div>
     );
   }
   return (
-    <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[260px]">
+    <div className="mx-auto w-56 shrink-0 snap-center rounded-[2.5rem] border-4 border-secondary bg-background p-2 md:w-full md:max-w-[220px]">
       <div className="flex aspect-[9/19] flex-col items-center justify-center gap-3 rounded-[2rem] border border-dashed border-border text-center text-muted-foreground">
         <Smartphone size={26} />
         <span className="px-6 text-xs font-medium uppercase tracking-widest">{label}</span>
@@ -147,7 +147,7 @@ export function Community() {
 
 export function AppShowcase() {
   return (
-    <section className={`py-16 md:py-20 ${wrap}`}>
+    <section className={`py-16 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
         <h2 className="mt-4 text-4xl md:text-6xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
