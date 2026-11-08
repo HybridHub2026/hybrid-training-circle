@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
-import wordmark from "@/assets/hybrid-hub-wordmark.png.asset.json";
+import wordmark from "@/assets/hybrid-hub-wordmark.webp";
 
 const nav = [
   { to: "/", label: "Início" },
@@ -20,7 +20,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-10">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <Logo />
-          <img src={wordmark.url} alt="Hybrid Hub" className="h-8 w-auto md:h-9" width={1920} height={500} />
+          <img src={wordmark} alt="Hybrid Hub" className="h-8 w-auto md:h-9" width={1920} height={500} />
         </Link>
         <nav className="hidden items-center gap-7 lg:flex">
           {nav.map((n) => (

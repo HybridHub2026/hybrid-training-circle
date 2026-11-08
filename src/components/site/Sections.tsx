@@ -1,21 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
-import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
+import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
 import train from "@/assets/hybrid-hub-community-sunset.png";
-import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
-import appScreen2 from "@/assets/app-ecra-2.jpg.asset.json";
-import appScreen3 from "@/assets/app-ecra-3.png.asset.json";
+import appScreen1 from "@/assets/app-ecra-1.jpg";
+import appScreen2 from "@/assets/app-ecra-2.png";
+import appScreen3 from "@/assets/app-ecra-3.png";
 import exploreScreen from "@/assets/app-explorar-foz.png";
 import ligateScreen from "@/assets/app-ligate.png";
 import treinaScreen from "@/assets/treino-lisboa-03.png";
-import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
+import merch from "@/assets/hybrid-hub-em-breve.png";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
 
 export function Hero() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
-      <img src={hero.url} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
+      <img src={hero} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-background/72 md:bg-background/60" />
         <div className={`relative w-full pb-8 pt-20 md:pb-16 md:pt-28 ${wrap}`}>
           <h1 className="text-5xl sm:text-6xl lg:text-9xl">
@@ -157,7 +157,7 @@ export function AppShowcase() {
       </div>
       <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
         {[1, 2, 3].map((i) => (
-          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : i === 2 ? appScreen2.url : appScreen3.url} />
+          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1 : i === 2 ? appScreen2 : appScreen3} />
         ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
@@ -178,7 +178,7 @@ export function Shop() {
   return (
     <section className="bg-muted">
       <div className={`grid gap-8 py-16 md:grid-cols-2 md:items-center md:gap-12 md:py-20 ${wrap}`}>
-        <img src={merch.url} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
+        <img src={merch} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>
           <h2 className="mt-6 text-3xl md:text-5xl">VESTE A <span className="text-primary">COMUNIDADE.</span></h2>
