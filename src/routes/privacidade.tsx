@@ -163,7 +163,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Contactos e direito de reclamação",
     body: [
-      `Para qualquer questão sobre esta Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico hybridhubadmin@gmail.com ou do seguinte endereço postal: ${MARK}.`,
+      "Para qualquer questão sobre esta Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico hybridhubadmin@gmail.com ou do seguinte endereço postal: Rua Maria da Conceição Ramos de Araújo Jorge, 210, 4425-193 Águas Santas, Maia.",
       "Sem prejuízo de qualquer outra via administrativa ou judicial, o titular dos dados tem o direito de apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD), a autoridade de controlo competente em Portugal, através do sítio www.cnpd.pt.",
     ],
   },
