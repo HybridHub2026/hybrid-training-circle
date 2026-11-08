@@ -70,10 +70,10 @@ export function Features() {
         <h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
         <ul className="mt-10 divide-y divide-border border-y border-border md:mt-12">
           {features.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="grid gap-2 py-5 md:grid-cols-[3rem_1fr_1.2fr] md:items-center md:gap-8 md:py-6">
-              <Icon className="text-primary" size={28} strokeWidth={1.5} />
-              <h3 className="text-xl md:text-2xl">{title}</h3>
-              <p className="text-muted-foreground">{text}</p>
+            <li key={title} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 py-5 md:grid-cols-[3rem_1fr_1.2fr] md:gap-8 md:py-6">
+              <Icon className="order-2 justify-self-end text-primary md:order-none md:justify-self-start" size={28} strokeWidth={1.5} />
+              <h3 className="order-1 text-xl md:order-none md:text-2xl">{title}</h3>
+              <p className="order-3 col-span-2 text-muted-foreground md:order-none md:col-span-1">{text}</p>
             </li>
           ))}
         </ul>
