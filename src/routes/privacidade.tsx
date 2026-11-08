@@ -25,8 +25,8 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Identificação do responsável pelo tratamento",
     body: [
-      `O responsável pelo tratamento dos dados pessoais recolhidos através da aplicação e do website Hybrid Hub é ${MARK}, com sede em ${MARK}, NIF ${MARK}.`,
-      `Para qualquer questão relacionada com o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico ${MARK}.`,
+      "O responsável pelo tratamento dos dados pessoais recolhidos através da aplicação e do website Hybrid Hub é Hybrid Hub, com sede em Maia, Portugal.",
+      "Para qualquer questão relacionada com o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico hybridhubadmin@gmail.com.",
     ],
   },
   {
@@ -163,7 +163,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Contactos e direito de reclamação",
     body: [
-      `Para qualquer questão sobre esta Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico ${MARK} ou do seguinte endereço postal: ${MARK}.`,
+      `Para qualquer questão sobre esta Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos através do endereço de correio eletrónico hybridhubadmin@gmail.com ou do seguinte endereço postal: ${MARK}.`,
       "Sem prejuízo de qualquer outra via administrativa ou judicial, o titular dos dados tem o direito de apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD), a autoridade de controlo competente em Portugal, através do sítio www.cnpd.pt.",
     ],
   },
