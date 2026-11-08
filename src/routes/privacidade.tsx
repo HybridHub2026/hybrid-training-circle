@@ -107,8 +107,8 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Prestadores de serviços e transferências internacionais",
     body: [
-      `Para o funcionamento da aplicação, a Hybrid Hub recorre a prestadores de serviços tecnológicos (por exemplo, alojamento, envio de SMS e análise de utilização). A identificação destes fornecedores é ${MARK}.`,
-      `Caso algum destes prestadores implique a transferência de dados pessoais para fora do Espaço Económico Europeu, essa transferência será efetuada apenas com as garantias adequadas previstas no Regulamento Geral sobre a Proteção de Dados (RGPD). Detalhes específicos: ${MARK}.`,
+      "Para o funcionamento da aplicação, a Hybrid Hub recorre a prestadores de serviços tecnológicos (por exemplo, alojamento, envio de SMS e análise de utilização).",
+      "Caso algum destes prestadores implique a transferência de dados pessoais para fora do Espaço Económico Europeu, essa transferência será efetuada apenas com as garantias adequadas previstas no Regulamento Geral sobre a Proteção de Dados (RGPD).",
     ],
   },
   {
