@@ -38,7 +38,7 @@ export function Hero() {
 
 export function About({ compact = false }: { compact?: boolean }) {
   return (
-    <section className={`grid grid-cols-1 items-center gap-8 py-12 md:grid-cols-2 md:gap-12 md:py-20 ${wrap} ${compact ? "md:py-16" : ""}`}>
+    <section className={`grid grid-cols-1 items-center gap-8 py-10 md:grid-cols-2 md:gap-12 md:py-20 ${wrap} ${compact ? "md:py-16" : ""}`}>
       <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className={`aspect-[4/5] w-full rounded-sm object-cover ${compact ? "max-w-[280px] md:max-w-[400px]" : "max-w-[320px] md:max-w-[440px]"}`} />
       <div>
         <p className="eyebrow">Sobre a Hybrid Hub</p>
@@ -65,7 +65,7 @@ const features = [
 export function Features() {
   return (
     <section className="bg-muted">
-      <div className={`py-16 md:py-20 ${wrap}`}>
+      <div className={`py-10 md:py-20 ${wrap}`}>
         <p className="eyebrow">Funcionalidades</p>
         <h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
         <ul className="mt-10 divide-y divide-border border-y border-border md:mt-12">
@@ -108,7 +108,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className={`py-16 md:py-20 ${wrap}`}>
+    <section className={`py-10 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
       <h2 className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
       <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground md:hidden">Desliza para ver os 3 passos <span aria-hidden="true">→</span></p>
@@ -128,7 +128,7 @@ export function HowItWorks() {
 export function Community() {
   return (
     <section className="bg-muted">
-      <div className={`py-16 md:py-24 ${wrap}`}>
+      <div className={`py-10 md:py-24 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
         <h2 className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
@@ -136,7 +136,7 @@ export function Community() {
         </p>
         <div className="mt-10 grid gap-px bg-border sm:grid-cols-3 md:mt-12">
           {["A COMEÇAR", "A TREINAR", "A COMPETIR"].map((l) => (
-            <div key={l} className="bg-muted py-6 sm:px-6">
+            <div key={l} className="bg-muted py-4 md:py-6 sm:px-6">
               <span className="text-2xl font-extrabold">{l}</span>
             </div>
           ))}
@@ -148,7 +148,7 @@ export function Community() {
 
 export function AppShowcase() {
   return (
-    <section className={`py-16 md:py-12 ${wrap}`}>
+    <section className={`py-10 md:py-12 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
         <h2 className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
@@ -178,7 +178,7 @@ const merchItems = ["Bucket hats reversíveis", "T-shirts oficiais", "Hoodies of
 export function Shop() {
   return (
     <section className="bg-muted">
-      <div className={`grid gap-8 py-16 md:grid-cols-2 md:items-center md:gap-12 md:py-20 ${wrap}`}>
+      <div className={`grid gap-8 py-10 md:grid-cols-2 md:items-center md:gap-12 md:py-20 ${wrap}`}>
         <img src={merch} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>
@@ -197,7 +197,7 @@ export function Shop() {
 
 export function FinalCta() {
   return (
-    <section className={`py-16 text-center md:py-24 ${wrap}`}>
+    <section className={`py-10 text-center md:py-24 ${wrap}`}>
       <h2 className="mx-auto max-w-5xl text-3xl md:text-5xl">A PRÓXIMA LIGAÇÃO <span className="text-primary">COMEÇA AQUI.</span></h2>
       <p className="mt-6 text-muted-foreground md:text-lg">Descobre novas pessoas, novos treinos e novas oportunidades.</p>
       <Link to="/app" className="btn-primary mt-12">Descobre a app</Link>
