@@ -36,17 +36,17 @@ export function Hero() {
   );
 }
 
-export function About() {
+export function About({ compact = false }: { compact?: boolean }) {
   return (
-    <section className={`grid gap-12 py-24 md:grid-cols-2 md:items-center md:gap-20 md:py-40 ${wrap}`}>
-      <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className="aspect-[4/5] w-full rounded-sm object-cover" />
+    <section className={`grid grid-cols-1 items-center gap-8 py-12 md:grid-cols-2 md:gap-12 md:py-20 ${wrap} ${compact ? "md:py-16" : ""}`}>
+      <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className={`aspect-[4/5] w-full rounded-sm object-cover ${compact ? "max-w-[280px] md:max-w-[400px]" : "max-w-[320px] md:max-w-[440px]"}`} />
       <div>
         <p className="eyebrow">Sobre a Hybrid Hub</p>
-        <h2 className="mt-6 text-4xl md:text-6xl">MAIS DO QUE <span className="text-primary">TREINAR.</span></h2>
-        <p className="mt-8 text-muted-foreground md:text-lg">
+        <h2 className="mt-4 text-4xl md:text-6xl">MAIS DO QUE <span className="text-primary">TREINAR.</span></h2>
+        <p className="mt-6 text-muted-foreground md:text-lg">
           Nem sempre é fácil encontrar alguém com quem treinar ou participar numa prova. A Hybrid Hub nasceu para aproximar pessoas que partilham interesses, objetivos e a vontade de praticar desporto.
         </p>
-        <p className="mt-6 text-muted-foreground md:text-lg">
+        <p className="mt-4 text-muted-foreground md:text-lg">
           Não organizamos todos os treinos nem todos os eventos — ajudamos-te a encontrar as pessoas e as oportunidades certas.
         </p>
       </div>
@@ -65,12 +65,12 @@ const features = [
 export function Features() {
   return (
     <section className="bg-muted">
-      <div className={`py-24 md:py-32 ${wrap}`}>
+      <div className={`py-16 md:py-20 ${wrap}`}>
         <p className="eyebrow">Funcionalidades</p>
-        <h2 className="mt-6 max-w-3xl text-4xl md:text-6xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
-        <ul className="mt-16 divide-y divide-border border-y border-border">
+        <h2 className="mt-4 max-w-3xl text-4xl md:text-6xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
+        <ul className="mt-10 divide-y divide-border border-y border-border md:mt-12">
           {features.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="grid gap-3 py-8 md:grid-cols-[3rem_1fr_1.2fr] md:items-center md:gap-10">
+            <li key={title} className="grid gap-2 py-5 md:grid-cols-[3rem_1fr_1.2fr] md:items-center md:gap-8 md:py-6">
               <Icon className="text-primary" size={28} strokeWidth={1.5} />
               <h3 className="text-xl md:text-2xl">{title}</h3>
               <p className="text-muted-foreground">{text}</p>
@@ -108,15 +108,15 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className={`py-24 md:py-40 ${wrap}`}>
+    <section className={`py-16 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
-      <h2 className="mt-6 text-4xl md:text-6xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
-      <div className="mt-16 grid gap-16 md:grid-cols-3 md:gap-10">
+      <h2 className="mt-4 text-4xl md:text-6xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
+      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-3 md:gap-8">
         {steps.map((s) => (
-          <div key={s.n} className="border-t border-primary pt-8">
+          <div key={s.n} className="border-t border-primary pt-6">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
-            <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : s.n === "02" ? ligateScreen : treinaScreen} /></div>
+            <div className="mt-6"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : s.n === "02" ? ligateScreen : treinaScreen} /></div>
           </div>
         ))}
       </div>
@@ -127,13 +127,13 @@ export function HowItWorks() {
 export function Community() {
   return (
     <section className="bg-muted">
-      <div className={`py-24 md:py-40 ${wrap}`}>
+      <div className={`py-16 md:py-24 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
-        <h2 className="mt-6 text-5xl md:text-8xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
-        <p className="mt-8 max-w-2xl text-muted-foreground md:text-lg">
+        <h2 className="mt-4 text-5xl md:text-8xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
+        <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
           Se estás a começar a correr, se treinas regularmente ou se já participas em provas, a Hybrid Hub ajuda-te a encontrar pessoas com quem partilhar o caminho.
         </p>
-        <div className="mt-16 grid gap-px bg-border sm:grid-cols-3">
+        <div className="mt-10 grid gap-px bg-border sm:grid-cols-3 md:mt-12">
           {["A COMEÇAR", "A TREINAR", "A COMPETIR"].map((l) => (
             <div key={l} className="bg-muted py-6 sm:px-6">
               <span className="text-2xl font-extrabold">{l}</span>
@@ -147,21 +147,21 @@ export function Community() {
 
 export function AppShowcase() {
   return (
-    <section className={`py-24 md:py-40 ${wrap}`}>
+    <section className={`py-16 md:py-20 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
-        <h2 className="mt-6 text-4xl md:text-6xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
+        <h2 className="mt-4 text-4xl md:text-6xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
         <p className="mt-6 text-muted-foreground md:text-lg">
           Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>
       </div>
-      <div className="mt-16 flex snap-x gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
+      <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-12 md:grid md:grid-cols-3 md:overflow-visible">
         {[1, 2, 3].map((i) => (
           <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : i === 2 ? appScreen2.url : appScreen3.url} />
         ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
-      <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row">
         {["App Store", "Google Play"].map((s) => (
           <div key={s} className="flex h-14 w-full items-center justify-center rounded-sm border border-dashed border-border text-xs font-medium uppercase tracking-widest text-muted-foreground sm:w-48">
             {s} — em breve
@@ -177,7 +177,7 @@ const merchItems = ["Bucket hats reversíveis", "T-shirts oficiais", "Hoodies of
 export function Shop() {
   return (
     <section className="bg-muted">
-      <div className={`grid gap-12 py-24 md:grid-cols-2 md:items-center md:py-32 ${wrap}`}>
+      <div className={`grid gap-8 py-16 md:grid-cols-2 md:items-center md:gap-12 md:py-20 ${wrap}`}>
         <img src={merch.url} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>
@@ -196,7 +196,7 @@ export function Shop() {
 
 export function FinalCta() {
   return (
-    <section className={`py-24 text-center md:py-40 ${wrap}`}>
+    <section className={`py-16 text-center md:py-24 ${wrap}`}>
       <h2 className="mx-auto max-w-5xl text-4xl md:text-7xl">A PRÓXIMA LIGAÇÃO <span className="text-primary">COMEÇA AQUI.</span></h2>
       <p className="mt-6 text-muted-foreground md:text-lg">Descobre novas pessoas, novos treinos e novas oportunidades.</p>
       <Link to="/app" className="btn-primary mt-12">Descobre a app</Link>

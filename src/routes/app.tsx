@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app")({
     ],
   }),
   component: () => (
-    <div className="pt-16">
+    <div className="pt-8">
       <AppShowcase />
       <Features />
     </div>

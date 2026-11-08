@@ -21,13 +21,13 @@ const products = [
 
 function Loja() {
   return (
-    <section className="mx-auto max-w-7xl px-5 pb-24 pt-32 md:px-10 md:pt-40">
+    <section className="mx-auto max-w-7xl px-5 pb-16 pt-24 md:px-10 md:pb-20 md:pt-28">
       <p className="eyebrow">Loja · Em breve</p>
       <h1 className="mt-6 text-5xl md:text-8xl">VESTE A COMUNIDADE.</h1>
       <p className="mt-6 max-w-xl text-muted-foreground md:text-lg">
         A Hybrid Hub também se vive fora dos treinos. A primeira coleção está a caminho.
       </p>
-      <div className="mt-16 grid gap-8 sm:grid-cols-2">
+      <div className="mt-10 grid gap-8 sm:grid-cols-2 md:mt-12">
         {products.map((p) => (
           <article key={p.name} className="group">
             <div className="relative overflow-hidden rounded-sm bg-card">

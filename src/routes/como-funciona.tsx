@@ -11,7 +11,7 @@ export const Route = createFileRoute("/como-funciona")({
     ],
   }),
   component: () => (
-    <div className="pt-16">
+    <div className="pt-8">
       <HowItWorks />
       <FinalCta />
     </div>
