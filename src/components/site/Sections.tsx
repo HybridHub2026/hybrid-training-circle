@@ -3,6 +3,7 @@ import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } fr
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
 import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
+import appScreen2 from "@/assets/app-ecra-2.jpg.asset.json";
 import exploreScreen from "@/assets/app-explorar.png.asset.json";
 import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
 
@@ -153,7 +154,7 @@ export function AppShowcase() {
       </div>
       <div className="mt-16 flex snap-x gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
         {[1, 2, 3].map((i) => (
-          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : undefined} />
+          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : i === 2 ? appScreen2.url : undefined} />
         ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
