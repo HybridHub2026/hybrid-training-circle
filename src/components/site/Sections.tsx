@@ -162,9 +162,9 @@ export function AppShowcase() {
         ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row md:mt-6">
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4 md:mt-6">
         {["App Store", "Google Play"].map((s) => (
-          <div key={s} className="flex h-14 w-full items-center justify-center rounded-sm border border-dashed border-border text-xs font-medium uppercase tracking-widest text-muted-foreground sm:w-48">
+          <div key={s} className="flex h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-sm border border-dashed border-border px-1 text-[10px] font-medium uppercase text-muted-foreground sm:h-14 sm:w-48 sm:px-0 sm:text-xs sm:tracking-widest">
             {s} — em breve
           </div>
         ))}
