@@ -19,7 +19,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-background/72 md:bg-background/60" />
         <div className={`relative w-full pb-8 pt-20 md:pb-16 md:pt-28 ${wrap}`}>
           <h1 className="text-5xl sm:text-6xl lg:text-9xl">
-          TRAIN•<br /><span className="text-primary">CONNECT•</span><br />COMPETE•
+          TRAIN•<br /><span className="text-primary">CONNECT•</span><br />COMPETE
         </h1>
         <p className="mt-6 max-w-xl text-lg font-medium md:text-xl">
           O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrarem-se.
@@ -42,7 +42,7 @@ export function About({ compact = false }: { compact?: boolean }) {
       <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className={`aspect-[4/5] w-full rounded-sm object-cover ${compact ? "max-w-[280px] md:max-w-[400px]" : "max-w-[320px] md:max-w-[440px]"}`} />
       <div>
         <p className="eyebrow">Sobre a Hybrid Hub</p>
-        <h2 className="mt-4 text-4xl md:text-6xl">MAIS DO QUE <span className="text-primary">TREINAR.</span></h2>
+        <h2 className="mt-4 text-3xl md:text-5xl">MAIS DO QUE <span className="text-primary">TREINAR.</span></h2>
         <p className="mt-6 text-muted-foreground md:text-lg">
           Nem sempre é fácil encontrar alguém com quem treinar ou participar numa prova. A Hybrid Hub nasceu para aproximar pessoas que partilham interesses, objetivos e a vontade de praticar desporto.
         </p>
@@ -67,7 +67,7 @@ export function Features() {
     <section className="bg-muted">
       <div className={`py-16 md:py-20 ${wrap}`}>
         <p className="eyebrow">Funcionalidades</p>
-        <h2 className="mt-4 max-w-3xl text-4xl md:text-6xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
+        <h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
         <ul className="mt-10 divide-y divide-border border-y border-border md:mt-12">
           {features.map(({ icon: Icon, title, text }) => (
             <li key={title} className="grid gap-2 py-5 md:grid-cols-[3rem_1fr_1.2fr] md:items-center md:gap-8 md:py-6">
@@ -110,7 +110,7 @@ export function HowItWorks() {
   return (
     <section className={`py-16 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
-      <h2 className="mt-4 text-4xl md:text-6xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
+      <h2 className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
       <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-3 md:gap-8">
         {steps.map((s) => (
           <div key={s.n} className="border-t border-primary pt-6">
@@ -129,7 +129,7 @@ export function Community() {
     <section className="bg-muted">
       <div className={`py-16 md:py-24 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
-        <h2 className="mt-4 text-5xl md:text-8xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
+        <h2 className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
           Se estás a começar a correr, se treinas regularmente ou se já participas em provas, a Hybrid Hub ajuda-te a encontrar pessoas com quem partilhar o caminho.
         </p>
@@ -150,7 +150,7 @@ export function AppShowcase() {
     <section className={`py-16 md:py-12 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
-        <h2 className="mt-4 text-4xl md:text-6xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
+        <h2 className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
         <p className="mt-6 text-muted-foreground md:text-lg">
           Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>
@@ -181,7 +181,7 @@ export function Shop() {
         <img src={merch.url} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>
-          <h2 className="mt-6 text-4xl md:text-6xl">VESTE A <span className="text-primary">COMUNIDADE.</span></h2>
+          <h2 className="mt-6 text-3xl md:text-5xl">VESTE A <span className="text-primary">COMUNIDADE.</span></h2>
           <p className="mt-6 text-muted-foreground md:text-lg">A Hybrid Hub também se vive fora dos treinos.</p>
           <ul className="mt-8 space-y-2 text-sm">
             {merchItems.map((m) => <li key={m} className="flex gap-3"><span className="text-primary">—</span>{m}</li>)}
@@ -197,7 +197,7 @@ export function Shop() {
 export function FinalCta() {
   return (
     <section className={`py-16 text-center md:py-24 ${wrap}`}>
-      <h2 className="mx-auto max-w-5xl text-4xl md:text-7xl">A PRÓXIMA LIGAÇÃO <span className="text-primary">COMEÇA AQUI.</span></h2>
+      <h2 className="mx-auto max-w-5xl text-3xl md:text-5xl">A PRÓXIMA LIGAÇÃO <span className="text-primary">COMEÇA AQUI.</span></h2>
       <p className="mt-6 text-muted-foreground md:text-lg">Descobre novas pessoas, novos treinos e novas oportunidades.</p>
       <Link to="/app" className="btn-primary mt-12">Descobre a app</Link>
     </section>
