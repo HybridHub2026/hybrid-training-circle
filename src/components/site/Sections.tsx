@@ -111,9 +111,10 @@ export function HowItWorks() {
     <section className={`py-16 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
       <h2 className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
-      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-3 md:gap-8">
+      <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground md:hidden">Desliza para ver os 3 passos <span aria-hidden="true">→</span></p>
+      <div className="-mr-5 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pr-5 pb-4 md:mr-0 md:mt-12 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pr-0 md:pb-0" role="region" aria-label="Passos de como funciona" tabIndex={0}>
         {steps.map((s) => (
-          <div key={s.n} className="border-t border-primary pt-6">
+          <div key={s.n} className="w-[78vw] max-w-80 flex-none snap-start border-t border-primary pt-6 md:w-auto md:max-w-none">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
             <div className="mt-6"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : s.n === "02" ? ligateScreen : treinaScreen} /></div>
