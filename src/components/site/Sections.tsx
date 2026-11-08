@@ -147,7 +147,7 @@ export function Community() {
 
 export function AppShowcase() {
   return (
-    <section className={`py-16 ${wrap}`}>
+    <section className={`py-16 md:py-12 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
         <h2 className="mt-4 text-4xl md:text-6xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
@@ -155,13 +155,13 @@ export function AppShowcase() {
           Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>
       </div>
-      <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-12 md:grid md:grid-cols-3 md:overflow-visible">
+      <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
         {[1, 2, 3].map((i) => (
           <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1.url : i === 2 ? appScreen2.url : appScreen3.url} />
         ))}
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row md:mt-6">
         {["App Store", "Google Play"].map((s) => (
           <div key={s} className="flex h-14 w-full items-center justify-center rounded-sm border border-dashed border-border text-xs font-medium uppercase tracking-widest text-muted-foreground sm:w-48">
             {s} — em breve
