@@ -3,6 +3,7 @@ import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } fr
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
 import train from "@/assets/train-together.jpg";
 import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
+import exploreScreen from "@/assets/app-explorar.png.asset.json";
 import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
@@ -111,7 +112,7 @@ export function HowItWorks() {
           <div key={s.n} className="border-t border-primary pt-8">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
-            <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} /></div>
+            <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen.url : undefined} /></div>
           </div>
         ))}
       </div>
