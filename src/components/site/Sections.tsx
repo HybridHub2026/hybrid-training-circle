@@ -5,7 +5,7 @@ import train from "@/assets/train-together.jpg";
 import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
 import appScreen2 from "@/assets/app-ecra-2.jpg.asset.json";
 import appScreen3 from "@/assets/app-ecra-3.png.asset.json";
-import exploreScreen from "@/assets/app-explorar.png.asset.json";
+import exploreScreen from "@/assets/app-explorar-foz.png";
 import merch from "@/assets/hybrid-hub-em-breve.png.asset.json";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
@@ -114,7 +114,7 @@ export function HowItWorks() {
           <div key={s.n} className="border-t border-primary pt-8">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
-            <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen.url : undefined} /></div>
+            <div className="mt-10"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : undefined} /></div>
           </div>
         ))}
       </div>
