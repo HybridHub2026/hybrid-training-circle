@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg.asset.json";
-import train from "@/assets/train-together.jpg";
+import train from "@/assets/hybrid-hub-community-sunset.png";
 import appScreen1 from "@/assets/app-ecra-1.jpg.asset.json";
 import appScreen2 from "@/assets/app-ecra-2.jpg.asset.json";
 import appScreen3 from "@/assets/app-ecra-3.png.asset.json";
@@ -39,7 +39,7 @@ export function Hero() {
 export function About() {
   return (
     <section className={`grid gap-12 py-24 md:grid-cols-2 md:items-center md:gap-20 md:py-40 ${wrap}`}>
-      <img src={train} alt="Duas pessoas a treinar juntas" loading="lazy" width={1280} height={1600} className="aspect-[4/5] w-full rounded-sm object-cover" />
+      <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className="aspect-[4/5] w-full rounded-sm object-cover" />
       <div>
         <p className="eyebrow">Sobre a Hybrid Hub</p>
         <h2 className="mt-6 text-4xl md:text-6xl">MAIS DO QUE <span className="text-primary">TREINAR.</span></h2>
