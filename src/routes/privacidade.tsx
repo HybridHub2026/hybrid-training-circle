@@ -191,9 +191,6 @@ function PrivacidadePage() {
         <h1 className="text-4xl sm:text-5xl md:text-6xl">POLÍTICA DE PRIVACIDADE</h1>
         <p className="mt-4 text-sm text-muted-foreground">Hybrid Hub | Train • Connect • Compete</p>
         <div className="mt-8 h-px w-24 bg-primary" aria-hidden="true" />
-        <p className="mt-8 text-xs uppercase tracking-widest text-muted-foreground">
-          Versão preliminar em revisão — não constitui documento jurídico aprovado.
-        </p>
       </header>
 
       <div className="mt-12 space-y-12">
