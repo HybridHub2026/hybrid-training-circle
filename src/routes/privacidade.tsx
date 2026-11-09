@@ -122,7 +122,7 @@ const sections: { heading: string; body: string[] }[] = [
     heading: "Dados de utilização e ferramentas de análise",
     body: [
       "Recolhemos dados sobre a forma como a aplicação é utilizada (por exemplo, funcionalidades acedidas e interações) com o objetivo de melhorar o serviço, corrigir problemas técnicos e desenvolver novas funcionalidades.",
-      `As ferramentas de análise utilizadas são ${MARK}. Sempre que estas ferramentas impliquem o tratamento de dados pessoais, a sua utilização respeita o RGPD e, quando aplicável, depende do consentimento do utilizador.`,
+      "A ferramenta de análise utilizada é o Firebase. Sempre que esta ferramenta implique o tratamento de dados pessoais, a sua utilização respeita o RGPD e, quando aplicável, depende do consentimento do utilizador.",
     ],
   },
   {
@@ -136,7 +136,7 @@ const sections: { heading: string; body: string[] }[] = [
     heading: "Eliminação de contas e dados",
     body: [
       "O utilizador pode, a qualquer momento, solicitar a eliminação da sua conta e dos dados pessoais associados, através das definições da aplicação ou dos contactos indicados no ponto 21.",
-      `Após o pedido de eliminação, os dados são apagados no prazo de ${MARK}, salvo quando a sua conservação seja exigida por lei ou necessária para o exercício ou defesa de direitos em processo judicial.`,
+      "Após o pedido de eliminação, os dados são apagados no prazo máximo de 2 dias, salvo quando a sua conservação seja exigida por lei ou necessária para o exercício ou defesa de direitos em processo judicial.",
     ],
   },
   {
