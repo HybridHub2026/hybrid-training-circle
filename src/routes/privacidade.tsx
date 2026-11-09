@@ -129,7 +129,7 @@ const sections: { heading: string; body: string[] }[] = [
     heading: "Prazos de conservação",
     body: [
       "Os dados pessoais são conservados apenas durante o período necessário às finalidades para que foram recolhidos. Em regra, os dados da conta são mantidos enquanto a conta estiver ativa.",
-      `Os prazos de conservação específicos aplicáveis a cada categoria de dados são ${MARK}. Findos os prazos aplicáveis, os dados são eliminados ou anonimizados de forma segura.`,
+      "Após um pedido de eliminação da conta, os dados associados são apagados no prazo indicado no ponto 17. Os dados cuja conservação seja exigida por lei ou necessária para o exercício ou defesa de direitos são mantidos apenas durante o prazo aplicável e depois eliminados ou anonimizados.",
     ],
   },
   {
