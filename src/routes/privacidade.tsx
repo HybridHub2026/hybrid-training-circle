@@ -8,10 +8,10 @@ export const Route = createFileRoute("/privacidade")({
       { property: "og:title", content: "Política de Privacidade — Hybrid Hub" },
       { property: "og:description", content: "Política de Privacidade da Hybrid Hub." },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "https://hybrid-training-circle.lovable.app/privacidade" },
+      { property: "og:url", content: "https://hybridhub.pt/privacidade" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://hybrid-training-circle.lovable.app/privacidade" }],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/privacidade" }],
   }),
   component: PrivacidadePage,
 });

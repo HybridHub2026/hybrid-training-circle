@@ -9,6 +9,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Hybrid Hub — Train • Connect • Compete" },
       { property: "og:description", content: "O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se." },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/" }],
   }),
   component: () => (
     <>
