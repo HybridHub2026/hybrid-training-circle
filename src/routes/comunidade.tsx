@@ -21,7 +21,7 @@ export const Route = createFileRoute("/comunidade")({
   }),
   component: () => (
     <div className="pt-8">
-      <Community />
+      <Community headingLevel={1} />
       <About compact />
     </div>
   ),

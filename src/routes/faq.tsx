@@ -12,6 +12,7 @@ export const Route = createFileRoute("/faq")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/faq" }],
   }),
   component: () => (
     <section className="mx-auto max-w-5xl px-5 pb-24 pt-32 md:px-10 md:pt-40">

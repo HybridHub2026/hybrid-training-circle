@@ -10,6 +10,7 @@ export const Route = createFileRoute("/termos")({
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/termos" }],
   }),
   component: TermosPage,
 });
