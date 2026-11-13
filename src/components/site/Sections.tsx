@@ -106,11 +106,12 @@ const steps = [
   { n: "03", title: "TREINA", text: "Participa, conhece pessoas e partilha a experiência." },
 ];
 
-export function HowItWorks() {
+export function HowItWorks({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <section className={`py-10 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
-      <h2 className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</h2>
+      <Heading className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</Heading>
       <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground md:hidden">Desliza para ver os 3 passos <span aria-hidden="true">→</span></p>
       <div className="-mr-5 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pr-5 pb-4 md:mr-0 md:mt-12 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pr-0 md:pb-0" role="region" aria-label="Passos de como funciona" tabIndex={0}>
         {steps.map((s) => (
@@ -125,12 +126,13 @@ export function HowItWorks() {
   );
 }
 
-export function Community() {
+export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <section className="bg-muted">
       <div className={`py-10 md:py-24 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
-        <h2 className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></h2>
+        <Heading className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></Heading>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
           Se estás a começar a correr, se treinas regularmente ou se já participas em provas, a Hybrid Hub ajuda-te a encontrar pessoas com quem partilhar o caminho.
         </p>
@@ -146,12 +148,13 @@ export function Community() {
   );
 }
 
-export function AppShowcase() {
+export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <section className={`py-10 md:py-12 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
-        <h2 className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></h2>
+        <Heading className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></Heading>
         <p className="mt-6 text-muted-foreground md:text-lg">
           Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>

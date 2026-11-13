@@ -4,15 +4,24 @@ import { About, Community } from "@/components/site/Sections";
 export const Route = createFileRoute("/comunidade")({
   head: () => ({
     meta: [
-      { title: "Comunidade — Hybrid Hub" },
-      { name: "description", content: "Do primeiro quilómetro à próxima prova, há espaço para ti na comunidade Hybrid Hub." },
-      { property: "og:title", content: "Comunidade — Hybrid Hub" },
-      { property: "og:description", content: "Há espaço para ti." },
+      { title: "Comunidade de corrida e treino | Hybrid Hub" },
+      {
+        name: "description",
+        content:
+          "Encontra pessoas para correr, treinar e participar em provas. Na comunidade Hybrid Hub há espaço para quem está a começar, treina regularmente ou compete.",
+      },
+      { property: "og:title", content: "Comunidade de corrida e treino | Hybrid Hub" },
+      {
+        property: "og:description",
+        content:
+          "Encontra pessoas para correr, treinar e participar em provas na comunidade Hybrid Hub.",
+      },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/comunidade" }],
   }),
   component: () => (
     <div className="pt-8">
-      <Community />
+      <Community headingLevel={1} />
       <About compact />
     </div>
   ),

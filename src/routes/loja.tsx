@@ -9,6 +9,7 @@ export const Route = createFileRoute("/loja")({
       { property: "og:title", content: "Loja Hybrid Hub — Em breve" },
       { property: "og:description", content: "Bucket hats e t-shirts Hybrid Hub. Em breve." },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/loja" }],
   }),
   component: Loja,
 });

@@ -11,6 +11,7 @@ export const Route = createFileRoute("/cookies")({
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/cookies" }],
   }),
   component: CookiesPage,
 });

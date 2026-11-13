@@ -5,13 +5,14 @@ import { Mail, Phone, MapPin } from "lucide-react";
 export const Route = createFileRoute("/contactos")({
   head: () => ({
     meta: [
-      { title: "Contactos — Hybrid Hub" },
-      { name: "description", content: "Fala com a equipa Hybrid Hub." },
-      { property: "og:title", content: "Contactos — Hybrid Hub" },
+      { title: "Contactos Hybrid Hub | Fala com a equipa" },
+      { name: "description", content: "Tens dúvidas sobre a app, comunidades, coaches ou parcerias? Encontra o email, telefone e morada da equipa Hybrid Hub." },
+      { property: "og:title", content: "Contactos Hybrid Hub | Fala com a equipa" },
       { property: "og:description", content: "Fala com a equipa Hybrid Hub." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/contactos" }],
   }),
   component: Contactos,
 });
