@@ -3,12 +3,21 @@ import { About, Community } from "@/components/site/Sections";
 
 export const Route = createFileRoute("/comunidade")({
   head: () => ({
-    meta: [     
-{ title: "Comunidades Desportivas e Treino | Hybrid Hub" },
-{ name: "description", content: "Junta-te a comunidades de treino híbrido, HYROX, corrida e outras modalidades. Descobre atividades, conhece praticantes e treina em conjunto na Hybrid Hub." },
-      { property: "og:title", content: "Comunidades Desportivas e Treino | Hybrid Hub" },
-      { property: "og:description", content: "Junta-te a comunidades de treino híbrido, HYROX, corrida e outras modalidades. Descobre atividades, conhece praticantes e treina em conjunto na Hybrid Hub." },
+    meta: [
+      { title: "Comunidade de corrida e treino | Hybrid Hub" },
+      {
+        name: "description",
+        content:
+          "Encontra pessoas para correr, treinar e participar em provas. Na comunidade Hybrid Hub há espaço para quem está a começar, treina regularmente ou compete.",
+      },
+      { property: "og:title", content: "Comunidade de corrida e treino | Hybrid Hub" },
+      {
+        property: "og:description",
+        content:
+          "Encontra pessoas para correr, treinar e participar em provas na comunidade Hybrid Hub.",
+      },
     ],
+    links: [{ rel: "canonical", href: "https://hybridhub.pt/comunidade" }],
   }),
   component: () => (
     <div className="pt-8">
