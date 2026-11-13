@@ -55,6 +55,7 @@ export const Route = createFileRoute("/comunidade")({
         </p>
         <div className="mt-7 flex flex-wrap gap-4">
           <Link to="/app" className="btn-primary">Conhece a app</Link>
+          <Link to="/parceiros-de-treino" className="btn-ghost">Como encontrar parceiros de treino</Link>
           <Link to="/faq" className="btn-ghost">Perguntas frequentes</Link>
         </div>
       </section>
