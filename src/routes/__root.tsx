@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Hybrid Hub — Train • Connect • Compete" },
       { name: "description", content: "A Hybrid Hub liga pessoas através do desporto." },
       { property: "og:title", content: "Hybrid Hub" },
+      { property: "og:site_name", content: "Hybrid Hub" },
       { property: "og:description", content: "A Hybrid Hub liga pessoas através do desporto." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
