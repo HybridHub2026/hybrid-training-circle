@@ -134,7 +134,7 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <p className="eyebrow">Comunidade</p>
         <Heading className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></Heading>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
-          Se estás a começar a correr, se treinas regularmente ou se já participas em provas, a Hybrid Hub ajuda-te a encontrar pessoas com quem partilhar o caminho.
+          Seja para correr, combinar corrida e força no treino híbrido ou preparar uma prova como HYROX, a Hybrid Hub aproxima pessoas com vontade de treinar em conjunto em Portugal.
         </p>
         <div className="mt-10 grid gap-px bg-border sm:grid-cols-3 md:mt-12">
           {["A COMEÇAR", "A TREINAR", "A COMPETIR"].map((l) => (
@@ -143,6 +143,11 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
             </div>
           ))}
         </div>
+        {headingLevel === 2 && (
+          <Link to="/comunidade" className="btn-ghost mt-8">
+            Explora a comunidade <ArrowRight size={16} />
+          </Link>
+        )}
       </div>
     </section>
   );
