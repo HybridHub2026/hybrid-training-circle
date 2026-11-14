@@ -157,9 +157,14 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
           Seja para correr, combinar corrida e força no treino híbrido ou preparar uma prova como HYROX, a Hybrid Hub aproxima pessoas com vontade de treinar em conjunto em Portugal.
         </p>
         <div className="mt-10 grid gap-px bg-border sm:grid-cols-3 md:mt-12">
-          {["A COMEÇAR", "A TREINAR", "A COMPETIR"].map((l) => (
-            <div key={l} className="bg-muted py-4 md:py-6 sm:px-6">
-              <span className="text-2xl font-extrabold">{l}</span>
+          {[
+            { title: "A COMEÇAR", text: "Dá os primeiros passos com companhia e ganha confiança ao teu ritmo." },
+            { title: "A TREINAR", text: "Partilha a rotina, mantém a motivação e encontra novos parceiros de treino." },
+            { title: "A COMPETIR", text: "Encontra quem partilhe os teus objetivos e prepara a próxima prova em conjunto." },
+          ].map(({ title, text }) => (
+            <div key={title} className="bg-muted py-4 md:py-6 sm:px-6">
+              <h3 className="text-2xl font-extrabold">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">{text}</p>
             </div>
           ))}
         </div>
