@@ -133,6 +133,14 @@ export const faqGroups = [
         ]
       },
       {
+        "id": "faq-4-5",
+        "question": "POSSO VENDER O MEU BILHETE SE JÁ NÃO FOR A UMA PROVA?",
+        "paragraphs": [
+          "Sim. Na app vais poder anunciar o teu bilhete para encontrar alguém interessado.",
+          "Ao criar o anúncio, indicas o tipo de prova, o tipo de bilhete, o local e a data da prova, a data-limite para transferir a inscrição e o valor de venda."
+        ]
+      },
+      {
         "id": "faq-4-3",
         "question": "POSSO CRIAR UMA COMUNIDADE?",
         "paragraphs": [

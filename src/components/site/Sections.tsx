@@ -2,7 +2,7 @@ import { Link, Localized, T } from "@/i18n";
 
 import { useState, type UIEvent } from "react";
 import { LaunchNotice } from "./LaunchNotice";
-import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
+import { Users, Dumbbell, Trophy, Ticket, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
 import train from "@/assets/hybrid-hub-community-sunset.png";
 import appScreen1 from "@/assets/app-ecra-1.jpg";
@@ -51,6 +51,7 @@ const features = [
   { icon: Users, title: "ENCONTRA PARCEIROS", text: "Descobre pessoas com quem partilhar treinos e desafios." },
   { icon: Dumbbell, title: "DESCOBRE TREINOS", text: "Explora oportunidades criadas por outros membros ou cria a tua." },
   { icon: Trophy, title: "ENCONTRA PROVAS", text: "Descobre eventos desportivos e procura parceiros para participar." },
+  { icon: Ticket, title: "VENDE O TEU BILHETE", text: "Já não vais participar numa prova? Anuncia o teu bilhete na app e encontra alguém interessado." },
   { icon: Globe2, title: "EXPLORA COMUNIDADES", text: "Conhece pessoas e integra comunidades com interesses semelhantes." },
   { icon: UserCheck, title: "ENCONTRA COACHES", text: "Descobre profissionais de exercício físico que podem ajudar-te a evoluir." },
 ];
