@@ -42,6 +42,7 @@ export function About({ compact = false }: { compact?: boolean }) {
         <h2 className="mt-4 text-3xl md:text-5xl"><T>{"MAIS DO QUE "}</T><span className="text-primary"><T>{"TREINAR."}</T></span></h2>
         <p className="mt-6 text-muted-foreground md:text-lg"><T>{"Nem sempre é fácil encontrar alguém com quem treinar ou participar numa prova. A Hybrid Hub nasceu para aproximar pessoas que partilham interesses, objetivos e a vontade de praticar desporto."}</T></p>
         <p className="mt-4 text-muted-foreground md:text-lg"><T>{"Não organizamos todos os treinos nem todos os eventos — ajudamos-te a encontrar as pessoas e as oportunidades certas."}</T></p>
+        <Link to="/sobre" className="btn-ghost mt-8"><T>{"Conhece a Hybrid Hub"}</T></Link>
       </div>
     </section>
   );
@@ -181,8 +182,12 @@ export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <Localized as="a" href="#aviso-lancamento" className="btn-primary mt-5"><T>{"Avisem-me no lançamento "}</T><ArrowRight size={16} /></Localized>
       </div>
       <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
-        <T>{[1, 2, 3].map((i) => (
-          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1 : i === 2 ? appScreen2 : appScreen3} />
+        <T>{[
+          { src: appScreen1, label: "Ecrã de boas-vindas da app Hybrid Hub com opções para entrar ou explorar como convidado" },
+          { src: appScreen2, label: "Ecrã da app Hybrid Hub com opções para criar uma oportunidade ou encontrar parceiro, prova e coach" },
+          { src: appScreen3, label: "Formulário Criar Oportunidade da app Hybrid Hub, com treino híbrido selecionado e campos de descrição e local" },
+        ].map(({ src, label }) => (
+          <PhoneSlot key={src} label={label} src={src} />
         ))}</T>
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}

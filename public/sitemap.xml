@@ -29,6 +29,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
   </url>
   <url>
+    <loc>https://hybridhub.pt/treino-hibrido</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/treino-hibrido" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/sobre</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/sobre" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/sobre" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/sobre" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/sobre" />
+  </url>
+  <url>
     <loc>https://hybridhub.pt/app</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/app" />
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/app" />
@@ -106,6 +120,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
   </url>
   <url>
+    <loc>https://hybridhub.pt/es/treino-hibrido</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/treino-hibrido" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/sobre</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/sobre" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/sobre" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/sobre" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/sobre" />
+  </url>
+  <url>
     <loc>https://hybridhub.pt/es/app</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/app" />
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/app" />
@@ -181,6 +209,20 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
     <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/parceiros-de-treino" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/treino-hibrido</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/treino-hibrido" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/treino-hibrido" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/sobre</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/sobre" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/sobre" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/sobre" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/sobre" />
   </url>
   <url>
     <loc>https://hybridhub.pt/en/app</loc>

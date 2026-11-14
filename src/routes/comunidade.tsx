@@ -48,6 +48,7 @@ export const Route = createFileRoute("/comunidade")({
         <div className="mt-7 flex flex-wrap gap-4">
           <Link to="/app" className="btn-primary"><T>{"Conhece a app"}</T></Link>
           <Link to="/parceiros-de-treino" className="btn-ghost"><T>{"Como encontrar parceiros de treino"}</T></Link>
+          <Link to="/treino-hibrido" className="btn-ghost"><T>{"O que é treino híbrido?"}</T></Link>
           <Link to="/faq" className="btn-ghost"><T>{"Perguntas frequentes"}</T></Link>
         </div>
       </section>

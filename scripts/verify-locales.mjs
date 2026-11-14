@@ -90,4 +90,4 @@ for (const path of paths) {
     assert.deepEqual(Object.fromEntries(links.map(link => [link.getAttribute("hreflang"), link.getAttribute("href")])), alternativesFor(path));
   }
 }
-console.log("Verified 33 indexable pages: translated HTML/metadata, reciprocal hreflang, self-canonicals, JSON-LD, robots and multilingual sitemap.");
+console.log(`Verified ${paths.length * 3} indexable pages: translated HTML/metadata, reciprocal hreflang, self-canonicals, JSON-LD, robots and multilingual sitemap.`);

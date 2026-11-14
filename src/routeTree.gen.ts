@@ -19,7 +19,9 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as ParceirosDeTreinoRouteImport } from './routes/parceiros-de-treino'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as TreinoHibridoRouteImport } from './routes/treino-hibrido'
 import { Route as EnIndexRouteImport } from './routes/en.index'
 import { Route as EnAppRouteImport } from './routes/en.app'
 import { Route as EnComoFuncionaRouteImport } from './routes/en.como-funciona'
@@ -30,7 +32,9 @@ import { Route as EnFaqRouteImport } from './routes/en.faq'
 import { Route as EnLojaRouteImport } from './routes/en.loja'
 import { Route as EnParceirosDeTreinoRouteImport } from './routes/en.parceiros-de-treino'
 import { Route as EnPrivacidadeRouteImport } from './routes/en.privacidade'
+import { Route as EnSobreRouteImport } from './routes/en.sobre'
 import { Route as EnTermosRouteImport } from './routes/en.termos'
+import { Route as EnTreinoHibridoRouteImport } from './routes/en.treino-hibrido'
 import { Route as EsIndexRouteImport } from './routes/es.index'
 import { Route as EsAppRouteImport } from './routes/es.app'
 import { Route as EsComoFuncionaRouteImport } from './routes/es.como-funciona'
@@ -41,7 +45,9 @@ import { Route as EsFaqRouteImport } from './routes/es.faq'
 import { Route as EsLojaRouteImport } from './routes/es.loja'
 import { Route as EsParceirosDeTreinoRouteImport } from './routes/es.parceiros-de-treino'
 import { Route as EsPrivacidadeRouteImport } from './routes/es.privacidade'
+import { Route as EsSobreRouteImport } from './routes/es.sobre'
 import { Route as EsTermosRouteImport } from './routes/es.termos'
+import { Route as EsTreinoHibridoRouteImport } from './routes/es.treino-hibrido'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -93,9 +99,19 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
   path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TreinoHibridoRoute = TreinoHibridoRouteImport.update({
+  id: '/treino-hibrido',
+  path: '/treino-hibrido',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnIndexRoute = EnIndexRouteImport.update({
@@ -148,9 +164,19 @@ const EnPrivacidadeRoute = EnPrivacidadeRouteImport.update({
   path: '/en/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnSobreRoute = EnSobreRouteImport.update({
+  id: '/en/sobre',
+  path: '/en/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnTermosRoute = EnTermosRouteImport.update({
   id: '/en/termos',
   path: '/en/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnTreinoHibridoRoute = EnTreinoHibridoRouteImport.update({
+  id: '/en/treino-hibrido',
+  path: '/en/treino-hibrido',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EsIndexRoute = EsIndexRouteImport.update({
@@ -203,9 +229,19 @@ const EsPrivacidadeRoute = EsPrivacidadeRouteImport.update({
   path: '/es/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsSobreRoute = EsSobreRouteImport.update({
+  id: '/es/sobre',
+  path: '/es/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EsTermosRoute = EsTermosRouteImport.update({
   id: '/es/termos',
   path: '/es/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsTreinoHibridoRoute = EsTreinoHibridoRouteImport.update({
+  id: '/es/treino-hibrido',
+  path: '/es/treino-hibrido',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -220,7 +256,9 @@ export interface FileRoutesByFullPath {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/treino-hibrido': typeof TreinoHibridoRoute
   '/en/app': typeof EnAppRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
@@ -230,7 +268,9 @@ export interface FileRoutesByFullPath {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/sobre': typeof EnSobreRoute
   '/en/termos': typeof EnTermosRoute
+  '/en/treino-hibrido': typeof EnTreinoHibridoRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
@@ -240,7 +280,9 @@ export interface FileRoutesByFullPath {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
+  '/es/treino-hibrido': typeof EsTreinoHibridoRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
 }
@@ -255,7 +297,9 @@ export interface FileRoutesByTo {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/treino-hibrido': typeof TreinoHibridoRoute
   '/en/app': typeof EnAppRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
@@ -265,7 +309,9 @@ export interface FileRoutesByTo {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/sobre': typeof EnSobreRoute
   '/en/termos': typeof EnTermosRoute
+  '/en/treino-hibrido': typeof EnTreinoHibridoRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
@@ -275,7 +321,9 @@ export interface FileRoutesByTo {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
+  '/es/treino-hibrido': typeof EsTreinoHibridoRoute
   '/en': typeof EnIndexRoute
   '/es': typeof EsIndexRoute
 }
@@ -291,7 +339,9 @@ export interface FileRoutesById {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/treino-hibrido': typeof TreinoHibridoRoute
   '/en/app': typeof EnAppRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
@@ -301,7 +351,9 @@ export interface FileRoutesById {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/sobre': typeof EnSobreRoute
   '/en/termos': typeof EnTermosRoute
+  '/en/treino-hibrido': typeof EnTreinoHibridoRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
@@ -311,7 +363,9 @@ export interface FileRoutesById {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
+  '/es/treino-hibrido': typeof EsTreinoHibridoRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
 }
@@ -328,7 +382,9 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
+    | '/treino-hibrido'
     | '/en/app'
     | '/en/como-funciona'
     | '/en/comunidade'
@@ -338,7 +394,9 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/sobre'
     | '/en/termos'
+    | '/en/treino-hibrido'
     | '/es/app'
     | '/es/como-funciona'
     | '/es/comunidade'
@@ -348,7 +406,9 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
+    | '/es/treino-hibrido'
     | '/en/'
     | '/es/'
   fileRoutesByTo: FileRoutesByTo
@@ -363,7 +423,9 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
+    | '/treino-hibrido'
     | '/en/app'
     | '/en/como-funciona'
     | '/en/comunidade'
@@ -373,7 +435,9 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/sobre'
     | '/en/termos'
+    | '/en/treino-hibrido'
     | '/es/app'
     | '/es/como-funciona'
     | '/es/comunidade'
@@ -383,7 +447,9 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
+    | '/es/treino-hibrido'
     | '/en'
     | '/es'
   id:
@@ -398,7 +464,9 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
+    | '/treino-hibrido'
     | '/en/app'
     | '/en/como-funciona'
     | '/en/comunidade'
@@ -408,7 +476,9 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/sobre'
     | '/en/termos'
+    | '/en/treino-hibrido'
     | '/es/app'
     | '/es/como-funciona'
     | '/es/comunidade'
@@ -418,7 +488,9 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
+    | '/es/treino-hibrido'
     | '/en/'
     | '/es/'
   fileRoutesById: FileRoutesById
@@ -434,7 +506,9 @@ export interface RootRouteChildren {
   LojaRoute: typeof LojaRoute
   ParceirosDeTreinoRoute: typeof ParceirosDeTreinoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  SobreRoute: typeof SobreRoute
   TermosRoute: typeof TermosRoute
+  TreinoHibridoRoute: typeof TreinoHibridoRoute
   EnAppRoute: typeof EnAppRoute
   EnComoFuncionaRoute: typeof EnComoFuncionaRoute
   EnComunidadeRoute: typeof EnComunidadeRoute
@@ -444,7 +518,9 @@ export interface RootRouteChildren {
   EnLojaRoute: typeof EnLojaRoute
   EnParceirosDeTreinoRoute: typeof EnParceirosDeTreinoRoute
   EnPrivacidadeRoute: typeof EnPrivacidadeRoute
+  EnSobreRoute: typeof EnSobreRoute
   EnTermosRoute: typeof EnTermosRoute
+  EnTreinoHibridoRoute: typeof EnTreinoHibridoRoute
   EsAppRoute: typeof EsAppRoute
   EsComoFuncionaRoute: typeof EsComoFuncionaRoute
   EsComunidadeRoute: typeof EsComunidadeRoute
@@ -454,7 +530,9 @@ export interface RootRouteChildren {
   EsLojaRoute: typeof EsLojaRoute
   EsParceirosDeTreinoRoute: typeof EsParceirosDeTreinoRoute
   EsPrivacidadeRoute: typeof EsPrivacidadeRoute
+  EsSobreRoute: typeof EsSobreRoute
   EsTermosRoute: typeof EsTermosRoute
+  EsTreinoHibridoRoute: typeof EsTreinoHibridoRoute
   EnIndexRoute: typeof EnIndexRoute
   EsIndexRoute: typeof EsIndexRoute
 }
@@ -531,11 +609,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/termos': {
       id: '/termos'
       path: '/termos'
       fullPath: '/termos'
       preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/treino-hibrido': {
+      id: '/treino-hibrido'
+      path: '/treino-hibrido'
+      fullPath: '/treino-hibrido'
+      preLoaderRoute: typeof TreinoHibridoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/': {
@@ -608,11 +700,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnPrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/sobre': {
+      id: '/en/sobre'
+      path: '/en/sobre'
+      fullPath: '/en/sobre'
+      preLoaderRoute: typeof EnSobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/en/termos': {
       id: '/en/termos'
       path: '/en/termos'
       fullPath: '/en/termos'
       preLoaderRoute: typeof EnTermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/treino-hibrido': {
+      id: '/en/treino-hibrido'
+      path: '/en/treino-hibrido'
+      fullPath: '/en/treino-hibrido'
+      preLoaderRoute: typeof EnTreinoHibridoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/es/': {
@@ -685,11 +791,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsPrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/es/sobre': {
+      id: '/es/sobre'
+      path: '/es/sobre'
+      fullPath: '/es/sobre'
+      preLoaderRoute: typeof EsSobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/es/termos': {
       id: '/es/termos'
       path: '/es/termos'
       fullPath: '/es/termos'
       preLoaderRoute: typeof EsTermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/treino-hibrido': {
+      id: '/es/treino-hibrido'
+      path: '/es/treino-hibrido'
+      fullPath: '/es/treino-hibrido'
+      preLoaderRoute: typeof EsTreinoHibridoRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -706,7 +826,9 @@ const rootRouteChildren: RootRouteChildren = {
   LojaRoute: LojaRoute,
   ParceirosDeTreinoRoute: ParceirosDeTreinoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  SobreRoute: SobreRoute,
   TermosRoute: TermosRoute,
+  TreinoHibridoRoute: TreinoHibridoRoute,
   EnAppRoute: EnAppRoute,
   EnComoFuncionaRoute: EnComoFuncionaRoute,
   EnComunidadeRoute: EnComunidadeRoute,
@@ -716,7 +838,9 @@ const rootRouteChildren: RootRouteChildren = {
   EnLojaRoute: EnLojaRoute,
   EnParceirosDeTreinoRoute: EnParceirosDeTreinoRoute,
   EnPrivacidadeRoute: EnPrivacidadeRoute,
+  EnSobreRoute: EnSobreRoute,
   EnTermosRoute: EnTermosRoute,
+  EnTreinoHibridoRoute: EnTreinoHibridoRoute,
   EsAppRoute: EsAppRoute,
   EsComoFuncionaRoute: EsComoFuncionaRoute,
   EsComunidadeRoute: EsComunidadeRoute,
@@ -726,7 +850,9 @@ const rootRouteChildren: RootRouteChildren = {
   EsLojaRoute: EsLojaRoute,
   EsParceirosDeTreinoRoute: EsParceirosDeTreinoRoute,
   EsPrivacidadeRoute: EsPrivacidadeRoute,
+  EsSobreRoute: EsSobreRoute,
   EsTermosRoute: EsTermosRoute,
+  EsTreinoHibridoRoute: EsTreinoHibridoRoute,
   EnIndexRoute: EnIndexRoute,
   EsIndexRoute: EsIndexRoute,
 }

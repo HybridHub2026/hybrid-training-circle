@@ -30,6 +30,7 @@ export function Footer() {
           <Link to="/termos" className="hover:text-foreground"><T>{"Termos e Condições"}</T></Link>
           <Link to="/cookies" className="hover:text-foreground"><T>{"Cookies"}</T></Link>
           <Link to="/faq" className="hover:text-foreground"><T>{"FAQ"}</T></Link>
+          <Link to="/sobre" className="hover:text-foreground"><T>{"Sobre a Hybrid Hub"}</T></Link>
           <Link to="/contactos" className="hover:text-foreground"><T>{"Contacto"}</T></Link>
         </div>
         <div className="justify-self-end md:justify-self-start">
