@@ -11,6 +11,14 @@ vi.mock("@tanstack/react-router", () => ({
 afterEach(() => { cleanup(); locale.pathname = "/"; });
 
 describe("FAQ expansion rules", () => {
+  it("translates questions and answers into English", () => {
+    locale.pathname = "/en/faq";
+    render(<FaqAccordion />);
+    const question = screen.getByRole("button", { name: "WHAT IS HYBRID HUB?" });
+    fireEvent.click(question);
+    expect(question).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText(/Hybrid Hub is a platform that connects people/)).toBeVisible();
+  });
   it("translates questions and answers into Spanish while retaining the accordion", () => {
     locale.pathname = "/es/faq";
     render(<FaqAccordion />);
