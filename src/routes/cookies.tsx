@@ -19,12 +19,16 @@ export const Route = createFileRoute("/cookies")({
 });
 
 // Campo editável: atualizar sempre que a política for alterada.
-const LAST_UPDATED = "[DATA DA ÚLTIMA ATUALIZAÇÃO]";
+const LAST_UPDATED = "14/11/2026";
 
-// Verificação do código (website): não são definidos cookies, nem é usado
-// localStorage/sessionStorage, nem existem ferramentas de análise ou marketing.
-// Se isso mudar, atualizar a tabela abaixo e implementar o consentimento.
-const cookieRows: { name: string; purpose: string; entity: string; duration: string; category: string }[] = [];
+// Local storage is used only after the visitor explicitly chooses a language.
+const cookieRows = [{
+  name: "hybridhub-language (localStorage)",
+  purpose: "Guardar o idioma escolhido no seletor PT / ES / EN.",
+  entity: "Hybrid Hub",
+  duration: "Até alterar o idioma ou apagar os dados do site no navegador.",
+  category: "Preferência de idioma solicitada pelo visitante",
+}];
 
 function H({ n, children }: { n: number; children: ReactNode }) {
   return (
@@ -84,7 +88,7 @@ function CookiesPage() {
         <section>
           <H n={4}><T>{"Cookies efetivamente utilizados"}</T></H>
           <div>
-            <p><T>{"Após verificação do website, não foram identificados cookies nem outras tecnologias de armazenamento no dispositivo do visitante definidos pelo website da Hybrid Hub."}</T></p>
+            <p><T>{"O website utiliza localStorage apenas para guardar o idioma que o visitante escolhe no seletor PT / ES / EN. Na primeira visita ao endereço principal, sem uma escolha guardada, consulta os idiomas do navegador. A deteção automática não grava dados no dispositivo. Não são utilizados cookies de análise ou marketing."}</T></p>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[600px] border-collapse text-left text-sm">
                 <thead>

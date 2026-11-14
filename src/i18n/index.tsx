@@ -1,7 +1,9 @@
 import { createElement, type ComponentPropsWithoutRef, type JSX, type ReactNode } from "react";
 import { Link as RouterLink, useRouterState, type ParsedLocation } from "@tanstack/react-router";
 import spanish from "./es.json";
+import english from "./en.json";
 import { languageFromPath, localizedPath, type Language } from "./language";
+import { rememberLanguage } from "./preference";
 
 export function useLanguage(): Language {
   return useRouterState({ select: (state: { location: ParsedLocation }) => languageFromPath(state.location.pathname) });
@@ -10,7 +12,7 @@ export function useLanguage(): Language {
 export function translateText(text: string, language: Language): string {
   if (language === "pt") return text;
   const key = text.replace(/\s+/g, " ").trim();
-  const translation = (spanish as Record<string, string>)[key];
+  const translation = ((language === "en" ? english : spanish) as Record<string, string>)[key];
   if (translation === undefined) return text;
   return `${text.match(/^\s*/)?.[0] ?? ""}${translation}${text.match(/\s*$/)?.[0] ?? ""}`;
 }
@@ -49,19 +51,19 @@ export function LanguageSelector({ onChange }: { onChange?: () => void }) {
   const location = useRouterState({ select: (state: { location: ParsedLocation }) => state.location });
   const language = languageFromPath(location.pathname);
   return (
-    <nav aria-label="Idioma" className="flex shrink-0 items-center gap-1 text-[11px] font-semibold tracking-wider">
-      {(["pt", "es"] as const).map((option) => (
+    <nav aria-label={language === "en" ? "Language" : "Idioma"} className="flex shrink-0 items-center gap-0.5 text-[11px] font-semibold tracking-wider">
+      {(["pt", "es", "en"] as const).map((option) => (
         <RouterLink
           key={option}
           to={localizedPath(location.pathname, option) as "/"}
           hash={location.hash}
           search={location.search}
-          lang={option === "pt" ? "pt-PT" : "es"}
-          hrefLang={option === "pt" ? "pt-PT" : "es"}
-          aria-label={option === "pt" ? "Português" : "Español"}
+          lang={option === "pt" ? "pt-PT" : option}
+          hrefLang={option === "pt" ? "pt-PT" : option}
+          aria-label={option === "pt" ? "Português" : option === "es" ? "Español" : "English"}
           aria-current={option === language ? "true" : undefined}
-          onClick={onChange}
-          className={`flex min-h-10 min-w-9 items-center justify-center rounded-sm border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${option === language ? "border-primary/60 text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+          onClick={() => { rememberLanguage(option); onChange?.(); }}
+          className={`flex min-h-10 min-w-8 items-center justify-center rounded-sm border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${option === language ? "border-primary/60 text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
         >
           {option.toUpperCase()}
         </RouterLink>

@@ -1,17 +1,25 @@
 # Site languages
 
-Portuguese remains at the original URLs. Spanish uses `/es` and `/es/<page>`.
+Portuguese remains at the original URLs. Spanish uses `/es` and `/es/<page>`;
+English uses `/en` and `/en/<page>`.
 The selector preserves the page, search parameters and hash. Internal navigation
-stays in the selected language; no preference cookies or browser storage are used.
+stays in the selected language. Initial entry at `/` uses the saved manual choice,
+then the first supported browser language, with English as the fallback. Direct
+links to other pages retain their URL language. Detection runs once after hydration
+and replaces history, preserving the search parameters and hash.
+
+Explicit selector choices save only `pt`, `es` or `en` under `hybridhub-language`
+in localStorage. Automatic detection writes nothing. Storage failures never block
+navigation. The Cookie Policy documents this preference storage.
 
 Shared components render the Portuguese source through `T`. Add the corresponding
-Spanish text to `es.json` when adding or editing public copy. `Localized` handles
+Spanish and English text to `es.json` and `en.json` when adding or editing public copy. `Localized` handles
 image descriptions, input placeholders, accessible labels and regular anchors;
 the local `Link` wraps the router for translated destinations. Keep the brand slogan,
 addresses, product names and the app screenshots unchanged.
 
-Each Spanish route shares its original page component and metadata. `spanishHead`
-translates metadata and supplies a Spanish canonical plus reciprocal language
+Each translated route shares its original page component and metadata. `spanishHead`
+and `englishHead` translate metadata and supply a local canonical plus reciprocal language
 alternatives. New pages need both routes, translations and entries in the sitemap.
 
 Validation: `npm test`, `npm run build`, and, with the preview running,
