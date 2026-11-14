@@ -1,3 +1,4 @@
+import { languageAlternates } from "@/i18n/language";
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero, About, Features, HowItWorks, Community, AppShowcase, Shop, FinalCta } from "@/components/site/Sections";
 import logo from "@/assets/hybrid-hub-logo.png";
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Hybrid Hub | Corrida, HYROX e treino híbrido em Portugal" },
       { property: "og:description", content: "O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrar-se." },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/" }],
+    links: [...languageAlternates("/"), { rel: "canonical", href: "https://hybridhub.pt/" }],
     scripts: [{ type: "application/ld+json", children: structuredData }],
   }),
   component: () => (

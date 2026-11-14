@@ -20,6 +20,17 @@ import { Route as LojaRouteImport } from './routes/loja'
 import { Route as ParceirosDeTreinoRouteImport } from './routes/parceiros-de-treino'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as EsIndexRouteImport } from './routes/es.index'
+import { Route as EsAppRouteImport } from './routes/es.app'
+import { Route as EsComoFuncionaRouteImport } from './routes/es.como-funciona'
+import { Route as EsComunidadeRouteImport } from './routes/es.comunidade'
+import { Route as EsContactosRouteImport } from './routes/es.contactos'
+import { Route as EsCookiesRouteImport } from './routes/es.cookies'
+import { Route as EsFaqRouteImport } from './routes/es.faq'
+import { Route as EsLojaRouteImport } from './routes/es.loja'
+import { Route as EsParceirosDeTreinoRouteImport } from './routes/es.parceiros-de-treino'
+import { Route as EsPrivacidadeRouteImport } from './routes/es.privacidade'
+import { Route as EsTermosRouteImport } from './routes/es.termos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +87,61 @@ const TermosRoute = TermosRouteImport.update({
   path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsIndexRoute = EsIndexRouteImport.update({
+  id: '/es/',
+  path: '/es/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsAppRoute = EsAppRouteImport.update({
+  id: '/es/app',
+  path: '/es/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsComoFuncionaRoute = EsComoFuncionaRouteImport.update({
+  id: '/es/como-funciona',
+  path: '/es/como-funciona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsComunidadeRoute = EsComunidadeRouteImport.update({
+  id: '/es/comunidade',
+  path: '/es/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsContactosRoute = EsContactosRouteImport.update({
+  id: '/es/contactos',
+  path: '/es/contactos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsCookiesRoute = EsCookiesRouteImport.update({
+  id: '/es/cookies',
+  path: '/es/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsFaqRoute = EsFaqRouteImport.update({
+  id: '/es/faq',
+  path: '/es/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsLojaRoute = EsLojaRouteImport.update({
+  id: '/es/loja',
+  path: '/es/loja',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsParceirosDeTreinoRoute = EsParceirosDeTreinoRouteImport.update({
+  id: '/es/parceiros-de-treino',
+  path: '/es/parceiros-de-treino',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsPrivacidadeRoute = EsPrivacidadeRouteImport.update({
+  id: '/es/privacidade',
+  path: '/es/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsTermosRoute = EsTermosRouteImport.update({
+  id: '/es/termos',
+  path: '/es/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +155,17 @@ export interface FileRoutesByFullPath {
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
+  '/es/app': typeof EsAppRoute
+  '/es/como-funciona': typeof EsComoFuncionaRoute
+  '/es/comunidade': typeof EsComunidadeRoute
+  '/es/contactos': typeof EsContactosRoute
+  '/es/cookies': typeof EsCookiesRoute
+  '/es/faq': typeof EsFaqRoute
+  '/es/loja': typeof EsLojaRoute
+  '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
+  '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/termos': typeof EsTermosRoute
+  '/es/': typeof EsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +179,17 @@ export interface FileRoutesByTo {
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
+  '/es/app': typeof EsAppRoute
+  '/es/como-funciona': typeof EsComoFuncionaRoute
+  '/es/comunidade': typeof EsComunidadeRoute
+  '/es/contactos': typeof EsContactosRoute
+  '/es/cookies': typeof EsCookiesRoute
+  '/es/faq': typeof EsFaqRoute
+  '/es/loja': typeof EsLojaRoute
+  '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
+  '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/termos': typeof EsTermosRoute
+  '/es': typeof EsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +204,17 @@ export interface FileRoutesById {
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
+  '/es/app': typeof EsAppRoute
+  '/es/como-funciona': typeof EsComoFuncionaRoute
+  '/es/comunidade': typeof EsComunidadeRoute
+  '/es/contactos': typeof EsContactosRoute
+  '/es/cookies': typeof EsCookiesRoute
+  '/es/faq': typeof EsFaqRoute
+  '/es/loja': typeof EsLojaRoute
+  '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
+  '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/termos': typeof EsTermosRoute
+  '/es/': typeof EsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +230,17 @@ export interface FileRouteTypes {
     | '/parceiros-de-treino'
     | '/privacidade'
     | '/termos'
+    | '/es/app'
+    | '/es/como-funciona'
+    | '/es/comunidade'
+    | '/es/contactos'
+    | '/es/cookies'
+    | '/es/faq'
+    | '/es/loja'
+    | '/es/parceiros-de-treino'
+    | '/es/privacidade'
+    | '/es/termos'
+    | '/es/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +254,17 @@ export interface FileRouteTypes {
     | '/parceiros-de-treino'
     | '/privacidade'
     | '/termos'
+    | '/es/app'
+    | '/es/como-funciona'
+    | '/es/comunidade'
+    | '/es/contactos'
+    | '/es/cookies'
+    | '/es/faq'
+    | '/es/loja'
+    | '/es/parceiros-de-treino'
+    | '/es/privacidade'
+    | '/es/termos'
+    | '/es'
   id:
     | '__root__'
     | '/'
@@ -157,6 +278,17 @@ export interface FileRouteTypes {
     | '/parceiros-de-treino'
     | '/privacidade'
     | '/termos'
+    | '/es/app'
+    | '/es/como-funciona'
+    | '/es/comunidade'
+    | '/es/contactos'
+    | '/es/cookies'
+    | '/es/faq'
+    | '/es/loja'
+    | '/es/parceiros-de-treino'
+    | '/es/privacidade'
+    | '/es/termos'
+    | '/es/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +303,17 @@ export interface RootRouteChildren {
   ParceirosDeTreinoRoute: typeof ParceirosDeTreinoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   TermosRoute: typeof TermosRoute
+  EsAppRoute: typeof EsAppRoute
+  EsComoFuncionaRoute: typeof EsComoFuncionaRoute
+  EsComunidadeRoute: typeof EsComunidadeRoute
+  EsContactosRoute: typeof EsContactosRoute
+  EsCookiesRoute: typeof EsCookiesRoute
+  EsFaqRoute: typeof EsFaqRoute
+  EsLojaRoute: typeof EsLojaRoute
+  EsParceirosDeTreinoRoute: typeof EsParceirosDeTreinoRoute
+  EsPrivacidadeRoute: typeof EsPrivacidadeRoute
+  EsTermosRoute: typeof EsTermosRoute
+  EsIndexRoute: typeof EsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +395,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/es/': {
+      id: '/es/'
+      path: '/es'
+      fullPath: '/es/'
+      preLoaderRoute: typeof EsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/app': {
+      id: '/es/app'
+      path: '/es/app'
+      fullPath: '/es/app'
+      preLoaderRoute: typeof EsAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/como-funciona': {
+      id: '/es/como-funciona'
+      path: '/es/como-funciona'
+      fullPath: '/es/como-funciona'
+      preLoaderRoute: typeof EsComoFuncionaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/comunidade': {
+      id: '/es/comunidade'
+      path: '/es/comunidade'
+      fullPath: '/es/comunidade'
+      preLoaderRoute: typeof EsComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/contactos': {
+      id: '/es/contactos'
+      path: '/es/contactos'
+      fullPath: '/es/contactos'
+      preLoaderRoute: typeof EsContactosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/cookies': {
+      id: '/es/cookies'
+      path: '/es/cookies'
+      fullPath: '/es/cookies'
+      preLoaderRoute: typeof EsCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/faq': {
+      id: '/es/faq'
+      path: '/es/faq'
+      fullPath: '/es/faq'
+      preLoaderRoute: typeof EsFaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/loja': {
+      id: '/es/loja'
+      path: '/es/loja'
+      fullPath: '/es/loja'
+      preLoaderRoute: typeof EsLojaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/parceiros-de-treino': {
+      id: '/es/parceiros-de-treino'
+      path: '/es/parceiros-de-treino'
+      fullPath: '/es/parceiros-de-treino'
+      preLoaderRoute: typeof EsParceirosDeTreinoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/privacidade': {
+      id: '/es/privacidade'
+      path: '/es/privacidade'
+      fullPath: '/es/privacidade'
+      preLoaderRoute: typeof EsPrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/termos': {
+      id: '/es/termos'
+      path: '/es/termos'
+      fullPath: '/es/termos'
+      preLoaderRoute: typeof EsTermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +487,17 @@ const rootRouteChildren: RootRouteChildren = {
   ParceirosDeTreinoRoute: ParceirosDeTreinoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   TermosRoute: TermosRoute,
+  EsAppRoute: EsAppRoute,
+  EsComoFuncionaRoute: EsComoFuncionaRoute,
+  EsComunidadeRoute: EsComunidadeRoute,
+  EsContactosRoute: EsContactosRoute,
+  EsCookiesRoute: EsCookiesRoute,
+  EsFaqRoute: EsFaqRoute,
+  EsLojaRoute: EsLojaRoute,
+  EsParceirosDeTreinoRoute: EsParceirosDeTreinoRoute,
+  EsPrivacidadeRoute: EsPrivacidadeRoute,
+  EsTermosRoute: EsTermosRoute,
+  EsIndexRoute: EsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

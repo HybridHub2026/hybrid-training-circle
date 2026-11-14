@@ -1,14 +1,24 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
+const locale = vi.hoisted(() => ({ pathname: "/" }));
 
 vi.mock("@tanstack/react-router", () => ({
+  useRouterState: ({ select }: { select: (state: { location: { pathname: string } }) => unknown }) => select({ location: { pathname: locale.pathname } }),
   Link: ({ to, children, ...props }: { to: string; children: React.ReactNode }) => <a href={to} {...props}>{children}</a>,
 }));
 
-afterEach(cleanup);
+afterEach(() => { cleanup(); locale.pathname = "/"; });
 
 describe("FAQ expansion rules", () => {
+  it("translates questions and answers into Spanish while retaining the accordion", () => {
+    locale.pathname = "/es/faq";
+    render(<FaqAccordion />);
+    const question = screen.getByRole("button", { name: "¿QUÉ ES HYBRID HUB?" });
+    fireEvent.click(question);
+    expect(question).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText(/Hybrid Hub es una plataforma que conecta a las personas/)).toBeVisible();
+  });
   it("starts with every answer closed", () => {
     render(<FaqAccordion />);
     for (const question of screen.getAllByRole("button")) {

@@ -1,3 +1,4 @@
+import { languageAlternates } from "@/i18n/language";
 import { createFileRoute } from "@tanstack/react-router";
 import { HowItWorks, FinalCta } from "@/components/site/Sections";
 
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/como-funciona")({
       { property: "og:title", content: "Como funciona a Hybrid Hub | Treinos e parceiros" },
       { property: "og:description", content: "Explora oportunidades, liga-te a pessoas com interesses semelhantes e participa em treinos." },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/como-funciona" }],
+    links: [...languageAlternates("/como-funciona"), { rel: "canonical", href: "https://hybridhub.pt/como-funciona" }],
   }),
   component: () => (
     <div className="pt-8">

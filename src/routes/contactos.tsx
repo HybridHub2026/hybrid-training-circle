@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { languageAlternates } from "@/i18n/language";
+import { Link, T, Localized, useLanguage, translateText } from "@/i18n";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 
@@ -12,7 +14,7 @@ export const Route = createFileRoute("/contactos")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/contactos" }],
+    links: [...languageAlternates("/contactos"), { rel: "canonical", href: "https://hybridhub.pt/contactos" }],
   }),
   component: Contactos,
 });
@@ -39,6 +41,7 @@ const inputClass =
   "w-full rounded-sm border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none";
 
 function Contactos() {
+  const language = useLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -74,9 +77,10 @@ function Contactos() {
         body: JSON.stringify({
           nome: name.trim(),
           email: email.trim(),
-          assunto: subject,
+          idioma: language,
+          assunto: translateText(subject, language),
           mensagem: message.trim(),
-          privacidade: "Li a Política de Privacidade e compreendo que os meus dados serão utilizados para responder ao meu contacto.",
+          privacidade: translateText("Li a Política de Privacidade e compreendo que os meus dados serão utilizados para responder ao meu contacto.", language),
           enviado_em: new Date().toISOString(),
         }),
       });
@@ -99,48 +103,39 @@ function Contactos() {
   return (
     <section className="mx-auto max-w-7xl px-5 pb-24 pt-32 md:px-10 md:pt-40">
       {/* Cabeçalho */}
-      <p className="eyebrow">Contactos</p>
-      <h1 className="mt-6 text-5xl md:text-8xl">
-        FALA <span className="text-primary">CONNOSCO.</span>
+      <p className="eyebrow"><T>{"Contactos"}</T></p>
+      <h1 className="mt-6 text-5xl md:text-8xl"><T>{"FALA "}</T><span className="text-primary"><T>{"CONNOSCO."}</T></span>
       </h1>
-      <p className="mt-6 max-w-xl text-muted-foreground md:text-lg">
-        Tens alguma dúvida, sugestão ou queres saber mais sobre a Hybrid Hub? Estamos deste lado.
-      </p>
+      <p className="mt-6 max-w-xl text-muted-foreground md:text-lg"><T>{"Tens alguma dúvida, sugestão ou queres saber mais sobre a Hybrid Hub? Estamos deste lado."}</T></p>
 
       <div className="mt-16 grid gap-16 md:grid-cols-2">
         {/* Coluna esquerda — contactos oficiais */}
         <div>
-          <h2 className="text-2xl md:text-3xl">ESTAMOS À DISTÂNCIA DE UMA MENSAGEM.</h2>
+          <h2 className="text-2xl md:text-3xl"><T>{"ESTAMOS À DISTÂNCIA DE UMA MENSAGEM."}</T></h2>
           <div className="mt-10 flex flex-col gap-8">
             <div className="flex items-start gap-4">
               <Mail size={20} className="mt-1 shrink-0 text-primary" />
               <div>
-                <span className="eyebrow">Email</span>
-                <a href={`mailto:${EMAIL}`} className="mt-2 block text-lg hover:text-primary">
-                  {EMAIL}
-                </a>
+                <span className="eyebrow"><T>{"Email"}</T></span>
+                <Localized as="a" href={`mailto:${EMAIL}`} className="mt-2 block text-lg hover:text-primary">
+                  <T>{EMAIL}</T>
+                </Localized>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <Phone size={20} className="mt-1 shrink-0 text-primary" />
               <div>
-                <span className="eyebrow">Telefone</span>
-                <a href={PHONE_TEL} className="mt-2 block text-lg hover:text-primary">
-                  {PHONE_DISPLAY}
-                </a>
+                <span className="eyebrow"><T>{"Telefone"}</T></span>
+                <Localized as="a" href={PHONE_TEL} className="mt-2 block text-lg hover:text-primary">
+                  <T>{PHONE_DISPLAY}</T>
+                </Localized>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <MapPin size={20} className="mt-1 shrink-0 text-primary" />
               <div>
-                <span className="eyebrow">Morada</span>
-                <p className="mt-2 text-lg leading-relaxed text-muted-foreground">
-                  Rua Maria da Conceição Ramos de Araújo Jorge
-                  <br />
-                  4425-193 Maia
-                  <br />
-                  Portugal
-                </p>
+                <span className="eyebrow"><T>{"Morada"}</T></span>
+                <p className="mt-2 text-lg leading-relaxed text-muted-foreground"><T>{"Rua Maria da Conceição Ramos de Araújo Jorge"}</T><br /><T>{"4425-193 Maia"}</T><br /><T>{"Portugal"}</T></p>
               </div>
             </div>
           </div>
@@ -148,14 +143,12 @@ function Contactos() {
 
         {/* Coluna direita — formulário */}
         <div>
-          <h2 className="text-2xl md:text-3xl">ENVIA-NOS UMA MENSAGEM.</h2>
+          <h2 className="text-2xl md:text-3xl"><T>{"ENVIA-NOS UMA MENSAGEM."}</T></h2>
 
-          {status === "success" ? (
+          <T>{status === "success" ? (
             <div role="status" className="mt-10 rounded-sm border border-primary p-8">
-              <h3 className="text-xl text-primary">MENSAGEM ENVIADA!</h3>
-              <p className="mt-4 text-muted-foreground">
-                Obrigado pelo teu contacto. Recebemos a tua mensagem e responderemos assim que possível.
-              </p>
+              <h3 className="text-xl text-primary"><T>{"MENSAGEM ENVIADA!"}</T></h3>
+              <p className="mt-4 text-muted-foreground"><T>{"Obrigado pelo teu contacto. Recebemos a tua mensagem e responderemos assim que possível."}</T></p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="mt-10 flex flex-col gap-6">
@@ -163,8 +156,8 @@ function Contactos() {
               <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
               <div>
-                <label htmlFor="nome" className="eyebrow mb-2 block">Nome</label>
-                <input
+                <label htmlFor="nome" className="eyebrow mb-2 block"><T>{"Nome"}</T></label>
+                <Localized as="input"
                   id="nome"
                   type="text"
                   value={name}
@@ -173,12 +166,12 @@ function Contactos() {
                   maxLength={100}
                   className={inputClass}
                 />
-                {errors["name"] && <p className="mt-2 text-sm text-destructive">{errors["name"]}</p>}
+                <T>{errors["name"] && <p className="mt-2 text-sm text-destructive"><T>{errors["name"]}</T></p>}</T>
               </div>
 
               <div>
-                <label htmlFor="email" className="eyebrow mb-2 block">Email</label>
-                <input
+                <label htmlFor="email" className="eyebrow mb-2 block"><T>{"Email"}</T></label>
+                <Localized as="input"
                   id="email"
                   type="email"
                   value={email}
@@ -187,32 +180,30 @@ function Contactos() {
                   maxLength={255}
                   className={inputClass}
                 />
-                {errors["email"] && <p className="mt-2 text-sm text-destructive">{errors["email"]}</p>}
+                <T>{errors["email"] && <p className="mt-2 text-sm text-destructive"><T>{errors["email"]}</T></p>}</T>
               </div>
 
               <div>
-                <label htmlFor="assunto" className="eyebrow mb-2 block">Assunto</label>
+                <label htmlFor="assunto" className="eyebrow mb-2 block"><T>{"Assunto"}</T></label>
                 <select
                   id="assunto"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   className={`${inputClass} ${subject ? "" : "text-muted-foreground"}`}
                 >
-                  <option value="" disabled>
-                    Escolhe um assunto
-                  </option>
-                  {SUBJECTS.map((s) => (
+                  <option value="" disabled><T>{"Escolhe um assunto"}</T></option>
+                  <T>{SUBJECTS.map((s) => (
                     <option key={s} value={s}>
-                      {s}
+                      <T>{s}</T>
                     </option>
-                  ))}
+                  ))}</T>
                 </select>
-                {errors["subject"] && <p className="mt-2 text-sm text-destructive">{errors["subject"]}</p>}
+                <T>{errors["subject"] && <p className="mt-2 text-sm text-destructive"><T>{errors["subject"]}</T></p>}</T>
               </div>
 
               <div>
-                <label htmlFor="mensagem" className="eyebrow mb-2 block">Mensagem</label>
-                <textarea
+                <label htmlFor="mensagem" className="eyebrow mb-2 block"><T>{"Mensagem"}</T></label>
+                <Localized as="textarea"
                   id="mensagem"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -221,7 +212,7 @@ function Contactos() {
                   maxLength={2000}
                   className={`${inputClass} resize-y`}
                 />
-                {errors["message"] && <p className="mt-2 text-sm text-destructive">{errors["message"]}</p>}
+                <T>{errors["message"] && <p className="mt-2 text-sm text-destructive"><T>{errors["message"]}</T></p>}</T>
               </div>
 
               <div>
@@ -232,42 +223,32 @@ function Contactos() {
                     onChange={(e) => setConsent(e.target.checked)}
                     className="mt-1 h-4 w-4 shrink-0 accent-[#F5C518]"
                   />
-                  <span>
-                    Li a{" "}
-                    <Link to="/privacidade" className="text-primary underline underline-offset-2">
-                      Política de Privacidade
-                    </Link>{" "}
-                    e compreendo que os meus dados serão utilizados para responder ao meu contacto.
-                  </span>
+                  <span><T>{"Li a"}</T><T>{" "}</T>
+                    <Link to="/privacidade" className="text-primary underline underline-offset-2"><T>{"Política de Privacidade"}</T></Link><T>{" "}</T><T>{"e compreendo que os meus dados serão utilizados para responder ao meu contacto."}</T></span>
                 </label>
-                {errors["consent"] && <p className="mt-2 text-sm text-destructive">{errors["consent"]}</p>}
+                <T>{errors["consent"] && <p className="mt-2 text-sm text-destructive"><T>{errors["consent"]}</T></p>}</T>
               </div>
 
-              {status === "error" && (
+              <T>{status === "error" && (
                 <div role="alert" className="rounded-sm border border-destructive p-6">
-                  <h3 className="text-lg text-destructive">NÃO FOI POSSÍVEL ENVIAR A MENSAGEM.</h3>
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    Tenta novamente ou contacta-nos diretamente através do email{" "}
-                    <a href={`mailto:${EMAIL}`} className="text-primary underline underline-offset-2">
-                      {EMAIL}
-                    </a>
-                    .
-                  </p>
+                  <h3 className="text-lg text-destructive"><T>{"NÃO FOI POSSÍVEL ENVIAR A MENSAGEM."}</T></h3>
+                  <p className="mt-3 text-sm text-muted-foreground"><T>{"Tenta novamente ou contacta-nos diretamente através do email"}</T><T>{" "}</T>
+                    <Localized as="a" href={`mailto:${EMAIL}`} className="text-primary underline underline-offset-2">
+                      <T>{EMAIL}</T>
+                    </Localized><T>{"."}</T></p>
                 </div>
-              )}
+              )}</T>
 
               <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-60">
-                {status === "sending" ? "A ENVIAR…" : "ENVIAR MENSAGEM"}
+                <T>{status === "sending" ? "A ENVIAR…" : "ENVIAR MENSAGEM"}</T>
               </button>
             </form>
-          )}
+          )}</T>
         </div>
       </div>
 
       <div className="mt-24">
-        <Link to="/" className="text-sm text-muted-foreground hover:text-primary">
-          ← Voltar ao início
-        </Link>
+        <Link to="/" className="text-sm text-muted-foreground hover:text-primary"><T>{"← Voltar ao início"}</T></Link>
       </div>
     </section>
   );

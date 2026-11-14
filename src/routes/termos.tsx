@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { languageAlternates } from "@/i18n/language";
+import { Link, T } from "@/i18n";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/termos")({
   head: () => ({
@@ -10,7 +12,7 @@ export const Route = createFileRoute("/termos")({
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/termos" }],
+    links: [...languageAlternates("/termos"), { rel: "canonical", href: "https://hybridhub.pt/termos" }],
   }),
   component: TermosPage,
 });
@@ -98,39 +100,37 @@ function TermosPage() {
   return (
     <article className="mx-auto max-w-[850px] px-5 pb-24 pt-32 md:px-8 md:pt-40">
       <header>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl">TERMOS E CONDIÇÕES</h1>
-        <p className="mt-4 text-sm text-muted-foreground">HYBRID HUB | TRAIN • CONNECT • COMPETE</p>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl"><T>{"TERMOS E CONDIÇÕES"}</T></h1>
+        <p className="mt-4 text-sm text-muted-foreground"><T>{"HYBRID HUB | TRAIN • CONNECT • COMPETE"}</T></p>
         <div className="mt-8 h-px w-24 bg-primary" aria-hidden="true" />
       </header>
 
       <div className="mt-12 space-y-12">
-        {sections.map((s, i) => (
+        <T>{sections.map((s, i) => (
           <section key={s.heading}>
             <h2 className="text-lg font-bold uppercase tracking-normal md:text-xl">
-              <span className="mr-2 text-primary">{String(i + 1).padStart(2, "0")} —</span>
-              {s.heading}
+              <span className="mr-2 text-primary"><T>{String(i + 1).padStart(2, "0")}</T><T>{" —"}</T></span>
+              <T>{s.heading}</T>
             </h2>
             <div className="mt-4 space-y-4 leading-relaxed text-muted-foreground">
-              {s.body.map((b, j) =>
+              <T>{s.body.map((b, j) =>
                 typeof b === "string" ? (
-                  <p key={j}>{b}</p>
+                  <p key={j}><T>{b}</T></p>
                 ) : (
                   <ul key={j} className="list-disc space-y-1 pl-6 marker:text-primary">
-                    {b.list.map((li) => (
-                      <li key={li}>{li}</li>
-                    ))}
+                    <T>{b.list.map((li) => (
+                      <li key={li}><T>{li}</T></li>
+                    ))}</T>
                   </ul>
                 ),
-              )}
+              )}</T>
             </div>
           </section>
-        ))}
+        ))}</T>
       </div>
 
       <div className="mt-16 border-t border-border pt-8">
-        <Link to="/" className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-          ← Voltar ao início
-        </Link>
+        <Link to="/" className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"><T>{"← Voltar ao início"}</T></Link>
       </div>
     </article>
   );

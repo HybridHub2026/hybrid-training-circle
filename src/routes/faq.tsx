@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { languageAlternates } from "@/i18n/language";
+import { Link, T } from "@/i18n";
+import { createFileRoute } from "@tanstack/react-router";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { Button } from "@/components/ui/button";
 
@@ -12,22 +14,21 @@ export const Route = createFileRoute("/faq")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/faq" }],
+    links: [...languageAlternates("/faq"), { rel: "canonical", href: "https://hybridhub.pt/faq" }],
   }),
   component: () => (
     <section className="mx-auto max-w-5xl px-5 pb-24 pt-32 md:px-10 md:pt-40">
       <header className="mb-14 md:mb-20">
-        <h1 className="text-3xl leading-tight tracking-normal sm:text-5xl lg:text-6xl">
-          PERGUNTAS<br /><span className="text-primary">FREQUENTES.</span>
+        <h1 className="text-3xl leading-tight tracking-normal sm:text-5xl lg:text-6xl"><T>{"PERGUNTAS"}</T><br /><span className="text-primary"><T>{"FREQUENTES."}</T></span>
         </h1>
-        <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">Tudo o que precisas de saber sobre a Hybrid Hub.</p>
+        <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg"><T>{"Tudo o que precisas de saber sobre a Hybrid Hub."}</T></p>
       </header>
       <FaqAccordion />
       <div className="mt-20 border-t border-border pt-12">
-        <h2 className="text-xl leading-tight tracking-normal md:text-2xl">NÃO ENCONTRASTE A TUA RESPOSTA?</h2>
-        <p className="mt-4 text-muted-foreground">Estamos disponíveis para ajudar.</p>
+        <h2 className="text-xl leading-tight tracking-normal md:text-2xl"><T>{"NÃO ENCONTRASTE A TUA RESPOSTA?"}</T></h2>
+        <p className="mt-4 text-muted-foreground"><T>{"Estamos disponíveis para ajudar."}</T></p>
         <Button asChild size="lg" className="mt-7 h-auto px-7 py-4 font-semibold">
-          <Link to="/contactos">FALA CONNOSCO</Link>
+          <Link to="/contactos"><T>{"FALA CONNOSCO"}</T></Link>
         </Button>
       </div>
     </section>

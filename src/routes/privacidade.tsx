@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { languageAlternates } from "@/i18n/language";
+import { Link, T } from "@/i18n";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
@@ -11,7 +13,7 @@ export const Route = createFileRoute("/privacidade")({
       { property: "og:url", content: "https://hybridhub.pt/privacidade" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/privacidade" }],
+    links: [...languageAlternates("/privacidade"), { rel: "canonical", href: "https://hybridhub.pt/privacidade" }],
   }),
   component: PrivacidadePage,
 });
@@ -173,15 +175,15 @@ const sections: { heading: string; body: string[] }[] = [
 
 function PolicyText({ text }: { text: string }) {
   const parts = text.split(MARK);
-  if (parts.length === 1) return <>{text}</>;
+  if (parts.length === 1) return <><T>{text}</T></>;
   return (
     <>
-      {parts.map((part, i) => (
+      <T>{parts.map((part, i) => (
         <span key={i}>
-          {part}
-          {i < parts.length - 1 && <span className="font-medium text-primary">{MARK}</span>}
+          <T>{part}</T>
+          <T>{i < parts.length - 1 && <span className="font-medium text-primary"><T>{MARK}</T></span>}</T>
         </span>
-      ))}
+      ))}</T>
     </>
   );
 }
@@ -190,33 +192,31 @@ function PrivacidadePage() {
   return (
     <article className="mx-auto max-w-[850px] px-5 pb-24 pt-32 md:px-8 md:pt-40">
       <header>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl">POLÍTICA DE PRIVACIDADE</h1>
-        <p className="mt-4 text-sm text-muted-foreground">Hybrid Hub | Train • Connect • Compete</p>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl"><T>{"POLÍTICA DE PRIVACIDADE"}</T></h1>
+        <p className="mt-4 text-sm text-muted-foreground"><T>{"Hybrid Hub | Train • Connect • Compete"}</T></p>
         <div className="mt-8 h-px w-24 bg-primary" aria-hidden="true" />
       </header>
 
       <div className="mt-12 space-y-12">
-        {sections.map((s, i) => (
+        <T>{sections.map((s, i) => (
           <section key={s.heading}>
             <h2 className="text-lg font-bold tracking-normal md:text-xl">
-              <span className="mr-2 text-primary">{i + 1}.</span>
-              {s.heading}
+              <span className="mr-2 text-primary"><T>{i + 1}</T><T>{"."}</T></span>
+              <T>{s.heading}</T>
             </h2>
             <div className="mt-4 space-y-4 leading-relaxed text-muted-foreground">
-              {s.body.map((p, j) => (
+              <T>{s.body.map((p, j) => (
                 <p key={j}>
                   <PolicyText text={p} />
                 </p>
-              ))}
+              ))}</T>
             </div>
           </section>
-        ))}
+        ))}</T>
       </div>
 
       <div className="mt-16 border-t border-border pt-8">
-        <Link to="/" className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-          ← Voltar ao início
-        </Link>
+        <Link to="/" className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"><T>{"← Voltar ao início"}</T></Link>
       </div>
     </article>
   );

@@ -1,3 +1,4 @@
+import { languageAlternates } from "@/i18n/language";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShowcase, Features } from "@/components/site/Sections";
 import { LaunchNotice } from "@/components/site/LaunchNotice";
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/app")({
       { property: "og:title", content: "App Hybrid Hub | Parceiros de treino e provas" },
       { property: "og:description", content: "Conhece a app Hybrid Hub e descobre pessoas, treinos, provas e comunidades." },
     ],
-    links: [{ rel: "canonical", href: "https://hybridhub.pt/app" }],
+    links: [...languageAlternates("/app"), { rel: "canonical", href: "https://hybridhub.pt/app" }],
   }),
   component: () => (
     <div className="pt-8">
