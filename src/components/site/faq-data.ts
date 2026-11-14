@@ -137,7 +137,9 @@ export const faqGroups = [
         "question": "POSSO VENDER O MEU BILHETE SE JÁ NÃO FOR A UMA PROVA?",
         "paragraphs": [
           "Sim. Na app vais poder anunciar o teu bilhete para encontrar alguém interessado.",
-          "Ao criar o anúncio, indicas o tipo de prova, o tipo de bilhete, o local e a data da prova, a data-limite para transferir a inscrição e o valor de venda."
+          "Ao criar o anúncio, indicas o tipo de prova, o tipo de bilhete, o local e a data da prova, a data-limite para transferir a inscrição e o valor de venda.",
+          "A Hybrid Hub atua apenas como intermediária, criando a ligação entre vendedor e comprador. Não cobra comissões nem obtém qualquer ganho com a venda do bilhete.",
+          "O acordo de venda, o pagamento e a transferência da inscrição ficam a cargo dos atletas envolvidos, que tratam de tudo diretamente entre si. A app não realiza nem gere essa transação."
         ]
       },
       {
