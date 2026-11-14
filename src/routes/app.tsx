@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShowcase, Features } from "@/components/site/Sections";
+import { LaunchNotice } from "@/components/site/LaunchNotice";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/app")({
   component: () => (
     <div className="pt-8">
       <AppShowcase headingLevel={1} />
+      <LaunchNotice />
       <Features />
     </div>
   ),

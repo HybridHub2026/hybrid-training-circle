@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { LaunchNotice } from "./LaunchNotice";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
 import train from "@/assets/hybrid-hub-community-sunset.png";
@@ -22,13 +23,13 @@ export function Hero() {
           TRAIN•<br /><span className="text-primary">CONNECT•</span><br />COMPETE
         </h1>
         <p className="mt-6 max-w-xl text-lg font-medium md:text-xl">
-          O desporto aproxima pessoas. A Hybrid Hub ajuda-as a encontrarem-se.
+          Encontra companhia para correr, treinar e preparar a tua próxima prova.
         </p>
         <p className="mt-3 max-w-xl text-muted-foreground">
-          Encontra parceiros, descobre treinos, explora provas e faz parte de uma comunidade que partilha a tua paixão pelo desporto.
+          Para quem está a começar ou já treina. A app Hybrid Hub está em preparação para iOS e Android.
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-          <Link to="/app" className="btn-primary">Descobre a Hybrid Hub <ArrowRight size={16} /></Link>
+          <a href="#aviso-lancamento" className="btn-primary">Avisem-me no lançamento <ArrowRight size={16} /></a>
           <Link to="/como-funciona" className="btn-ghost">Como funciona</Link>
         </div>
       </div>
@@ -164,6 +165,8 @@ export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <p className="mt-6 text-muted-foreground md:text-lg">
           Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>
+        <p className="mt-4 text-sm text-muted-foreground">A app está em preparação para iOS e Android.</p>
+        <a href="#aviso-lancamento" className="btn-primary mt-5">Avisem-me no lançamento <ArrowRight size={16} /></a>
       </div>
       <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
         {[1, 2, 3].map((i) => (
@@ -205,13 +208,7 @@ export function Shop() {
 }
 
 export function FinalCta() {
-  return (
-    <section className={`py-10 text-center md:py-24 ${wrap}`}>
-      <h2 className="mx-auto max-w-5xl text-3xl md:text-5xl">A PRÓXIMA LIGAÇÃO <span className="text-primary">COMEÇA AQUI.</span></h2>
-      <p className="mt-6 text-muted-foreground md:text-lg">Descobre novas pessoas, novos treinos e novas oportunidades.</p>
-      <Link to="/app" className="btn-primary mt-12">Descobre a app</Link>
-    </section>
-  );
+  return <LaunchNotice />;
 }
 
 export function PageTop({ eyebrow, title }: { eyebrow: string; title: string }) {

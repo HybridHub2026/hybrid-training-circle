@@ -107,6 +107,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Prestadores de serviços e transferências internacionais",
     body: [
+      "Para recolher os pedidos de aviso de lançamento da app no website, utilizamos o Formspree, que recebe e guarda o endereço de email e o registo do consentimento fornecido no formulário.",
       "Para o funcionamento da aplicação, a Hybrid Hub recorre a prestadores de serviços tecnológicos (por exemplo, alojamento, envio de SMS e análise de utilização).",
       "Caso algum destes prestadores implique a transferência de dados pessoais para fora do Espaço Económico Europeu, essa transferência será efetuada apenas com as garantias adequadas previstas no Regulamento Geral sobre a Proteção de Dados (RGPD).",
     ],
@@ -128,6 +129,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Prazos de conservação",
     body: [
+      "Os endereços de email recolhidos para o aviso de lançamento são utilizados apenas para esse aviso e conservados até ao seu envio ou à retirada do consentimento, sendo depois eliminados. O consentimento pode ser retirado através de hybridhubadmin@gmail.com.",
       "Os dados pessoais são conservados apenas durante o período necessário às finalidades para que foram recolhidos. Em regra, os dados da conta são mantidos enquanto a conta estiver ativa.",
       "Após um pedido de eliminação da conta, os dados associados são apagados no prazo indicado no ponto 17. Os dados cuja conservação seja exigida por lei ou necessária para o exercício ou defesa de direitos são mantidos apenas durante o prazo aplicável e depois eliminados ou anonimizados.",
     ],
