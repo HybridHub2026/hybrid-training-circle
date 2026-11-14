@@ -181,8 +181,12 @@ export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <Localized as="a" href="#aviso-lancamento" className="btn-primary mt-5"><T>{"Avisem-me no lançamento "}</T><ArrowRight size={16} /></Localized>
       </div>
       <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
-        <T>{[1, 2, 3].map((i) => (
-          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1 : i === 2 ? appScreen2 : appScreen3} />
+        <T>{[
+          { src: appScreen1, label: "Ecrã de boas-vindas da app Hybrid Hub com opções para entrar ou explorar como convidado" },
+          { src: appScreen2, label: "Ecrã da app Hybrid Hub com opções para criar uma oportunidade ou encontrar parceiro, prova e coach" },
+          { src: appScreen3, label: "Formulário Criar Oportunidade da app Hybrid Hub, com treino híbrido selecionado e campos de descrição e local" },
+        ].map(({ src, label }) => (
+          <PhoneSlot key={src} label={label} src={src} />
         ))}</T>
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
