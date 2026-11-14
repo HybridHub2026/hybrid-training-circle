@@ -1,4 +1,4 @@
-import { Link, Localized, T, LanguageSelector } from "@/i18n";
+import { Link, Localized, T, LanguageSelector, useLanguage, translateText } from "@/i18n";
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -16,10 +16,25 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const language = useLanguage();
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 min-[360px]:px-4 md:px-10">
-        <Link to="/" className="flex min-w-0 shrink items-center gap-1 md:gap-3" onClick={() => setOpen(false)}>
+        <Link
+          to="/"
+          hash=""
+          search={{}}
+          resetScroll
+          aria-label={translateText("Voltar ao início", language)}
+          title={translateText("Voltar ao início", language)}
+          className="flex min-w-0 shrink cursor-pointer items-center gap-1 rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary md:gap-3"
+          onClick={(event) => {
+            setOpen(false);
+            if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+              window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            }
+          }}
+        >
           <Logo />
           <Localized as="img" src={wordmark} alt="Hybrid Hub" className="h-auto w-[84px] min-[360px]:w-[104px] sm:w-[160px] lg:w-[138px] xl:w-[160px]" width={1920} height={500} />
         </Link>
