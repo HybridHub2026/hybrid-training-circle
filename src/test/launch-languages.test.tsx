@@ -17,7 +17,7 @@ it("submits English consent and confirms success in English", async () => {
   fireEvent.change(screen.getByLabelText("Your email"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
   fireEvent.click(screen.getByRole("button", { name: "Notify me at launch" }));
-  await waitFor(() => expect(screen.getByText("Your request has been received!")).toBeVisible());
+  await waitFor(() => expect(screen.getByText("We've received your request!")).toBeVisible());
   expect(fetch.mock.calls[0]?.[0]).toBe("https://formspree.io/f/mwlovnjz");
   const payload = JSON.parse(fetch.mock.calls[0]?.[1].body);
   expect(payload).toMatchObject({ email: "locale-test@example.com", idioma: "en" });
