@@ -28,22 +28,22 @@ it("submits the Spanish consent to the existing launch form and confirms success
   const fetch = vi.fn().mockResolvedValue({ ok: true });
   vi.stubGlobal("fetch", fetch);
   render(<LaunchNotice />);
-  fireEvent.change(screen.getByLabelText("Tu email"), { target: { value: "locale-test@example.com" } });
+  fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
   fireEvent.click(screen.getByRole("button", { name: "Avísame del lanzamiento" }));
   await waitFor(() => expect(screen.getByText("¡Hemos recibido tu solicitud!")).toBeVisible());
   expect(fetch.mock.calls[0]?.[0]).toBe("https://formspree.io/f/mwlovnjz");
   const payload = JSON.parse(fetch.mock.calls[0]?.[1].body);
   expect(payload).toMatchObject({ email: "locale-test@example.com", idioma: "es" });
-  expect(payload.consentimento).toMatch(/^Quiero recibir por email/);
+  expect(payload.consentimento).toMatch(/^Quiero recibir por correo electrónico/);
 });
 
 it("shows Spanish failure feedback without clearing the email", async () => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
   render(<LaunchNotice />);
-  fireEvent.change(screen.getByLabelText("Tu email"), { target: { value: "locale-test@example.com" } });
+  fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
   fireEvent.click(screen.getByRole("button", { name: "Avísame del lanzamiento" }));
   await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("No se ha podido enviar la solicitud."));
-  expect(screen.getByLabelText("Tu email")).toHaveValue("locale-test@example.com");
+  expect(screen.getByLabelText("Tu correo electrónico")).toHaveValue("locale-test@example.com");
 });
