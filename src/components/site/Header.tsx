@@ -6,8 +6,8 @@ import wordmark from "@/assets/hybrid-hub-wordmark.webp";
 
 const nav = [
   { to: "/", label: "Início" },
-  { to: "/app", label: "A app" },
   { to: "/como-funciona", label: "Como funciona" },
+  { to: "/app", label: "A app" },
   { to: "/comunidade", label: "Comunidade" },
   { to: "/loja", label: "Loja" },
   { to: "/contactos", label: "Contactos" },
