@@ -1,16 +1,11 @@
-import { Link, Localized, T } from "@/i18n";
+import { Link, Localized, T, useLanguage } from "@/i18n";
 
 import { useState, type UIEvent } from "react";
 import { LaunchNotice } from "./LaunchNotice";
 import { Users, Dumbbell, Trophy, Ticket, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
 import train from "@/assets/hybrid-hub-community-sunset.png";
-import appScreen1 from "@/assets/app-ecra-1.jpg";
-import appScreen2 from "@/assets/app-ecra-2.png";
-import appScreen3 from "@/assets/app-ecra-3.png";
-import exploreScreen from "@/assets/app-explorar-foz.png";
-import ligateScreen from "@/assets/app-ligate.png";
-import treinaScreen from "@/assets/treino-lisboa-03.png";
+import { appScreens } from "./app-screens";
 import merch from "@/assets/hybrid-hub-em-breve.png";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
@@ -101,6 +96,7 @@ const steps = [
 ];
 
 export function HowItWorks({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const screens = appScreens[useLanguage()];
   const Heading = headingLevel === 1 ? "h1" : "h2";
   const [activeStep, setActiveStep] = useState(0);
   function updateProgress(event: UIEvent<HTMLDivElement>) {
@@ -130,7 +126,7 @@ export function HowItWorks({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
             <span className="text-5xl font-extrabold text-primary"><T>{s.n}</T></span>
             <h3 className="mt-4 text-3xl"><T>{s.title}</T></h3>
             <p className="mt-3 min-h-12 text-muted-foreground"><T>{s.text}</T></p>
-            <div className="mt-6"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : s.n === "02" ? ligateScreen : treinaScreen} /></div>
+            <div className="mt-6"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? screens.explore : s.n === "02" ? screens.partners : screens.training} /></div>
           </div>
         ))}</T>
       </Localized>
@@ -170,6 +166,7 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
 }
 
 export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const screens = appScreens[useLanguage()];
   const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <section className={`py-8 md:py-10 ${wrap}`}>
@@ -182,7 +179,7 @@ export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
       </div>
       <div className="mt-10 flex snap-x gap-6 overflow-x-auto pb-4 md:mt-8 md:grid md:grid-cols-3 md:overflow-visible">
         <T>{[1, 2, 3].map((i) => (
-          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? appScreen1 : i === 2 ? appScreen2 : appScreen3} />
+          <PhoneSlot key={i} label={i === 1 ? "Ecrã de boas-vindas da app Hybrid Hub" : `Captura de ecrã ${i}`} src={i === 1 ? screens.welcome : i === 2 ? screens.actions : screens.create} />
         ))}</T>
       </div>
       {/* Espaço para os botões oficiais das lojas, quando a app estiver disponível. */}
