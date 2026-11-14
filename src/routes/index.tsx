@@ -21,6 +21,7 @@ const structuredData = JSON.stringify({
       url: siteUrl,
       logo: new URL(logo, siteUrl).toString(),
       sameAs: ["https://www.instagram.com/hybridhub.app/"],
+      founder: { "@type": "Person", name: "Tiago Passos" },
     },
   ],
 });

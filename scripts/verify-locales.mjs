@@ -2,7 +2,7 @@ import { JSDOM } from "jsdom";
 import fs from "node:fs";
 import assert from "node:assert/strict";
 const origin = process.argv[2] || "http://127.0.0.1:8081";
-const paths = ["/", "/app", "/como-funciona", "/comunidade", "/loja", "/faq", "/contactos", "/privacidade", "/termos", "/cookies", "/parceiros-de-treino"];
+const paths = ["/", "/app", "/como-funciona", "/comunidade", "/sobre", "/loja", "/faq", "/contactos", "/privacidade", "/termos", "/cookies", "/parceiros-de-treino"];
 const catalogue = JSON.parse(fs.readFileSync("src/i18n/es.json", "utf8"));
 const untranslated = new Set();
 for (const path of paths) {
@@ -33,4 +33,4 @@ for (const path of paths) {
   }
 }
 assert.equal(untranslated.size, 0, [...untranslated].join("\n"));
-console.log("Verified 22 pages: server-rendered content, language, canonicals and navigation.");
+console.log(`Verified ${paths.length * 2} pages: server-rendered content, language, canonicals and navigation.`);

@@ -19,6 +19,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as ParceirosDeTreinoRouteImport } from './routes/parceiros-de-treino'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as EsIndexRouteImport } from './routes/es.index'
 import { Route as EsAppRouteImport } from './routes/es.app'
@@ -30,6 +31,7 @@ import { Route as EsFaqRouteImport } from './routes/es.faq'
 import { Route as EsLojaRouteImport } from './routes/es.loja'
 import { Route as EsParceirosDeTreinoRouteImport } from './routes/es.parceiros-de-treino'
 import { Route as EsPrivacidadeRouteImport } from './routes/es.privacidade'
+import { Route as EsSobreRouteImport } from './routes/es.sobre'
 import { Route as EsTermosRouteImport } from './routes/es.termos'
 
 const IndexRoute = IndexRouteImport.update({
@@ -80,6 +82,11 @@ const ParceirosDeTreinoRoute = ParceirosDeTreinoRouteImport.update({
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermosRoute = TermosRouteImport.update({
@@ -137,6 +144,11 @@ const EsPrivacidadeRoute = EsPrivacidadeRouteImport.update({
   path: '/es/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsSobreRoute = EsSobreRouteImport.update({
+  id: '/es/sobre',
+  path: '/es/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EsTermosRoute = EsTermosRouteImport.update({
   id: '/es/termos',
   path: '/es/termos',
@@ -154,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
@@ -164,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
   '/es/': typeof EsIndexRoute
 }
@@ -178,6 +192,7 @@ export interface FileRoutesByTo {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
@@ -188,6 +203,7 @@ export interface FileRoutesByTo {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
   '/es': typeof EsIndexRoute
 }
@@ -203,6 +219,7 @@ export interface FileRoutesById {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/es/app': typeof EsAppRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
@@ -213,6 +230,7 @@ export interface FileRoutesById {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/sobre': typeof EsSobreRoute
   '/es/termos': typeof EsTermosRoute
   '/es/': typeof EsIndexRoute
 }
@@ -229,6 +247,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
     | '/es/app'
     | '/es/como-funciona'
@@ -239,6 +258,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
     | '/es/'
   fileRoutesByTo: FileRoutesByTo
@@ -253,6 +273,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
     | '/es/app'
     | '/es/como-funciona'
@@ -263,6 +284,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
     | '/es'
   id:
@@ -277,6 +299,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/sobre'
     | '/termos'
     | '/es/app'
     | '/es/como-funciona'
@@ -287,6 +310,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/sobre'
     | '/es/termos'
     | '/es/'
   fileRoutesById: FileRoutesById
@@ -302,6 +326,7 @@ export interface RootRouteChildren {
   LojaRoute: typeof LojaRoute
   ParceirosDeTreinoRoute: typeof ParceirosDeTreinoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  SobreRoute: typeof SobreRoute
   TermosRoute: typeof TermosRoute
   EsAppRoute: typeof EsAppRoute
   EsComoFuncionaRoute: typeof EsComoFuncionaRoute
@@ -312,6 +337,7 @@ export interface RootRouteChildren {
   EsLojaRoute: typeof EsLojaRoute
   EsParceirosDeTreinoRoute: typeof EsParceirosDeTreinoRoute
   EsPrivacidadeRoute: typeof EsPrivacidadeRoute
+  EsSobreRoute: typeof EsSobreRoute
   EsTermosRoute: typeof EsTermosRoute
   EsIndexRoute: typeof EsIndexRoute
 }
@@ -386,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/termos': {
@@ -465,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsPrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/es/sobre': {
+      id: '/es/sobre'
+      path: '/es/sobre'
+      fullPath: '/es/sobre'
+      preLoaderRoute: typeof EsSobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/es/termos': {
       id: '/es/termos'
       path: '/es/termos'
@@ -486,6 +526,7 @@ const rootRouteChildren: RootRouteChildren = {
   LojaRoute: LojaRoute,
   ParceirosDeTreinoRoute: ParceirosDeTreinoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  SobreRoute: SobreRoute,
   TermosRoute: TermosRoute,
   EsAppRoute: EsAppRoute,
   EsComoFuncionaRoute: EsComoFuncionaRoute,
@@ -496,6 +537,7 @@ const rootRouteChildren: RootRouteChildren = {
   EsLojaRoute: EsLojaRoute,
   EsParceirosDeTreinoRoute: EsParceirosDeTreinoRoute,
   EsPrivacidadeRoute: EsPrivacidadeRoute,
+  EsSobreRoute: EsSobreRoute,
   EsTermosRoute: EsTermosRoute,
   EsIndexRoute: EsIndexRoute,
 }

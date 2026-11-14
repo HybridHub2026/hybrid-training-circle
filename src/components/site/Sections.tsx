@@ -42,6 +42,7 @@ export function About({ compact = false }: { compact?: boolean }) {
         <h2 className="mt-4 text-3xl md:text-5xl"><T>{"MAIS DO QUE "}</T><span className="text-primary"><T>{"TREINAR."}</T></span></h2>
         <p className="mt-6 text-muted-foreground md:text-lg"><T>{"Nem sempre é fácil encontrar alguém com quem treinar ou participar numa prova. A Hybrid Hub nasceu para aproximar pessoas que partilham interesses, objetivos e a vontade de praticar desporto."}</T></p>
         <p className="mt-4 text-muted-foreground md:text-lg"><T>{"Não organizamos todos os treinos nem todos os eventos — ajudamos-te a encontrar as pessoas e as oportunidades certas."}</T></p>
+        <Link to="/sobre" className="btn-ghost mt-8"><T>{"Conhece a Hybrid Hub"}</T></Link>
       </div>
     </section>
   );
