@@ -20,7 +20,7 @@ export function HybridTrainingGuide() {
     <article className="mx-auto max-w-5xl px-5 pb-24 pt-32 md:px-10 md:pt-40">
       <header className="max-w-3xl">
         <p className="eyebrow"><T>{"Guia de treino"}</T></p>
-        <h1 className="mt-5 text-4xl md:text-6xl"><T>{"TREINO HÍBRIDO: "}</T><span className="text-primary"><T>{"O QUE É E COMO COMEÇAR"}</T></span></h1>
+        <h1 className="mt-5 text-4xl md:text-6xl"><T>{"TREINO HÍBRIDO:"}</T>{" "}<span className="text-primary"><T>{"O QUE É E COMO COMEÇAR"}</T></span></h1>
         <p className="mt-6 text-muted-foreground md:text-lg"><T>{"Treino híbrido é uma forma de combinar corrida ou outro trabalho de resistência com exercícios de força. Pode servir para variar a rotina, desenvolver capacidades diferentes ou preparar uma prova. O ponto de partida é perceber o teu objetivo e adaptar as sessões à tua experiência."}</T></p>
         <p className="mt-5 text-sm text-muted-foreground"><T>{"Guia editorial da Hybrid Hub. Conhece o fundador, Tiago Passos, personal trainer há mais de 15 anos, na página"}</T>{" "}<Link to="/sobre" className="text-primary underline underline-offset-4"><T>{"Sobre a Hybrid Hub"}</T></Link>.</p>
       </header>
