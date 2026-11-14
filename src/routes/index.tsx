@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hero, About, Features, HowItWorks, Community, AppShowcase, Shop, FinalCta } from "@/components/site/Sections";
+import { Hero, About, HowItWorks, Community, Shop, FinalCta } from "@/components/site/Sections";
 import logo from "@/assets/hybrid-hub-logo.png";
 
 const siteUrl = "https://hybridhub.pt/";
@@ -39,10 +39,8 @@ export const Route = createFileRoute("/")({
     <>
       <Hero />
       <About />
-      <Features />
       <HowItWorks />
       <Community />
-      <AppShowcase />
       <Shop />
       <FinalCta />
     </>
