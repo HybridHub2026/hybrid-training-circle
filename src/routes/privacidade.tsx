@@ -107,7 +107,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Prestadores de serviços e transferências internacionais",
     body: [
-      "Para recolher os pedidos de aviso de lançamento da app no website, utilizamos o Formspree, que recebe e guarda o endereço de email e o registo do consentimento fornecido no formulário.",
+      "Utilizamos o Formspree para receber e guardar os pedidos de aviso de lançamento e as mensagens enviadas pelo formulário de Contactos do website. No aviso de lançamento, são recolhidos o endereço de email e o registo do consentimento. No formulário de Contactos, são recolhidos o nome, o email, o assunto, a mensagem e o registo da informação de privacidade apresentada, para responder ao contacto.",
       "Para o funcionamento da aplicação, a Hybrid Hub recorre a prestadores de serviços tecnológicos (por exemplo, alojamento, envio de SMS e análise de utilização).",
       "Caso algum destes prestadores implique a transferência de dados pessoais para fora do Espaço Económico Europeu, essa transferência será efetuada apenas com as garantias adequadas previstas no Regulamento Geral sobre a Proteção de Dados (RGPD).",
     ],

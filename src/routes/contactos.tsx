@@ -17,16 +17,8 @@ export const Route = createFileRoute("/contactos")({
   component: Contactos,
 });
 
-// ─────────────────────────────────────────────────────────────
-// CONFIGURAÇÃO DO ENVIO (Formspree — plano gratuito, compatível
-// com websites estáticos como GitHub Pages):
-// 1. Criar conta gratuita em https://formspree.io
-// 2. Criar um formulário novo com o email hybridhubadmin@gmail.com
-// 3. Copiar o ID do formulário (ex.: "xabc1234") para aqui.
-// Enquanto estiver vazio, o formulário mostra o estado de erro
-// e sugere o contacto direto por email — nunca finge um envio.
-// ─────────────────────────────────────────────────────────────
-const FORMSPREE_FORM_ID = "";
+// Separate from the launch notification list in the same Formspree account.
+const FORMSPREE_FORM_ID = "xyewkngw";
 
 const EMAIL = "hybridhubadmin@gmail.com";
 const PHONE_DISPLAY = "+351 933 002 870";
@@ -70,25 +62,22 @@ function Contactos() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "sending") return;
+    if (new FormData(e.currentTarget).get("_gotcha")) return;
     if (!validate()) return;
-
-    if (!FORMSPREE_FORM_ID) {
-      // Serviço de envio ainda não configurado: não fingir sucesso.
-      setStatus("error");
-      return;
-    }
 
     setStatus("sending");
     try {
       const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
+        signal: AbortSignal.timeout(20000),
         body: JSON.stringify({
           nome: name.trim(),
           email: email.trim(),
           assunto: subject,
           mensagem: message.trim(),
-          enviado_em: new Date().toLocaleString("pt-PT"),
+          privacidade: "Li a Política de Privacidade e compreendo que os meus dados serão utilizados para responder ao meu contacto.",
+          enviado_em: new Date().toISOString(),
         }),
       });
       if (res.ok) {
@@ -162,7 +151,7 @@ function Contactos() {
           <h2 className="text-2xl md:text-3xl">ENVIA-NOS UMA MENSAGEM.</h2>
 
           {status === "success" ? (
-            <div className="mt-10 rounded-sm border border-primary p-8">
+            <div role="status" className="mt-10 rounded-sm border border-primary p-8">
               <h3 className="text-xl text-primary">MENSAGEM ENVIADA!</h3>
               <p className="mt-4 text-muted-foreground">
                 Obrigado pelo teu contacto. Recebemos a tua mensagem e responderemos assim que possível.
@@ -255,7 +244,7 @@ function Contactos() {
               </div>
 
               {status === "error" && (
-                <div className="rounded-sm border border-destructive p-6">
+                <div role="alert" className="rounded-sm border border-destructive p-6">
                   <h3 className="text-lg text-destructive">NÃO FOI POSSÍVEL ENVIAR A MENSAGEM.</h3>
                   <p className="mt-3 text-sm text-muted-foreground">
                     Tenta novamente ou contacta-nos diretamente através do email{" "}
