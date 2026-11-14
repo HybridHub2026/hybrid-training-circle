@@ -40,7 +40,7 @@ export function Hero() {
 
 export function About({ compact = false }: { compact?: boolean }) {
   return (
-    <section className={`grid grid-cols-1 items-center gap-8 py-10 md:grid-cols-2 md:gap-12 md:py-20 ${wrap} ${compact ? "md:py-16" : ""}`}>
+    <section className={`grid grid-cols-1 items-center gap-8 py-8 md:grid-cols-2 md:gap-12 md:py-16 ${wrap} ${compact ? "md:py-14" : ""}`}>
       <img src={train} alt="Grupo de atletas a conversar junto ao mar ao pôr do sol" loading="lazy" width={1080} height={1350} className={`aspect-[4/5] w-full rounded-sm object-cover ${compact ? "max-w-[280px] md:max-w-[400px]" : "max-w-[320px] md:max-w-[440px]"}`} />
       <div>
         <p className="eyebrow">Sobre a Hybrid Hub</p>
@@ -67,7 +67,7 @@ const features = [
 export function Features() {
   return (
     <section className="bg-muted">
-      <div className={`py-10 md:py-20 ${wrap}`}>
+      <div className={`py-8 md:py-16 ${wrap}`}>
         <p className="eyebrow">Funcionalidades</p>
         <h2 className="mt-4 max-w-3xl text-3xl md:text-5xl">UM HUB. <span className="text-primary">MUITAS POSSIBILIDADES.</span></h2>
         <ul className="mt-10 divide-y divide-border border-y border-border md:mt-12">
@@ -122,7 +122,7 @@ export function HowItWorks({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
     setActiveStep(nearest);
   }
   return (
-    <section className={`py-10 md:py-20 ${wrap}`}>
+    <section className={`py-8 md:py-16 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
       <Heading className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</Heading>
       <div className="mt-5 flex items-center justify-between gap-3 md:hidden">
@@ -150,7 +150,7 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
   const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <section className="bg-muted">
-      <div className={`py-10 md:py-24 ${wrap}`}>
+      <div className={`py-8 md:py-20 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
         <Heading className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></Heading>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
@@ -177,7 +177,7 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
 export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
   const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
-    <section className={`py-10 md:py-12 ${wrap}`}>
+    <section className={`py-8 md:py-10 ${wrap}`}>
       <div className="max-w-2xl">
         <p className="eyebrow">A app</p>
         <Heading className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></Heading>
@@ -209,7 +209,7 @@ const merchItems = ["Bucket hats reversíveis", "T-shirts oficiais", "Hoodies of
 export function Shop() {
   return (
     <section className="bg-muted">
-      <div className={`grid gap-8 py-10 md:grid-cols-2 md:items-center md:gap-12 md:py-20 ${wrap}`}>
+      <div className={`grid gap-8 py-8 md:grid-cols-2 md:items-center md:gap-12 md:py-16 ${wrap}`}>
         <img src={merch} alt="Sweatshirt e bucket hat Hybrid Hub — em breve" loading="lazy" width={1024} height={768} className="w-full rounded-sm object-cover" />
         <div>
           <p className="eyebrow">Loja</p>

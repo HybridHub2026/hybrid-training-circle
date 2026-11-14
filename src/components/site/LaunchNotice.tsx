@@ -30,7 +30,7 @@ export function LaunchNotice() {
 
   return (
     <section id="aviso-lancamento" className="scroll-mt-24 border-y border-border bg-muted">
-      <div className="mx-auto max-w-3xl px-5 py-12 md:px-10 md:py-20">
+      <div className="mx-auto max-w-3xl px-5 py-10 md:px-10 md:py-16">
         <p className="eyebrow">App em preparação · iOS e Android</p>
         <h2 className="mt-4 text-3xl md:text-5xl">A TUA PRÓXIMA LIGAÇÃO <span className="text-primary">ESTÁ A CHEGAR.</span></h2>
         <p className="mt-5 text-muted-foreground md:text-lg">Deixa o teu email para receberes o aviso quando a app Hybrid Hub estiver disponível.</p>

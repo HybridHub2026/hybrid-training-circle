@@ -22,7 +22,7 @@ export const Route = createFileRoute("/comunidade")({
   component: () => (
     <div className="pt-8">
       <Community headingLevel={1} />
-      <section className="mx-auto max-w-7xl px-5 py-12 md:px-10 md:py-20">
+      <section className="mx-auto max-w-7xl px-5 py-10 md:px-10 md:py-16">
         <div className="max-w-3xl">
           <p className="eyebrow">Treina com outras pessoas</p>
           <h2 className="mt-4 text-3xl md:text-5xl">ENCONTRA O TEU <span className="text-primary">RITMO.</span></h2>
