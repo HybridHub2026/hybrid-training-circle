@@ -19,7 +19,7 @@ export const Route = createFileRoute("/termos")({
 
 type Block = string | { list: string[] };
 
-// Secções 09 a 19 aguardam o restante texto enviado pela Hybrid Hub.
+// Secções adicionais aguardam o restante texto enviado pela Hybrid Hub.
 const sections: { heading: string; body: Block[] }[] = [
   {
     heading: "Objeto e âmbito",
@@ -92,6 +92,15 @@ const sections: { heading: string; body: Block[] }[] = [
       "Os utilizadores podem cancelar a sua participação numa oportunidade a qualquer momento. O cancelamento não implica penalização automática.",
       "No entanto, devem informar os restantes participantes com a maior antecedência possível, através dos mecanismos disponibilizados na aplicação.",
       "O criador pode cancelar uma oportunidade, devendo comunicar essa decisão aos participantes.",
+    ],
+  },
+  {
+    heading: "Venda de bilhetes entre atletas",
+    body: [
+      "Os utilizadores podem anunciar bilhetes para provas na aplicação, para encontrar outros atletas interessados.",
+      "Para publicar um anúncio, o vendedor deve indicar o tipo de prova, o tipo de bilhete, o local e a data da prova, a data-limite para transferir a inscrição e o valor de venda.",
+      "A Hybrid Hub atua apenas como intermediária, criando a ligação entre vendedor e comprador. Não cobra comissões nem obtém qualquer ganho com a venda do bilhete.",
+      "O acordo de venda, o pagamento e a transferência da inscrição ficam a cargo dos atletas envolvidos, que tratam de tudo diretamente entre si. A app não realiza nem gere essa transação.",
     ],
   },
 ];
