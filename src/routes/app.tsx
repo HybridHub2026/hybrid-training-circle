@@ -15,8 +15,8 @@ export const Route = createFileRoute("/app")({
   component: () => (
     <div className="pt-8">
       <AppShowcase headingLevel={1} />
-      <Features />
       <LaunchNotice />
+      <Features />
     </div>
   ),
 });

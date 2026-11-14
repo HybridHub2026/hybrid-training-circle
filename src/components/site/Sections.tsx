@@ -51,7 +51,6 @@ export function About({ compact = false }: { compact?: boolean }) {
         <p className="mt-4 text-muted-foreground md:text-lg">
           Não organizamos todos os treinos nem todos os eventos — ajudamos-te a encontrar as pessoas e as oportunidades certas.
         </p>
-        <Link to="/app" className="btn-ghost mt-6">Conhece as funcionalidades da app <ArrowRight size={16} /></Link>
       </div>
     </section>
   );
@@ -153,10 +152,17 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
     <section className="bg-muted">
       <div className={`py-10 md:py-24 ${wrap}`}>
         <p className="eyebrow">Comunidade</p>
-        <Heading className="mt-4 text-4xl md:text-6xl">O TEU DESPORTO. <span className="text-primary">A TUA GENTE.</span></Heading>
+        <Heading className="mt-4 text-4xl md:text-6xl">HÁ ESPAÇO <span className="text-primary">PARA TI.</span></Heading>
         <p className="mt-6 max-w-2xl text-muted-foreground md:text-lg">
-          Do primeiro quilómetro ao próximo desafio, descobre como podes fazer parte da comunidade de corrida e treino híbrido em Portugal.
+          Seja para correr, combinar corrida e força no treino híbrido ou preparar uma prova como HYROX, a Hybrid Hub aproxima pessoas com vontade de treinar em conjunto em Portugal.
         </p>
+        <div className="mt-10 grid gap-px bg-border sm:grid-cols-3 md:mt-12">
+          {["A COMEÇAR", "A TREINAR", "A COMPETIR"].map((l) => (
+            <div key={l} className="bg-muted py-4 md:py-6 sm:px-6">
+              <span className="text-2xl font-extrabold">{l}</span>
+            </div>
+          ))}
+        </div>
         {headingLevel === 2 && (
           <div className="mt-8 flex flex-wrap gap-4">
             <Link to="/comunidade" className="btn-ghost">Explora a comunidade <ArrowRight size={16} /></Link>
@@ -176,7 +182,7 @@ export function AppShowcase({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <p className="eyebrow">A app</p>
         <Heading className="mt-4 text-3xl md:text-5xl">TUDO COMEÇA COM UMA <span className="text-primary">LIGAÇÃO.</span></Heading>
         <p className="mt-6 text-muted-foreground md:text-lg">
-          Explora oportunidades por modalidade, localização, horário e nível de experiência, ou cria uma oportunidade com os detalhes do teu treino.
+          Encontra oportunidades, descobre pessoas e mantém-te ligado ao desporto.
         </p>
         <p className="mt-4 text-sm text-muted-foreground">A app está em preparação para iOS e Android.</p>
         <a href="#aviso-lancamento" className="btn-primary mt-5">Avisem-me no lançamento <ArrowRight size={16} /></a>
