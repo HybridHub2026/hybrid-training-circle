@@ -434,5 +434,9 @@
   "Ecrã — treina": "Screen — train",
   "Captura de ecrã 2": "Screenshot 2",
   "Captura de ecrã 3": "Screenshot 3",
-  "de": "of"
+  "de": "of",
+  "Guardar o idioma escolhido no seletor PT / ES / EN.": "Remember the language chosen in the PT / ES / EN selector.",
+  "Até alterar o idioma ou apagar os dados do site no navegador.": "Until you change the language or clear the website's data in your browser.",
+  "Preferência de idioma solicitada pelo visitante": "Language preference requested by the visitor",
+  "O website utiliza localStorage apenas para guardar o idioma que o visitante escolhe no seletor PT / ES / EN. Na primeira visita ao endereço principal, sem uma escolha guardada, consulta os idiomas do navegador. A deteção automática não grava dados no dispositivo. Não são utilizados cookies de análise ou marketing.": "The website uses localStorage only to remember the language the visitor chooses in the PT / ES / EN selector. On the first visit to the main address, with no saved choice, it checks the browser's languages. Automatic detection does not store data on the device. No analytics or marketing cookies are used."
 }

@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
 import { Link, T, useLanguage } from "@/i18n";
+import { AutomaticLanguage } from "@/i18n/AutomaticLanguage";
 
 function NotFoundComponent() {
   return (
@@ -123,6 +124,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AutomaticLanguage />
       <Header />
       <main>
         <Outlet />

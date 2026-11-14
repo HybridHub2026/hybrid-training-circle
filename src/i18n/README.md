@@ -3,7 +3,14 @@
 Portuguese remains at the original URLs. Spanish uses `/es` and `/es/<page>`;
 English uses `/en` and `/en/<page>`.
 The selector preserves the page, search parameters and hash. Internal navigation
-stays in the selected language; no preference cookies or browser storage are used.
+stays in the selected language. Initial entry at `/` uses the saved manual choice,
+then the first supported browser language, with English as the fallback. Direct
+links to other pages retain their URL language. Detection runs once after hydration
+and replaces history, preserving the search parameters and hash.
+
+Explicit selector choices save only `pt`, `es` or `en` under `hybridhub-language`
+in localStorage. Automatic detection writes nothing. Storage failures never block
+navigation. The Cookie Policy documents this preference storage.
 
 Shared components render the Portuguese source through `T`. Add the corresponding
 Spanish and English text to `es.json` and `en.json` when adding or editing public copy. `Localized` handles

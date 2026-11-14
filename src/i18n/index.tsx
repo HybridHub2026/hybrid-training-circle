@@ -3,6 +3,7 @@ import { Link as RouterLink, useRouterState, type ParsedLocation } from "@tansta
 import spanish from "./es.json";
 import english from "./en.json";
 import { languageFromPath, localizedPath, type Language } from "./language";
+import { rememberLanguage } from "./preference";
 
 export function useLanguage(): Language {
   return useRouterState({ select: (state: { location: ParsedLocation }) => languageFromPath(state.location.pathname) });
@@ -61,7 +62,7 @@ export function LanguageSelector({ onChange }: { onChange?: () => void }) {
           hrefLang={option === "pt" ? "pt-PT" : option}
           aria-label={option === "pt" ? "Português" : option === "es" ? "Español" : "English"}
           aria-current={option === language ? "true" : undefined}
-          onClick={onChange}
+          onClick={() => { rememberLanguage(option); onChange?.(); }}
           className={`flex min-h-10 min-w-8 items-center justify-center rounded-sm border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${option === language ? "border-primary/60 text-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}
         >
           {option.toUpperCase()}
