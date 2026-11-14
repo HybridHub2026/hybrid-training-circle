@@ -1,36 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hybridhub.pt/</loc></url>
-  <url><loc>https://hybridhub.pt/como-funciona</loc></url>
-  <url><loc>https://hybridhub.pt/comunidade</loc></url>
-  <url><loc>https://hybridhub.pt/parceiros-de-treino</loc></url>
-  <url><loc>https://hybridhub.pt/app</loc></url>
-  <url><loc>https://hybridhub.pt/loja</loc></url>
-  <url><loc>https://hybridhub.pt/faq</loc></url>
-  <url><loc>https://hybridhub.pt/contactos</loc></url>
-  <url><loc>https://hybridhub.pt/privacidade</loc></url>
-  <url><loc>https://hybridhub.pt/termos</loc></url>
-  <url><loc>https://hybridhub.pt/cookies</loc></url>
-  <url><loc>https://hybridhub.pt/es</loc></url>
-  <url><loc>https://hybridhub.pt/es/como-funciona</loc></url>
-  <url><loc>https://hybridhub.pt/es/comunidade</loc></url>
-  <url><loc>https://hybridhub.pt/es/parceiros-de-treino</loc></url>
-  <url><loc>https://hybridhub.pt/es/app</loc></url>
-  <url><loc>https://hybridhub.pt/es/loja</loc></url>
-  <url><loc>https://hybridhub.pt/es/faq</loc></url>
-  <url><loc>https://hybridhub.pt/es/contactos</loc></url>
-  <url><loc>https://hybridhub.pt/es/privacidade</loc></url>
-  <url><loc>https://hybridhub.pt/es/termos</loc></url>
-  <url><loc>https://hybridhub.pt/es/cookies</loc></url>
-  <url><loc>https://hybridhub.pt/en</loc></url>
-  <url><loc>https://hybridhub.pt/en/como-funciona</loc></url>
-  <url><loc>https://hybridhub.pt/en/comunidade</loc></url>
-  <url><loc>https://hybridhub.pt/en/parceiros-de-treino</loc></url>
-  <url><loc>https://hybridhub.pt/en/app</loc></url>
-  <url><loc>https://hybridhub.pt/en/loja</loc></url>
-  <url><loc>https://hybridhub.pt/en/faq</loc></url>
-  <url><loc>https://hybridhub.pt/en/contactos</loc></url>
-  <url><loc>https://hybridhub.pt/en/privacidade</loc></url>
-  <url><loc>https://hybridhub.pt/en/termos</loc></url>
-  <url><loc>https://hybridhub.pt/en/cookies</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://hybridhub.pt/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/como-funciona</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/como-funciona" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/comunidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/comunidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/comunidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/comunidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/parceiros-de-treino</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/app</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/app" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/loja</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/loja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/loja" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/loja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/loja" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/faq</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/faq" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/faq" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/contactos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/contactos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/contactos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/contactos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/contactos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/privacidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/privacidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/privacidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/privacidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/termos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/termos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/termos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/termos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/termos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/cookies" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/como-funciona</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/como-funciona" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/comunidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/comunidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/comunidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/comunidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/parceiros-de-treino</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/app</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/app" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/loja</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/loja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/loja" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/loja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/loja" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/faq</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/faq" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/faq" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/contactos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/contactos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/contactos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/contactos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/contactos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/privacidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/privacidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/privacidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/privacidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/termos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/termos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/termos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/termos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/termos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/es/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/cookies" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/como-funciona</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/como-funciona" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/como-funciona" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/comunidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/comunidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/comunidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/comunidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/parceiros-de-treino</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/parceiros-de-treino" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/parceiros-de-treino" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/app</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/app" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/loja</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/loja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/loja" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/loja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/loja" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/faq</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/faq" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/faq" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/contactos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/contactos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/contactos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/contactos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/contactos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/privacidade" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/privacidade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/privacidade" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/privacidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/termos</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/termos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/termos" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/termos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/termos" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/cookies" />
+  </url>
 </urlset>

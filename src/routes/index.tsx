@@ -12,6 +12,7 @@ const structuredData = JSON.stringify({
       "@id": `${siteUrl}#website`,
       name: "Hybrid Hub",
       url: siteUrl,
+      inLanguage: "pt-PT",
       publisher: { "@id": `${siteUrl}#organization` },
     },
     {

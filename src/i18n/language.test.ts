@@ -53,4 +53,15 @@ describe("Portuguese, Spanish and English navigation", () => {
     expect(head.links.slice(1)).toEqual(languageAlternates("/privacidade"));
     expect(head.links).toHaveLength(5);
   });
+  it.each([["es", spanishHead], ["en", englishHead]] as const)("identifies the %s website without changing the organisation", (language, headFor) => {
+    const organisation = { "@type": "Organization", "@id": "https://hybridhub.pt/#organization", url: "https://hybridhub.pt/" };
+    const children = JSON.stringify({ "@context": "https://schema.org", "@graph": [
+      { "@type": "WebSite", "@id": "https://hybridhub.pt/#website", url: "https://hybridhub.pt/", inLanguage: "pt-PT", publisher: { "@id": organisation["@id"] } },
+      organisation,
+    ] });
+    const head = headFor({ scripts: [{ type: "application/ld+json", children }] }, "/");
+    const graph = JSON.parse(head.scripts![0]!.children)["@graph"];
+    expect(graph[0]).toMatchObject({ "@id": `https://hybridhub.pt/${language}#website`, url: `https://hybridhub.pt/${language}`, inLanguage: language });
+    expect(graph[1]).toEqual(organisation);
+  });
 });

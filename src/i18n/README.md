@@ -21,6 +21,10 @@ addresses, product names and the app screenshots unchanged.
 Each translated route shares its original page component and metadata. `spanishHead`
 and `englishHead` translate metadata and supply a local canonical plus reciprocal language
 alternatives. New pages need both routes, translations and entries in the sitemap.
+The page list in `pages.json` generates the sitemap during each production build.
+Every URL lists all three languages and the default, matching its HTML alternatives.
 
 Validation: `npm test`, `npm run build`, and, with the preview running,
 `node scripts/verify-locales.mjs http://127.0.0.1:8081`.
+The same check accepts `https://hybridhub.pt` to audit published content, indexing
+directives, metadata, language alternatives, structured data, robots and sitemap.
