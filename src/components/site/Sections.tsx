@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useState, type UIEvent } from "react";
 import { LaunchNotice } from "./LaunchNotice";
 import { Users, Dumbbell, Trophy, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
@@ -102,23 +103,41 @@ function PhoneSlot({ label, src }: { label: string; src?: string | undefined }) 
 }
 
 const steps = [
-  { n: "01", title: "EXPLORA", text: "Descobre oportunidades de treino, provas e comunidades." },
-  { n: "02", title: "LIGA-TE", text: "Encontra pessoas com interesses semelhantes e combina a tua próxima atividade." },
-  { n: "03", title: "TREINA", text: "Participa, conhece pessoas e partilha a experiência." },
+  { n: "01", title: "EXPLORA", text: "Descobre treinos e provas na tua zona." },
+  { n: "02", title: "LIGA-TE", text: "Encontra pessoas com objetivos e horários compatíveis." },
+  { n: "03", title: "TREINA", text: "Combina o local e a hora, e treina em companhia." },
 ];
 
 export function HowItWorks({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
   const Heading = headingLevel === 1 ? "h1" : "h2";
+  const [activeStep, setActiveStep] = useState(0);
+  function updateProgress(event: UIEvent<HTMLDivElement>) {
+    const track = event.currentTarget;
+    const cards = Array.from(track.children) as HTMLElement[];
+    const origin = cards[0]?.offsetLeft ?? 0;
+    let nearest = 0;
+    cards.forEach((card, index) => {
+      if (Math.abs(card.offsetLeft - origin - track.scrollLeft) < Math.abs(cards[nearest].offsetLeft - origin - track.scrollLeft)) nearest = index;
+    });
+    setActiveStep(nearest);
+  }
   return (
     <section className={`py-10 md:py-20 ${wrap}`}>
       <p className="eyebrow">Como funciona</p>
       <Heading className="mt-4 text-3xl md:text-5xl">EXPLORA. <span className="text-primary">LIGA-TE.</span> TREINA.</Heading>
-      <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground md:hidden">Desliza para ver os 3 passos <span aria-hidden="true">→</span></p>
-      <div className="-mr-5 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pr-5 pb-4 md:mr-0 md:mt-12 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pr-0 md:pb-0" role="region" aria-label="Passos de como funciona" tabIndex={0}>
+      <div className="mt-5 flex items-center justify-between gap-3 md:hidden">
+        <p className="text-xs text-muted-foreground">Desliza para ver os passos <span aria-hidden="true">→</span></p>
+        <p className="shrink-0 text-sm font-medium" role="status" aria-live="polite" aria-atomic="true">Passo {activeStep + 1} de {steps.length}</p>
+      </div>
+      <div className="mt-3 flex gap-2 md:hidden" aria-hidden="true">
+        {steps.map((s, index) => <span key={s.n} className={`h-1 flex-1 rounded-full ${index === activeStep ? "bg-primary" : "bg-border"}`} />)}
+      </div>
+      <div onScroll={updateProgress} className="-mr-5 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pr-5 pb-4 md:mr-0 md:mt-12 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pr-0 md:pb-0" role="region" aria-label="Passos de como funciona" tabIndex={0}>
         {steps.map((s) => (
           <div key={s.n} className="w-[78vw] max-w-80 flex-none snap-start border-t border-primary pt-6 md:w-auto md:max-w-none">
             <span className="text-5xl font-extrabold text-primary">{s.n}</span>
             <h3 className="mt-4 text-3xl">{s.title}</h3>
+            <p className="mt-3 min-h-12 text-muted-foreground">{s.text}</p>
             <div className="mt-6"><PhoneSlot label={`Ecrã — ${s.title.toLowerCase()}`} src={s.n === "01" ? exploreScreen : s.n === "02" ? ligateScreen : treinaScreen} /></div>
           </div>
         ))}
