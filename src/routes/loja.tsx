@@ -1,5 +1,6 @@
 import { languageAlternates } from "@/i18n/language";
-import { T, Localized } from "@/i18n";
+import { T } from "@/i18n";
+import { ProductImage } from "@/components/site/ProductImage";
 import { createFileRoute } from "@tanstack/react-router";
 import bucketHat from "@/assets/merch/bucket-hat-reversivel.jpg";
 import hoodie from "@/assets/merch/hoodie-hybrid-hub.jpg";
@@ -36,10 +37,7 @@ function Loja() {
       <div className="mt-10 grid gap-8 sm:grid-cols-2 md:mt-12">
         <T>{products.map((p) => (
           <article key={p.name}>
-            <div className="relative overflow-hidden rounded-sm bg-card">
-              <Localized as="img" src={p.image} alt={p.name} loading="lazy" decoding="async" width={p.width} height={p.height} className="aspect-[4/3] w-full bg-black object-contain" />
-              <span className="absolute left-4 top-4 rounded-sm bg-primary px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary-foreground"><T>{"Em breve"}</T></span>
-            </div>
+            <ProductImage image={p.image} name={p.name} width={p.width} height={p.height} />
             <h2 className="mt-5 text-lg"><T>{p.name}</T></h2>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground"><T>{p.description}</T></p>
             <p className="mt-3 text-sm text-primary"><T>{"Disponível em breve"}</T></p>
