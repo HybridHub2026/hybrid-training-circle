@@ -82,6 +82,7 @@ export function makeEmail(submission: Submission, recipient: RecipientKind, send
     `Recebido em: ${new Date(submission.created_at).toISOString()}`,
     `Referência: ${submission.id}`,
     `Registo de consentimento/privacidade: ${submission.consent_text}`,
+    ...(kind === "launch" ? ["Consultar a lista de inscritos: https://hybridhub.pt/inscritos"] : []),
   ];
   const subject = recipient === "user" ? text[`${kind}Subject`] : `Hybrid Hub — ${kind === "launch" ? "nova inscrição" : "novo contacto"}`;
   const body = paragraphs.map(paragraph => `<p style="margin:0 0 18px;line-height:1.6">${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join("");

@@ -3,6 +3,7 @@ import {
   Outlet,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -121,15 +122,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const privatePage = useRouterState({ select: (state: { location: { pathname: string } }) => state.location.pathname === "/inscritos" });
 
   return (
     <QueryClientProvider client={queryClient}>
       <AutomaticLanguage />
-      <Header />
+      {!privatePage && <Header />}
       <main>
         <Outlet />
       </main>
-      <Footer />
+      {!privatePage && <Footer />}
     </QueryClientProvider>
   );
 }

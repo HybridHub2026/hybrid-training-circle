@@ -62,7 +62,7 @@ export function useWebsiteForm() {
       setResetNonce(value => value + 1);
     }
   }
-  return { submit, ready: Boolean(token && siteKey), protection: { siteKey, configurationError, resetNonce, onToken: setToken } };
+  return { submit, token, ready: Boolean(token && siteKey), resetProtection: () => { setToken(""); setResetNonce(value => value + 1); }, protection: { siteKey, configurationError, resetNonce, onToken: setToken } };
 }
 
 export function FormProtection({ siteKey, configurationError, resetNonce, onToken, language }: {

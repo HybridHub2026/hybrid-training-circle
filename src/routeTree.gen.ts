@@ -16,6 +16,7 @@ import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as InscritosRouteImport } from './routes/inscritos'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as ParceirosDeTreinoRouteImport } from './routes/parceiros-de-treino'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
@@ -76,6 +77,11 @@ const CookiesRoute = CookiesRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InscritosRoute = InscritosRouteImport.update({
+  id: '/inscritos',
+  path: '/inscritos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LojaRoute = LojaRouteImport.update({
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/contactos': typeof ContactosRoute
   '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
+  '/inscritos': typeof InscritosRoute
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -252,6 +259,7 @@ export interface FileRoutesByTo {
   '/contactos': typeof ContactosRoute
   '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
+  '/inscritos': typeof InscritosRoute
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -288,6 +296,7 @@ export interface FileRoutesById {
   '/contactos': typeof ContactosRoute
   '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
+  '/inscritos': typeof InscritosRoute
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -325,6 +334,7 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/cookies'
     | '/faq'
+    | '/inscritos'
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
@@ -360,6 +370,7 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/cookies'
     | '/faq'
+    | '/inscritos'
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
@@ -395,6 +406,7 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/cookies'
     | '/faq'
+    | '/inscritos'
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
@@ -431,6 +443,7 @@ export interface RootRouteChildren {
   ContactosRoute: typeof ContactosRoute
   CookiesRoute: typeof CookiesRoute
   FaqRoute: typeof FaqRoute
+  InscritosRoute: typeof InscritosRoute
   LojaRoute: typeof LojaRoute
   ParceirosDeTreinoRoute: typeof ParceirosDeTreinoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -508,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inscritos': {
+      id: '/inscritos'
+      path: '/inscritos'
+      fullPath: '/inscritos'
+      preLoaderRoute: typeof InscritosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loja': {
@@ -703,6 +723,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactosRoute: ContactosRoute,
   CookiesRoute: CookiesRoute,
   FaqRoute: FaqRoute,
+  InscritosRoute: InscritosRoute,
   LojaRoute: LojaRoute,
   ParceirosDeTreinoRoute: ParceirosDeTreinoRoute,
   PrivacidadeRoute: PrivacidadeRoute,

@@ -23,6 +23,10 @@ Brevo idempotency keys are also used. Ambiguous transport failures are not retri
 
 ## Admin access and existing requests
 
+The owner can use `https://hybridhub.pt/inscritos` to view launch requests, search email addresses, filter by language and download a filtered CSV for Excel. Known migration test addresses are hidden by default. The page is not in the public navigation or sitemap and has `noindex`; actual protection is enforced by the server on every list/export request.
+
+Apply `migrations/0002_subscribers_admin.sql` before deploying this page. Login codes go only to the fixed owner mailbox `hybridhubadmin@gmail.com`, never to an address supplied by the browser. Turnstile is required to request a code; rate limits are one email per minute and 20 per UTC day, counted against the shared Brevo email allowance. Codes expire after 10 minutes, allow five attempts and are single-use. Codes and session tokens are stored only as hashes. Sessions expire after one hour, use a Secure/HttpOnly/SameSite=Strict host-only cookie, and are revoked on logout. Authenticated API responses are private/no-store. No new provider credentials are required.
+
 The database has no public listing endpoint. The account owner can view `form_submissions` and `form_mail_outbox` using Cloudflare D1 Studio or its SQL console. Notification emails also include a submission reference. Filter `form_submissions` by `kind='launch'` to view the launch list, including language and the recorded consent text.
 
 Older requests remain in the existing Formspree account; this migration does not delete them or resend messages to those users. Consolidate existing launch requests before the launch campaign. Apply the site's retention policy to both services.

@@ -38,7 +38,7 @@ export function formsConfigured(env: FormsEnvironment) {
   return Boolean(env.FORMS_DB && env.BREVO_API_KEY && env.BREVO_SENDER_EMAIL && env.FORMS_TURNSTILE_SITE_KEY && env.FORMS_TURNSTILE_SECRET);
 }
 
-async function readLimitedJson(request: Request) {
+export async function readLimitedJson(request: Request) {
   const reader = request.body?.getReader();
   if (!reader) throw new Error("empty_body");
   const chunks: Uint8Array[] = [];
