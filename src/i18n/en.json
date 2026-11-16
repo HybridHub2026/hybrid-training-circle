@@ -451,5 +451,15 @@
   "O website utiliza localStorage apenas para guardar o idioma que o visitante escolhe no seletor PT / ES / EN. Na primeira visita ao endereço principal, sem uma escolha guardada, consulta os idiomas do navegador. A deteção automática não grava dados no dispositivo. Não são utilizados cookies de análise ou marketing.": "The website uses localStorage only to remember the language you choose in the PT / ES / EN selector. On your first visit to the main address, if you have not saved a preference, it checks your browser's languages. Automatic detection does not store data on your device. No analytics or marketing cookies are used.",
   "Email": "Email",
   "Verificação de segurança": "Security check",
-  "Não foi possível preparar o formulário. Atualiza a página ou contacta-nos por email.": "We couldn't load the form. Refresh the page or contact us by email."
+  "Não foi possível preparar o formulário. Atualiza a página ou contacta-nos por email.": "We couldn't load the form. Refresh the page or contact us by email.",
+  "Descobre os bucket hats, hoodies e t-shirts Hybrid Hub. Pré-visualização da coleção: os produtos ainda não estão à venda.": "Explore Hybrid Hub bucket hats, hoodies and T-shirts. A preview of the collection: these products are not yet on sale.",
+  "Bucket hats, hoodies e t-shirts Hybrid Hub. A coleção está a caminho e ainda não está à venda.": "Hybrid Hub bucket hats, hoodies and T-shirts. The collection is on its way and is not yet on sale.",
+  "Pré-visualização da coleção. Estes produtos ainda não estão à venda.": "A preview of the collection. These products are not yet on sale.",
+  "Hoodie Hybrid Hub": "Hybrid Hub hoodie",
+  "T-shirt cropped Hybrid Hub": "Hybrid Hub cropped T-shirt",
+  "T-shirt desportiva Hybrid Hub": "Hybrid Hub sports T-shirt",
+  "Preto de um lado, amarelo do outro. A identidade Hybrid Hub em duas versões.": "Black on one side, yellow on the other. Two ways to wear Hybrid Hub.",
+  "Hoodie preto com a marca Hybrid Hub e o slogan Train • Connect • Compete.": "A black hoodie with Hybrid Hub branding and the Train • Connect • Compete slogan.",
+  "Corte curto com a identidade Hybrid Hub na frente, nas costas e na manga.": "A cropped fit with Hybrid Hub details on the front, back and sleeve.",
+  "T-shirt preta com os detalhes Hybrid Hub na frente, nas costas e na manga.": "A black T-shirt with Hybrid Hub details on the front, back and sleeve."
 }

@@ -451,5 +451,15 @@
   "O website utiliza localStorage apenas para guardar o idioma que o visitante escolhe no seletor PT / ES / EN. Na primeira visita ao endereço principal, sem uma escolha guardada, consulta os idiomas do navegador. A deteção automática não grava dados no dispositivo. Não são utilizados cookies de análise ou marketing.": "El sitio web utiliza localStorage únicamente para recordar el idioma que eliges en el selector PT / ES / EN. En tu primera visita a la dirección principal, si no has guardado ninguna preferencia, consulta los idiomas de tu navegador. La detección automática no guarda datos en tu dispositivo. No se utilizan cookies de análisis ni de marketing.",
   "Email": "Correo electrónico",
   "Verificação de segurança": "Verificación de seguridad",
-  "Não foi possível preparar o formulário. Atualiza a página ou contacta-nos por email.": "No hemos podido cargar el formulario. Actualiza la página o escríbenos por correo electrónico."
+  "Não foi possível preparar o formulário. Atualiza a página ou contacta-nos por email.": "No hemos podido cargar el formulario. Actualiza la página o escríbenos por correo electrónico.",
+  "Descobre os bucket hats, hoodies e t-shirts Hybrid Hub. Pré-visualização da coleção: os produtos ainda não estão à venda.": "Descubre los bucket hats, las sudaderas con capucha y las camisetas Hybrid Hub. Un adelanto de la colección: los productos aún no están a la venta.",
+  "Bucket hats, hoodies e t-shirts Hybrid Hub. A coleção está a caminho e ainda não está à venda.": "Bucket hats, sudaderas con capucha y camisetas Hybrid Hub. La colección está en camino y aún no está a la venta.",
+  "Pré-visualização da coleção. Estes produtos ainda não estão à venda.": "Un adelanto de la colección. Estos productos aún no están a la venta.",
+  "Hoodie Hybrid Hub": "Sudadera con capucha Hybrid Hub",
+  "T-shirt cropped Hybrid Hub": "Camiseta corta Hybrid Hub",
+  "T-shirt desportiva Hybrid Hub": "Camiseta deportiva Hybrid Hub",
+  "Preto de um lado, amarelo do outro. A identidade Hybrid Hub em duas versões.": "Negro por un lado, amarillo por el otro. La identidad Hybrid Hub en dos versiones.",
+  "Hoodie preto com a marca Hybrid Hub e o slogan Train • Connect • Compete.": "Sudadera negra con capucha, la marca Hybrid Hub y el lema Train • Connect • Compete.",
+  "Corte curto com a identidade Hybrid Hub na frente, nas costas e na manga.": "Corte corto con detalles Hybrid Hub en la parte delantera, la espalda y la manga.",
+  "T-shirt preta com os detalhes Hybrid Hub na frente, nas costas e na manga.": "Camiseta negra con detalles Hybrid Hub en la parte delantera, la espalda y la manga."
 }
