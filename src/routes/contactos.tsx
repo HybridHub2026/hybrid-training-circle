@@ -3,6 +3,7 @@ import { Link, T, Localized, useLanguage, translateText } from "@/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { FormProtection, useWebsiteForm } from "@/components/site/WebsiteForm";
 
 export const Route = createFileRoute("/contactos")({
   head: () => ({
@@ -18,9 +19,6 @@ export const Route = createFileRoute("/contactos")({
   }),
   component: Contactos,
 });
-
-// Separate from the launch notification list in the same Formspree account.
-const FORMSPREE_FORM_ID = "xyewkngw";
 
 const EMAIL = "hybridhubadmin@gmail.com";
 const PHONE_DISPLAY = "+351 933 002 870";
@@ -42,6 +40,7 @@ const inputClass =
 
 function Contactos() {
   const language = useLanguage();
+  const websiteForm = useWebsiteForm();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -64,37 +63,29 @@ function Contactos() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (status === "sending") return;
+    if (status === "sending" || !websiteForm.ready) return;
     if (new FormData(e.currentTarget).get("_gotcha")) return;
     if (!validate()) return;
 
     setStatus("sending");
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        signal: AbortSignal.timeout(20000),
-        body: JSON.stringify({
-          nome: name.trim(),
-          email: email.trim(),
-          idioma: language,
-          assunto: translateText(subject, language),
-          mensagem: message.trim(),
-          privacidade: translateText("Li a Política de Privacidade e compreendo que os meus dados serão utilizados para responder ao meu contacto.", language),
-          enviado_em: new Date().toISOString(),
-        }),
+      await websiteForm.submit({
+        kind: "contact",
+        nome: name.trim(),
+        email: email.trim(),
+        idioma: language,
+        assunto: translateText(subject, language),
+        mensagem: message.trim(),
+        consent,
+        privacidade: translateText("Li a Política de Privacidade e compreendo que os meus dados serão utilizados para responder ao meu contacto.", language),
       });
-      if (res.ok) {
-        setStatus("success");
-        setName("");
-        setEmail("");
-        setSubject("");
-        setMessage("");
-        setConsent(false);
-        setErrors({});
-      } else {
-        setStatus("error");
-      }
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+      setConsent(false);
+      setErrors({});
     } catch {
       setStatus("error");
     }
@@ -229,6 +220,7 @@ function Contactos() {
                 <T>{errors["consent"] && <p className="mt-2 text-sm text-destructive"><T>{errors["consent"]}</T></p>}</T>
               </div>
 
+              <FormProtection {...websiteForm.protection} language={language} />
               <T>{status === "error" && (
                 <div role="alert" className="rounded-sm border border-destructive p-6">
                   <h3 className="text-lg text-destructive"><T>{"NÃO FOI POSSÍVEL ENVIAR A MENSAGEM."}</T></h3>
@@ -239,7 +231,7 @@ function Contactos() {
                 </div>
               )}</T>
 
-              <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-60">
+              <button type="submit" disabled={status === "sending" || !websiteForm.ready} className="btn-primary disabled:opacity-60">
                 <T>{status === "sending" ? "A ENVIAR…" : "ENVIAR MENSAGEM"}</T>
               </button>
             </form>

@@ -8,9 +8,21 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   nitro: {
+    serverDir: "./src/server",
     cloudflare: {
       wrangler: {
         previews: {},
+        triggers: { crons: ["*/5 * * * *"] },
+        d1_databases: [{
+          binding: "FORMS_DB",
+          database_name: "hybridhub-website-forms",
+          database_id: "57c2d7c4-d961-4954-bf37-081065591e84",
+        }],
+        vars: {
+          BREVO_SENDER_EMAIL: "avisos@hybridhub.pt",
+          FORMS_ADMIN_EMAIL: "hybridhubadmin@gmail.com",
+          FORMS_TURNSTILE_SITE_KEY: "0x4AAAAAAGDTnY0RiSZLHaad",
+        },
       },
     },
   },
