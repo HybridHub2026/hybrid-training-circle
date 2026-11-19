@@ -47,6 +47,33 @@ function request(body: unknown, origin = "https://hybridhub.pt") {
 const mailCalls = () => fetchMock.mock.calls.filter(([url]) => String(url).includes("api.brevo.com"));
 
 describe("website forms", () => {
+  const partner = { type: "coach", city: "Maia", country: "Portugal", sports: "Corrida", description: "Treino para iniciantes", activities: "Individual e em grupo", website: "@coach" };
+  it.each(["pt", "es", "en"])("durably stores partner interest separately from launch and confirms next steps in %s", async idioma => {
+    const body = payload({ kind: "partner", idioma, nome: "Coach Test", partner });
+    expect((await handleForms(request(body), env)).status).toBe(202);
+    const saved = sqlite.prepare("SELECT * FROM form_submissions").get();
+    expect(saved?.['kind']).toBe("contact");
+    expect(saved?.['subject']).toBe("[Participação] PT / coach");
+    expect(saved?.['message']).toContain("Cidade: Maia");
+    expect(saved?.['consent_text']).toMatch(/publica|published/);
+    const emails = mailCalls().map(call => JSON.parse((call[1] as RequestInit).body as string));
+    const user = emails.find(email => email.to[0].email === "athlete@example.com");
+    expect(user.textContent).toMatch(idioma === "pt" ? /Nenhum perfil será publicado/ : idioma === "es" ? /No publicaremos ningún perfil/ : /won't publish a profile/);
+    expect(emails.find(email => email.to[0].email === "hybridhubadmin@gmail.com").textContent).toContain("https://hybridhub.pt/inscritos");
+    expect((await handleForms(request(body), env)).status).toBe(202);
+    expect(mailCalls()).toHaveLength(2);
+  });
+  it("stores community activities and rejects incomplete or spoofed partner classifications", async () => {
+    for (const invalid of [{ partner: undefined }, { partner: { ...partner, city: " " } }, { partner: { ...partner, type: "unknown" } }, { nome: "" }, { consent: false }]) {
+      expect((await handleForms(request(payload({ kind: "partner", nome: "Test", partner, ...invalid })), env)).status).toBe(400);
+    }
+    expect((await handleForms(request(payload({ kind: "contact", nome: "Test", assunto: "[Participação] Comunidade", mensagem: "spoof" })), env)).status).toBe(400);
+    expect(mailCalls()).toHaveLength(0);
+    expect((await handleForms(request(payload({ kind: "partner", nome: "Run club", partner: { ...partner, type: "community", activities: "Sábados às 9h" } })), env)).status).toBe(202);
+    const saved = sqlite.prepare("SELECT * FROM form_submissions").get();
+    expect(saved?.['subject']).toBe("[Participação] Comunidade");
+    expect(saved?.['message']).toContain("Atividades e frequência: Sábados às 9h");
+  });
   it("only exposes public configuration and fails closed until setup is complete", async () => {
     const response = await handleForms(new Request("https://hybridhub.pt/api/forms"), env);
     expect(await response.json()).toEqual({ ready: true, siteKey: "public-test-key" });

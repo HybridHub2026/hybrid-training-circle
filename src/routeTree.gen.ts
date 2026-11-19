@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as CoachesComunidadesRouteImport } from './routes/coaches-comunidades'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as ContactosRouteImport } from './routes/contactos'
@@ -23,6 +24,7 @@ import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as EnIndexRouteImport } from './routes/en.index'
 import { Route as EnAppRouteImport } from './routes/en.app'
+import { Route as EnCoachesComunidadesRouteImport } from './routes/en.coaches-comunidades'
 import { Route as EnComoFuncionaRouteImport } from './routes/en.como-funciona'
 import { Route as EnComunidadeRouteImport } from './routes/en.comunidade'
 import { Route as EnContactosRouteImport } from './routes/en.contactos'
@@ -34,6 +36,7 @@ import { Route as EnPrivacidadeRouteImport } from './routes/en.privacidade'
 import { Route as EnTermosRouteImport } from './routes/en.termos'
 import { Route as EsIndexRouteImport } from './routes/es.index'
 import { Route as EsAppRouteImport } from './routes/es.app'
+import { Route as EsCoachesComunidadesRouteImport } from './routes/es.coaches-comunidades'
 import { Route as EsComoFuncionaRouteImport } from './routes/es.como-funciona'
 import { Route as EsComunidadeRouteImport } from './routes/es.comunidade'
 import { Route as EsContactosRouteImport } from './routes/es.contactos'
@@ -52,6 +55,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoachesComunidadesRoute = CoachesComunidadesRouteImport.update({
+  id: '/coaches-comunidades',
+  path: '/coaches-comunidades',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
@@ -114,6 +122,11 @@ const EnAppRoute = EnAppRouteImport.update({
   path: '/en/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnCoachesComunidadesRoute = EnCoachesComunidadesRouteImport.update({
+  id: '/en/coaches-comunidades',
+  path: '/en/coaches-comunidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnComoFuncionaRoute = EnComoFuncionaRouteImport.update({
   id: '/en/como-funciona',
   path: '/en/como-funciona',
@@ -169,6 +182,11 @@ const EsAppRoute = EsAppRouteImport.update({
   path: '/es/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsCoachesComunidadesRoute = EsCoachesComunidadesRouteImport.update({
+  id: '/es/coaches-comunidades',
+  path: '/es/coaches-comunidades',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EsComoFuncionaRoute = EsComoFuncionaRouteImport.update({
   id: '/es/como-funciona',
   path: '/es/como-funciona',
@@ -218,6 +236,7 @@ const EsTermosRoute = EsTermosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRoute
+  '/coaches-comunidades': typeof CoachesComunidadesRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
@@ -229,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
+  '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
   '/en/contactos': typeof EnContactosRoute
@@ -239,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/en/privacidade': typeof EnPrivacidadeRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
+  '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
   '/es/contactos': typeof EsContactosRoute
@@ -254,6 +275,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app': typeof AppRoute
+  '/coaches-comunidades': typeof CoachesComunidadesRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
@@ -265,6 +287,7 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
+  '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
   '/en/contactos': typeof EnContactosRoute
@@ -275,6 +298,7 @@ export interface FileRoutesByTo {
   '/en/privacidade': typeof EnPrivacidadeRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
+  '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
   '/es/contactos': typeof EsContactosRoute
@@ -291,6 +315,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRoute
+  '/coaches-comunidades': typeof CoachesComunidadesRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/comunidade': typeof ComunidadeRoute
   '/contactos': typeof ContactosRoute
@@ -302,6 +327,7 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
+  '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
   '/en/como-funciona': typeof EnComoFuncionaRoute
   '/en/comunidade': typeof EnComunidadeRoute
   '/en/contactos': typeof EnContactosRoute
@@ -312,6 +338,7 @@ export interface FileRoutesById {
   '/en/privacidade': typeof EnPrivacidadeRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
+  '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
   '/es/como-funciona': typeof EsComoFuncionaRoute
   '/es/comunidade': typeof EsComunidadeRoute
   '/es/contactos': typeof EsContactosRoute
@@ -329,6 +356,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/coaches-comunidades'
     | '/como-funciona'
     | '/comunidade'
     | '/contactos'
@@ -340,6 +368,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/termos'
     | '/en/app'
+    | '/en/coaches-comunidades'
     | '/en/como-funciona'
     | '/en/comunidade'
     | '/en/contactos'
@@ -350,6 +379,7 @@ export interface FileRouteTypes {
     | '/en/privacidade'
     | '/en/termos'
     | '/es/app'
+    | '/es/coaches-comunidades'
     | '/es/como-funciona'
     | '/es/comunidade'
     | '/es/contactos'
@@ -365,6 +395,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/app'
+    | '/coaches-comunidades'
     | '/como-funciona'
     | '/comunidade'
     | '/contactos'
@@ -376,6 +407,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/termos'
     | '/en/app'
+    | '/en/coaches-comunidades'
     | '/en/como-funciona'
     | '/en/comunidade'
     | '/en/contactos'
@@ -386,6 +418,7 @@ export interface FileRouteTypes {
     | '/en/privacidade'
     | '/en/termos'
     | '/es/app'
+    | '/es/coaches-comunidades'
     | '/es/como-funciona'
     | '/es/comunidade'
     | '/es/contactos'
@@ -401,6 +434,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/coaches-comunidades'
     | '/como-funciona'
     | '/comunidade'
     | '/contactos'
@@ -412,6 +446,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/termos'
     | '/en/app'
+    | '/en/coaches-comunidades'
     | '/en/como-funciona'
     | '/en/comunidade'
     | '/en/contactos'
@@ -422,6 +457,7 @@ export interface FileRouteTypes {
     | '/en/privacidade'
     | '/en/termos'
     | '/es/app'
+    | '/es/coaches-comunidades'
     | '/es/como-funciona'
     | '/es/comunidade'
     | '/es/contactos'
@@ -438,6 +474,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRoute
+  CoachesComunidadesRoute: typeof CoachesComunidadesRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
   ComunidadeRoute: typeof ComunidadeRoute
   ContactosRoute: typeof ContactosRoute
@@ -449,6 +486,7 @@ export interface RootRouteChildren {
   PrivacidadeRoute: typeof PrivacidadeRoute
   TermosRoute: typeof TermosRoute
   EnAppRoute: typeof EnAppRoute
+  EnCoachesComunidadesRoute: typeof EnCoachesComunidadesRoute
   EnComoFuncionaRoute: typeof EnComoFuncionaRoute
   EnComunidadeRoute: typeof EnComunidadeRoute
   EnContactosRoute: typeof EnContactosRoute
@@ -459,6 +497,7 @@ export interface RootRouteChildren {
   EnPrivacidadeRoute: typeof EnPrivacidadeRoute
   EnTermosRoute: typeof EnTermosRoute
   EsAppRoute: typeof EsAppRoute
+  EsCoachesComunidadesRoute: typeof EsCoachesComunidadesRoute
   EsComoFuncionaRoute: typeof EsComoFuncionaRoute
   EsComunidadeRoute: typeof EsComunidadeRoute
   EsContactosRoute: typeof EsContactosRoute
@@ -486,6 +525,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coaches-comunidades': {
+      id: '/coaches-comunidades'
+      path: '/coaches-comunidades'
+      fullPath: '/coaches-comunidades'
+      preLoaderRoute: typeof CoachesComunidadesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/como-funciona': {
@@ -572,6 +618,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnAppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/coaches-comunidades': {
+      id: '/en/coaches-comunidades'
+      path: '/en/coaches-comunidades'
+      fullPath: '/en/coaches-comunidades'
+      preLoaderRoute: typeof EnCoachesComunidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/en/como-funciona': {
       id: '/en/como-funciona'
       path: '/en/como-funciona'
@@ -649,6 +702,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsAppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/es/coaches-comunidades': {
+      id: '/es/coaches-comunidades'
+      path: '/es/coaches-comunidades'
+      fullPath: '/es/coaches-comunidades'
+      preLoaderRoute: typeof EsCoachesComunidadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/es/como-funciona': {
       id: '/es/como-funciona'
       path: '/es/como-funciona'
@@ -718,6 +778,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRoute,
+  CoachesComunidadesRoute: CoachesComunidadesRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
   ComunidadeRoute: ComunidadeRoute,
   ContactosRoute: ContactosRoute,
@@ -729,6 +790,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacidadeRoute: PrivacidadeRoute,
   TermosRoute: TermosRoute,
   EnAppRoute: EnAppRoute,
+  EnCoachesComunidadesRoute: EnCoachesComunidadesRoute,
   EnComoFuncionaRoute: EnComoFuncionaRoute,
   EnComunidadeRoute: EnComunidadeRoute,
   EnContactosRoute: EnContactosRoute,
@@ -739,6 +801,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnPrivacidadeRoute: EnPrivacidadeRoute,
   EnTermosRoute: EnTermosRoute,
   EsAppRoute: EsAppRoute,
+  EsCoachesComunidadesRoute: EsCoachesComunidadesRoute,
   EsComoFuncionaRoute: EsComoFuncionaRoute,
   EsComunidadeRoute: EsComunidadeRoute,
   EsContactosRoute: EsContactosRoute,

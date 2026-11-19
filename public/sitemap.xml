@@ -22,6 +22,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
   </url>
   <url>
+    <loc>https://hybridhub.pt/coaches-comunidades</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/coaches-comunidades" />
+  </url>
+  <url>
     <loc>https://hybridhub.pt/parceiros-de-treino</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/parceiros-de-treino" />
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
@@ -99,6 +106,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
   </url>
   <url>
+    <loc>https://hybridhub.pt/es/coaches-comunidades</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/coaches-comunidades" />
+  </url>
+  <url>
     <loc>https://hybridhub.pt/es/parceiros-de-treino</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/parceiros-de-treino" />
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/parceiros-de-treino" />
@@ -174,6 +188,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/comunidade" />
     <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/comunidade" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/comunidade" />
+  </url>
+  <url>
+    <loc>https://hybridhub.pt/en/coaches-comunidades</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://hybridhub.pt/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hybridhub.pt/es/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hybridhub.pt/en/coaches-comunidades" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hybridhub.pt/coaches-comunidades" />
   </url>
   <url>
     <loc>https://hybridhub.pt/en/parceiros-de-treino</loc>

@@ -41,3 +41,8 @@ For a withdrawal or deletion request, use the submission id or verified email to
 - After deployment, submit controlled tests to the account owner's email and verify D1 persistence, both messages and language selection.
 
 The public forms stay disabled when the service is not fully configured. Complete setup and verification before publishing the migration.
+# Coaches e comunidades
+
+Página pública `/coaches-comunidades` (também `/es/coaches-comunidades` e `/en/coaches-comunidades`). O formulário envia `kind=partner` com campos estruturados, validados no servidor e proteção Turnstile. O servidor guarda estes pedidos como contactos com assuntos reservados `[Participação] PT / coach` ou `[Participação] Comunidade`; não há alteração ao esquema nem migração de dados. Contactos gerais não podem usar estes assuntos. A fila durável existente envia confirmação localizada e notificação para o administrador.
+
+Em `/inscritos`, selecionar **Coaches e comunidades** para ver respostas e exportar CSV. A mesma autenticação privada protege ambos os grupos; os pedidos ficam separados dos avisos de lançamento. Nenhum pedido cria ou publica automaticamente um perfil na app. Confirmar os dados e a autorização com o participante antes de publicar. Pedidos de eliminação chegam ao email administrativo indicado na política.

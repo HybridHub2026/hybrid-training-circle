@@ -41,6 +41,23 @@ beforeEach(() => {
 afterEach(() => { sqlite.close(); vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe("private subscribers", () => {
+  it("keeps coach/community applications private, separate from launch and exportable with answers", async () => {
+    signUp("launch@example.com"); signUp("general@example.com", "contact");
+    signUp("coach@example.com", "contact");
+    sqlite.prepare("UPDATE form_submissions SET name=?,subject=?,message=? WHERE email=?").run("=Coach", "[Participação] PT / coach", "Cidade: Maia\n\nModalidades: Corrida", "coach@example.com");
+    expect((await get("list&group=partners")).status).toBe(401);
+    const auth = await login();
+    const launch = await (await get("list", auth.cookie)).json();
+    expect(launch.subscribers.map((row: { email: string }) => row.email)).toEqual(["launch@example.com"]);
+    const partners = await (await get("list&group=partners", auth.cookie)).json();
+    expect(partners.total).toBe(1);
+    expect(partners.subscribers[0]).toMatchObject({ name: "=Coach", email: "coach@example.com", message: "Cidade: Maia\n\nModalidades: Corrida" });
+    const csv = await (await get("export&group=partners", auth.cookie)).text();
+    expect(csv).toContain("'=Coach");
+    expect(csv).toContain("Modalidades: Corrida");
+    expect(csv).not.toContain("launch@example.com");
+    expect((await get("list&group=other", auth.cookie)).status).toBe(400);
+  });
   it("never returns subscribers or CSV without an authenticated session", async () => {
     signUp("private@example.com");
     expect(await (await get("session")).json()).toEqual({ authenticated: false, expiresAt: null });

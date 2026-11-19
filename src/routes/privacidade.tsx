@@ -36,6 +36,7 @@ const sections: { heading: string; body: string[] }[] = [
     body: [
       "A Hybrid Hub recolhe apenas os dados pessoais necessários ao funcionamento da aplicação e à prestação das suas funcionalidades. Consoante a utilização que fizer da aplicação, podemos recolher: dados de identificação e de contacto (nome, endereço de correio eletrónico, número de telemóvel e data de nascimento); dados de perfil (fotografia, modalidades desportivas preferidas, nível de experiência e zona de residência); dados de localização; conteúdos partilhados nas comunidades; e dados de utilização da aplicação.",
       "A aplicação Hybrid Hub destina-se exclusivamente a maiores de 18 anos. Ao criar uma conta, o utilizador declara ter idade igual ou superior a 18 anos.",
+      "No formulário de interesse para coaches e comunidades, recolhemos o nome profissional ou da comunidade, email, cidade, país, modalidades, apresentação e informações sobre o acompanhamento ou atividades; o Instagram ou site é opcional. Utilizamos estas respostas para analisar o interesse e contactar o participante sobre os próximos passos. Os dados são guardados no sistema de formulários do site, com notificações por email, e não são publicados na app sem confirmação prévia. Para retirar o interesse e pedir a eliminação das respostas, pode escrever para hybridhubadmin@gmail.com.",
     ],
   },
   {

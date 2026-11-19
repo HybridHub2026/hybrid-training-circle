@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { partnerSchema, partnerSubjects, partnerMessage, partnerConsent, isPartner } from "./partners";
 import { consentText, makeEmail, type RecipientKind, type Submission } from "./emails";
 
 interface Statement {
@@ -22,7 +23,8 @@ export interface FormsEnvironment {
 
 const schema = z.object({
   id: z.string().uuid(),
-  kind: z.enum(["launch", "contact"]),
+  kind: z.enum(["launch", "contact", "partner"]),
+  partner: partnerSchema.optional(),
   idioma: z.enum(["pt", "es", "en"]),
   email: z.string().trim().email().max(254).transform(value => value.toLowerCase()),
   nome: z.string().trim().max(100).default(""),
@@ -31,7 +33,9 @@ const schema = z.object({
   consent: z.literal(true),
   token: z.string().min(1).max(4096),
   _gotcha: z.string().max(100).default(""),
-}).refine(value => value.kind !== "contact" || (value.nome && value.assunto && value.mensagem));
+}).refine(value => value.kind !== "contact" || (value.nome && value.assunto && value.mensagem && !isPartner(value.assunto)))
+  .refine(value => value.kind !== "partner" || (value.nome && value.partner))
+  .refine(value => value.kind === "partner" || value.partner === undefined);
 
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
 export function formsConfigured(env: FormsEnvironment) {
@@ -95,7 +99,9 @@ export async function handleForms(request: Request, env: FormsEnvironment, waitU
       if (signedUp) return json({ accepted: true }, 202);
     }
     const now = Date.now();
-    const submission: Submission = { id: body.id, kind: body.kind, language: body.idioma, email: body.email, name: body.nome, subject: body.assunto, message: body.mensagem, consent_text: consentText(body.kind, body.idioma), request_hash: requestHash, created_at: now };
+    const partner = body.kind === "partner" ? body.partner! : undefined;
+    const kind = body.kind === "partner" ? "contact" : body.kind;
+    const submission: Submission = { id: body.id, kind, language: body.idioma, email: body.email, name: body.nome, subject: partner ? partnerSubjects[partner.type] : body.assunto, message: partner ? partnerMessage(partner) : body.mensagem, consent_text: partner ? partnerConsent[body.idioma] : consentText(kind, body.idioma), request_hash: requestHash, created_at: now };
     await db.batch([
       db.prepare("INSERT INTO form_submissions(id,kind,language,email,name,subject,message,consent_text,request_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING").bind(...Object.values(submission)),
       ...(["user", "admin"] as const).map(recipient => db.prepare("INSERT INTO form_mail_outbox(id,submission_id,recipient) SELECT ?,id,? FROM form_submissions WHERE id=? ON CONFLICT DO NOTHING").bind(`${body.id}:${recipient}`, recipient, body.id)),

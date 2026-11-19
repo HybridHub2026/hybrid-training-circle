@@ -1,3 +1,4 @@
+import { isPartner } from "./partners";
 export type FormLanguage = "pt" | "es" | "en";
 export type FormKind = "launch" | "contact";
 export type RecipientKind = "user" | "admin";
@@ -65,11 +66,17 @@ function escapeHtml(value: string) {
 export function makeEmail(submission: Submission, recipient: RecipientKind, senderEmail: string, adminEmail: string) {
   const { kind, language, email, name } = submission;
   const text = copy[language];
+  const partner = kind === "contact" && isPartner(submission.subject);
+  const partnerReply = {
+    pt: "Obrigado por quereres fazer parte da Hybrid Hub. Recebemos a tua manifestação de interesse e vamos contactar-te para conhecer melhor o teu projeto e combinar os próximos passos. A app está em preparação. Nenhum perfil será publicado sem a tua confirmação.",
+    es: "Gracias por querer formar parte de Hybrid Hub. Hemos recibido tu solicitud de participación y te contactaremos para conocer mejor tu proyecto y acordar los próximos pasos. La app está en preparación. No publicaremos ningún perfil sin tu confirmación.",
+    en: "Thanks for wanting to be part of Hybrid Hub. We've received your expression of interest and will get in touch to learn more about what you do and agree on the next steps. The app is in development. We won't publish a profile without your confirmation.",
+  };
   const prefix = language === "pt" ? "" : `/${language}`;
   const privacyUrl = `https://hybridhub.pt${prefix}/privacidade`;
   const paragraphs = recipient === "user" ? [
     `${text.hello}${name ? ` ${name}` : ""},`,
-    text[kind],
+    partner ? partnerReply[language] : text[kind],
     text.reply,
     ...(kind === "launch" ? [text.unsubscribe] : []),
     "Hybrid Hub · TRAIN • CONNECT • COMPETE",
@@ -82,9 +89,9 @@ export function makeEmail(submission: Submission, recipient: RecipientKind, send
     `Recebido em: ${new Date(submission.created_at).toISOString()}`,
     `Referência: ${submission.id}`,
     `Registo de consentimento/privacidade: ${submission.consent_text}`,
-    ...(kind === "launch" ? ["Consultar a lista de inscritos: https://hybridhub.pt/inscritos"] : []),
+    ...(kind === "launch" || partner ? ["Consultar a área privada: https://hybridhub.pt/inscritos"] : []),
   ];
-  const subject = recipient === "user" ? text[`${kind}Subject`] : `Hybrid Hub — ${kind === "launch" ? "nova inscrição" : "novo contacto"}`;
+  const subject = recipient === "user" ? (partner ? { pt: "Hybrid Hub — recebemos o teu interesse", es: "Hybrid Hub — hemos recibido tu solicitud", en: "Hybrid Hub — thanks for your interest" }[language] : text[`${kind}Subject`]) : `Hybrid Hub — ${partner ? "novo interesse: coaches e comunidades" : kind === "launch" ? "nova inscrição" : "novo contacto"}`;
   const body = paragraphs.map(paragraph => `<p style="margin:0 0 18px;line-height:1.6">${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join("");
   return {
     sender: { email: senderEmail, name: "Hybrid Hub" },

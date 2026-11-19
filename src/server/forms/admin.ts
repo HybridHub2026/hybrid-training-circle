@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { partnerSubjects } from "./partners";
 import { formsConfigured, readLimitedJson, type FormsEnvironment } from "./service";
 
 const OWNER = "hybridhubadmin@gmail.com";
@@ -47,8 +48,11 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const language = url.searchParams.get("language") ?? "";
       if (language && !["pt", "es", "en"].includes(language)) return json({ error: "invalid_filter" }, 400);
       const showTests = url.searchParams.get("tests") === "1";
-      const conditions = ["kind='launch'"];
-      const values: unknown[] = [];
+      const group = url.searchParams.get("group") ?? "launch";
+      if (!["launch", "partners"].includes(group)) return json({ error: "invalid_filter" }, 400);
+      const partners = group === "partners";
+      const conditions = [partners ? "(kind='contact' AND subject IN (?,?))" : "kind='launch'"];
+      const values: unknown[] = partners ? Object.values(partnerSubjects) : [];
       if (!showTests) { conditions.push(`email NOT IN (${TEST_EMAILS.map(() => "?").join(",")})`); values.push(...TEST_EMAILS); }
       if (q) { conditions.push("email LIKE ? ESCAPE '\\'"); values.push(`%${q.replace(/[\\%_]/g, value => `\\${value}`)}%`); }
       if (language) { conditions.push("language=?"); values.push(language); }
@@ -58,10 +62,10 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const page = Math.max(1, Math.min(100000, Number.parseInt(url.searchParams.get("page") ?? "1", 10) || 1));
       const limit = action === "export" ? 10000 : 50;
       if (action === "export" && total > limit) return json({ error: "export_too_large" }, 422);
-      const rows = await db.prepare(`SELECT email,language,created_at FROM form_submissions WHERE ${where} ORDER BY created_at DESC,id DESC LIMIT ? OFFSET ?`).bind(...values, limit, action === "export" ? 0 : (page - 1) * limit).all<{ email: string; language: string; created_at: number }>();
+      const rows = await db.prepare(`SELECT ${partners ? "id,name,subject,message," : ""}email,language,created_at FROM form_submissions WHERE ${where} ORDER BY created_at DESC,id DESC LIMIT ? OFFSET ?`).bind(...values, limit, action === "export" ? 0 : (page - 1) * limit).all<{ id?: string; name?: string; subject?: string; message?: string; email: string; language: string; created_at: number }>();
       if (action === "export") {
         const cell = (text: string) => `"${(/^[=+@\-\t\r\n]/.test(text) ? `'${text}` : text).replace(/"/g, '""')}"`;
-        const csv = "\uFEFF" + [["Email", "Idioma", "Data de inscrição (UTC)"], ...rows.results.map(row => [row.email, row.language.toUpperCase(), new Date(row.created_at).toISOString()])].map(row => row.map(cell).join(";")).join("\r\n");
+        const csv = "\uFEFF" + [partners ? ["Nome", "Tipo", "Respostas", "Email", "Idioma", "Data de inscrição (UTC)"] : ["Email", "Idioma", "Data de inscrição (UTC)"], ...rows.results.map(row => [...(partners ? [row.name ?? "", row.subject ?? "", row.message ?? ""] : []), row.email, row.language.toUpperCase(), new Date(row.created_at).toISOString()])].map(row => row.map(cell).join(";")).join("\r\n");
         return new Response(csv, { headers: { ...headers, "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="hybrid-hub-inscritos-${new Date(now).toISOString().slice(0, 10)}.csv"` } });
       }
       return json({ total, page, pageSize: limit, subscribers: rows.results, expiresAt: auth.expiresAt });

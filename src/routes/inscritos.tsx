@@ -9,7 +9,7 @@ export const Route = createFileRoute("/inscritos")({
   component: SubscribersPage,
 });
 
-type Subscriber = { email: string; language: string; created_at: number };
+type Subscriber = { id?: string; name?: string; subject?: string; message?: string; email: string; language: string; created_at: number };
 type List = { subscribers: Subscriber[]; total: number; page: number; pageSize: number };
 const field = "w-full rounded-sm border border-border bg-card px-4 py-3 text-base focus:border-primary focus:outline-none";
 const languages: Record<string, string> = { pt: "Português", es: "Espanhol", en: "Inglês" };
@@ -30,6 +30,7 @@ function SubscribersPage() {
   const [query, setQuery] = useState("");
   const [language, setLanguage] = useState("");
   const [tests, setTests] = useState(false);
+  const [group, setGroup] = useState("launch");
   const [page, setPage] = useState(1);
   const [list, setList] = useState<List>(empty);
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,7 @@ function SubscribersPage() {
     const timer = setTimeout(() => { clearAccess(); setError("A sessão terminou. Pede um novo código para voltar a entrar."); }, Math.max(0, expiresAt - Date.now()));
     return () => clearTimeout(timer);
   }, [authenticated, expiresAt]);
-  const filters = new URLSearchParams({ q: query, language, tests: tests ? "1" : "0" });
+  const filters = new URLSearchParams({ q: query, language, group, tests: tests ? "1" : "0" });
   const filterString = filters.toString();
   useEffect(() => {
     if (!authenticated) return;
@@ -95,8 +96,8 @@ function SubscribersPage() {
   return <div className="min-h-screen bg-background">
     <header className="border-b border-border"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5"><a href="/" aria-label="Ir para o site Hybrid Hub"><img src={wordmark} alt="Hybrid Hub" className="w-40" /></a><span className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground"><LockKeyhole size={14} />Área privada</span></div></header>
     <section className="mx-auto max-w-6xl px-5 py-10 md:py-14">
-      <p className="eyebrow">Aviso de lançamento</p><h1 className="mt-3 text-3xl md:text-5xl">LISTA DE <span className="text-primary">INSCRITOS.</span></h1>
-      <p className="mt-4 max-w-2xl text-muted-foreground">Consulta quem quer saber quando a app estiver disponível.</p>
+      <p className="eyebrow">Hybrid Hub</p><h1 className="mt-3 text-3xl md:text-5xl">LISTA DE <span className="text-primary">INSCRITOS.</span></h1>
+      <p className="mt-4 max-w-2xl text-muted-foreground">Consulta os pedidos de aviso de lançamento e o interesse de coaches e comunidades.</p>
       {checking ? <p role="status" className="mt-10">A verificar o acesso…</p> : !authenticated ? <div className="mt-9 max-w-lg rounded-sm border border-border bg-card p-6 md:p-8">
         <h2 className="text-xl">{challenge ? "CONFIRMA O TEU ACESSO" : "ENTRA COM O TEU EMAIL"}</h2>
         <p className="mt-4 break-words text-sm leading-relaxed text-muted-foreground">{challenge ? "Enviámos um código para hybridhubadmin@gmail.com. Introduz os 8 algarismos abaixo. O código é válido durante 10 minutos. Verifica também o spam." : "O código de acesso será enviado apenas para hybridhubadmin@gmail.com. Não precisas de criar uma palavra-passe."}</p>
@@ -107,16 +108,17 @@ function SubscribersPage() {
         {challenge && <button className="mt-5 text-sm text-primary underline" disabled={busy} onClick={() => { setChallenge(""); setCode(""); setError(""); form.resetProtection(); }}>Pedir um novo código</button>}
         <p className="mt-5 text-xs text-muted-foreground">A sessão termina ao fim de uma hora. Não partilhes o código de acesso.</p>
       </div> : <>
+        <div className="mt-7 flex flex-wrap gap-3" role="group" aria-label="Lista a consultar">{([["launch", "Aviso de lançamento"], ["partners", "Coaches e comunidades"]] as const).map(([value, label]) => <button key={value} aria-pressed={group === value} className={`min-h-11 rounded-sm border px-4 py-3 text-sm ${group === value ? "border-primary text-primary" : "border-border"}`} onClick={() => { setGroup(value); setPage(1); setList(empty); }}>{label}</button>)}</div>
         <div className="mt-9 flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><Users className="text-primary" /><p><strong className="text-3xl">{loading ? "…" : list.total}</strong><span className="ml-2 text-muted-foreground">{query || language || tests ? "inscrições nesta vista" : "inscrições reais"}</span></p></div><div className="flex flex-wrap gap-3"><button onClick={() => setRefresh(value => value + 1)} className="rounded-sm border border-border px-4 py-3 text-sm" disabled={loading}>Atualizar</button><button onClick={download} className="btn-primary inline-flex items-center gap-2 disabled:opacity-50" disabled={busy || loading || !list.total}><Download size={16} />Exportar para Excel</button><button onClick={logout} className="flex items-center gap-2 rounded-sm border border-border px-4 py-3 text-sm" disabled={busy}><LogOut size={16} />Sair</button></div></div>
         <div className="mt-7 grid gap-4 md:grid-cols-[1fr_220px]"><div><label htmlFor="subscriber-search" className="mb-2 flex items-center gap-2 text-sm"><Search size={14} />Pesquisar por email</label><input id="subscriber-search" type="search" className={field} value={q} maxLength={254} onChange={event => setQ(event.target.value)} placeholder="Escreve parte do email" /></div><div><label htmlFor="subscriber-language" className="mb-2 block text-sm">Idioma</label><select id="subscriber-language" className={field} value={language} onChange={event => { setLanguage(event.target.value); setPage(1); }}><option value="">Todos os idiomas</option><option value="pt">Português</option><option value="es">Espanhol</option><option value="en">Inglês</option></select></div></div>
         <label className="mt-5 flex items-center gap-3 text-sm text-muted-foreground"><input type="checkbox" className="h-4 w-4 accent-primary" checked={tests} onChange={event => { setTests(event.target.checked); setPage(1); }} />Incluir inscrições de teste</label>
         <div className="mt-6 overflow-hidden rounded-sm border border-border" aria-busy={loading}>
-          <table className="hidden w-full text-left text-sm md:table"><thead className="bg-card text-muted-foreground"><tr><th scope="col" className="p-4">Email</th><th scope="col" className="p-4">Idioma</th><th scope="col" className="p-4">Inscrição</th></tr></thead><tbody>{list.subscribers.map(row => <tr key={row.email} className="border-t border-border"><td className="p-4 break-all">{row.email}{isTest(row.email) && <span className="ml-2 text-xs text-primary">Teste</span>}</td><td className="p-4">{languages[row.language]}</td><td className="whitespace-nowrap p-4">{dateLabel(row.created_at)}</td></tr>)}</tbody></table>
-          <div className="divide-y divide-border md:hidden">{list.subscribers.map(row => <article key={row.email} className="p-4"><p className="break-all text-sm">{row.email}</p>{isTest(row.email) && <p className="mt-1 text-xs text-primary">Inscrição de teste</p>}<dl className="mt-3 flex flex-wrap justify-between gap-3 text-xs text-muted-foreground"><div><dt className="sr-only">Idioma</dt><dd>{languages[row.language]}</dd></div><div><dt className="sr-only">Inscrição</dt><dd>{dateLabel(row.created_at)}</dd></div></dl></article>)}</div>
-          {!list.subscribers.length && <p role="status" className="p-6 text-sm text-muted-foreground">{loading ? "A carregar inscritos…" : query || language ? "Nenhuma inscrição corresponde aos filtros." : "Ainda não há inscrições reais. As inscrições de teste estão ocultas por defeito."}</p>}
+          {group === "launch" && <table className="hidden w-full text-left text-sm md:table"><thead className="bg-card text-muted-foreground"><tr><th scope="col" className="p-4">Email</th><th scope="col" className="p-4">Idioma</th><th scope="col" className="p-4">Inscrição</th></tr></thead><tbody>{list.subscribers.map(row => <tr key={row.email} className="border-t border-border"><td className="p-4 break-all">{row.email}{isTest(row.email) && <span className="ml-2 text-xs text-primary">Teste</span>}</td><td className="p-4">{languages[row.language]}</td><td className="whitespace-nowrap p-4">{dateLabel(row.created_at)}</td></tr>)}</tbody></table>}
+          <div className={`divide-y divide-border ${group === "launch" ? "md:hidden" : ""}`}>{list.subscribers.map(row => <article key={row.id ?? row.email} className="p-4">{row.name && <h2 className="text-lg">{row.name}</h2>}{row.subject && <p className="mt-1 text-sm text-primary">{row.subject.replace("[Participação] ", "")}</p>}<p className="mt-1 break-all text-sm">{row.email}</p>{row.message && <details className="mt-4 text-sm"><summary className="cursor-pointer py-2 text-primary">Ver respostas</summary><p className="mt-2 whitespace-pre-wrap break-words leading-relaxed text-muted-foreground">{row.message}</p></details>}{isTest(row.email) && <p className="mt-1 text-xs text-primary">Inscrição de teste</p>}<dl className="mt-3 flex flex-wrap justify-between gap-3 text-xs text-muted-foreground"><div><dt className="sr-only">Idioma</dt><dd>{languages[row.language]}</dd></div><div><dt className="sr-only">Inscrição</dt><dd>{dateLabel(row.created_at)}</dd></div></dl></article>)}</div>
+          {!list.subscribers.length && <p role="status" className="p-6 text-sm text-muted-foreground">{loading ? "A carregar inscritos…" : query || language ? "Nenhuma inscrição corresponde aos filtros." : "Ainda não há inscrições nesta lista. As inscrições de teste estão ocultas por defeito."}</p>}
         </div>
         {list.total > list.pageSize && <div className="mt-5 flex items-center justify-between gap-3 text-sm"><button className="rounded-sm border border-border px-4 py-2 disabled:opacity-40" disabled={loading || page <= 1} onClick={() => setPage(value => value - 1)}>Anterior</button><span>Página {page} de {Math.ceil(list.total / list.pageSize)}</span><button className="rounded-sm border border-border px-4 py-2 disabled:opacity-40" disabled={loading || page * list.pageSize >= list.total} onClick={() => setPage(value => value + 1)}>Seguinte</button></div>}
-        <p className="mt-5 text-xs leading-relaxed text-muted-foreground">Datas na hora de Lisboa. O ficheiro CSV abre no Excel e inclui os filtros escolhidos. Esta lista contém apenas pedidos do aviso de lançamento recebidos pelo sistema atual; as inscrições antigas do Formspree continuam nessa conta.</p>
+        <p className="mt-5 text-xs leading-relaxed text-muted-foreground">Datas na hora de Lisboa. O ficheiro CSV abre no Excel e inclui a lista e os filtros escolhidos. As inscrições antigas do Formspree continuam nessa conta. Os pedidos de coaches e comunidades são manifestações de interesse; os perfis só devem ser publicados após confirmação com cada pessoa.</p>
       </>}
       {error && <p role="alert" className="mt-5 max-w-2xl rounded-sm border border-primary/40 p-4 text-sm">{error}</p>}
     </section>

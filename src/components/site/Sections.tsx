@@ -157,6 +157,7 @@ export function Community({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         <T>{headingLevel === 2 && (
           <div className="mt-8 flex flex-wrap gap-4">
             <Link to="/comunidade" className="btn-ghost"><T>{"Explora a comunidade "}</T><ArrowRight size={16} /></Link>
+            <Link to="/coaches-comunidades" className="btn-ghost"><T>{"És coach ou representas uma comunidade?"}</T><ArrowRight size={16} /></Link>
             <Link to="/parceiros-de-treino" className="btn-ghost"><T>{"Como encontrar parceiros"}</T></Link>
           </div>
         )}</T>
