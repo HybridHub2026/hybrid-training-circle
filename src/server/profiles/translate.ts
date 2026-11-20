@@ -27,6 +27,19 @@ export const translationActionSchema = z
 export type ProfileTranslationRequest = z.infer<typeof translationActionSchema>;
 export type ProfileTranslations = Record<"es" | "en", Partial<z.infer<typeof sourceSchema>>>;
 const MODEL = "@cf/meta/m2m100-1.2b";
+const sportsTerms: Record<string, { es: string; en: string }> = {
+  corrida: { es: "Running", en: "Running" },
+  running: { es: "Running", en: "Running" },
+  "treino hibrido": { es: "Entrenamiento híbrido", en: "Hybrid training" },
+  "treino de forca": { es: "Entrenamiento de fuerza", en: "Strength training" },
+  forca: { es: "Fuerza", en: "Strength" },
+  musculacao: { es: "Entrenamiento de fuerza", en: "Strength training" },
+  natacao: { es: "Natación", en: "Swimming" },
+  ciclismo: { es: "Ciclismo", en: "Cycling" },
+  trail: { es: "Trail running", en: "Trail running" },
+  caminhada: { es: "Caminata", en: "Walking" },
+  "treino funcional": { es: "Entrenamiento funcional", en: "Functional training" },
+};
 const headers = {
   "Cache-Control": "private, no-store",
   "X-Robots-Tag": "noindex, nofollow",
@@ -90,8 +103,24 @@ export async function translateProfile(body: ProfileTranslationRequest, env: For
     const translations: ProfileTranslations = { es: {}, en: {} };
     const jobs: Array<() => Promise<void>> = [];
     const promises = new Map<string, Promise<string>>();
-    async function translate(text: string, language: "es" | "en", maxLength: number) {
+    async function translate(
+      text: string,
+      language: "es" | "en",
+      maxLength: number,
+      sport = false,
+    ) {
       if (!text) return "";
+      if (sport) {
+        const term =
+          sportsTerms[
+            text
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .toLocaleLowerCase("pt")
+              .trim()
+          ];
+        if (term && Object.hasOwn(term, language)) return term[language];
+      }
       // Preserve names of sports/brands that don't change between these languages.
       if (/^(HYROX|Hybrid Hub|CrossFit|Pilates|Yoga)$/i.test(text)) return text;
       const id = await hash(`${MODEL}:v1:${language}:${text}`);
@@ -145,7 +174,7 @@ export async function translateProfile(body: ProfileTranslationRequest, env: For
         translations[language].sports = sports;
         body.source.sports.forEach((sport, index) =>
           jobs.push(async () => {
-            sports[index] = await translate(sport, language, 60);
+            sports[index] = await translate(sport, language, 60, true);
           }),
         );
       }
