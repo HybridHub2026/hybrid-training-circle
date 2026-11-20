@@ -10,6 +10,8 @@ A gestão está em https://hybridhub.pt/inscritos, opção **Gerir perfis públi
 4. Guardar rascunho. A pré-visualização permite rever cada idioma.
 5. Confirmar a autorização do participante para os dados e imagem no site e publicar.
 
+Antes de publicar, selecionar Espanhol e Inglês e usar **Marcar espanhol/inglês como revisto**, depois de ler os textos. As alterações devem estar guardadas para confirmar uma revisão.
+
 Guardar alterações num perfil publicado mantém a versão pública anterior. Só Publicar substitui a versão visível. Retirar do site conserva o rascunho. Arquivar retira o perfil do site e permite recuperá-lo como rascunho. Não existe eliminação definitiva no painel.
 
 ## Dados e segurança
@@ -35,3 +37,13 @@ O Worker usa a ligação PROFILE_TRANSLATOR ao Workers AI, modelo @cf/meta/m2m10
 Limites locais: 30 pedidos por dia UTC, intervalo mínimo de três segundos, até quatro inferências em simultâneo, textos limitados pelos campos do editor. A tradução usa a quota do serviço existente, sem contratar planos pagos. Se o serviço ou quota estiver indisponível, guardar continua a conservar o rascunho original e permite preencher os idiomas manualmente. Os textos e erros do fornecedor não são registados em logs públicos.
 
 Referências: https://developers.cloudflare.com/workers-ai/models/m2m100-1.2b/ e https://developers.cloudflare.com/workers-ai/platform/pricing/.
+
+## Avisos de revisão das traduções
+
+O esquema aditivo migrations/0005_profile_translation_reviews.sql regista, por perfil e idioma, uma cópia normalizada dos textos portugueses, da tradução revista e a data da confirmação. Esta informação é privada e nunca integra o feed público.
+
+Alterar país, apresentação, modalidades ou descrição da imagem em português assinala espanhol e inglês como desatualizados. Alterar apenas uma tradução assinala só esse idioma. O aviso aparece imediatamente no editor e permanece depois de guardar, fechar ou reabrir. Nomes, cidades e links não invalidam as revisões; espaços exteriores aos textos são ignorados.
+
+Gerar traduções não as marca como revistas. É necessário guardar e confirmar cada idioma pendente. A API de publicação também bloqueia revisões pendentes, mesmo que o pedido seja feito fora do editor. A confirmação usa a revisão atual do perfil e rejeita versões antigas com HTTP 409.
+
+Para perfis publicados antes desta funcionalidade, a versão publicada serve de referência da revisão anterior. As alterações posteriores são comparadas com essa referência. A versão pública mantém-se inalterada enquanto o rascunho é revisto.

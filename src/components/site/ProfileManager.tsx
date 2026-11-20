@@ -4,6 +4,9 @@ import {
   emptyProfile,
   profileLanguages,
   publicationErrors,
+  pendingTranslationReviews,
+  translationReviewState,
+  translationComplete,
   type ProfileData,
   type ManagedProfile,
 } from "@/lib/profile-data";
@@ -92,6 +95,16 @@ export function ProfileManager({
     !!editor &&
     (!editor.current || JSON.stringify(editor.data) !== JSON.stringify(editor.current.data));
   const incomplete = editor ? publicationErrors(editor.data) : [];
+  const pendingReviews = editor
+    ? pendingTranslationReviews(editor.data, editor.current?.translationReviews)
+    : [];
+  const portugueseChanged =
+    !!editor &&
+    translationLanguages.some(
+      (lang) =>
+        translationReviewState(editor.data, lang, editor.current?.translationReviews?.[lang]) ===
+        "outdated",
+    );
 
   async function api(body?: unknown) {
     const response = await fetch(body ? "/api/admin" : "/api/admin?action=profiles", {
@@ -255,7 +268,7 @@ export function ProfileManager({
       setTranslating(false);
     }
   }
-  async function action(profile: ManagedProfile, action: string) {
+  async function action(profile: ManagedProfile, action: string, reviewLanguage?: "es" | "en") {
     if (busy) return;
     if (
       action !== "profile-publish" &&
@@ -279,16 +292,19 @@ export function ProfileManager({
         id: profile.id,
         revision: profile.revision,
         ...(action === "profile-publish" ? { permission } : {}),
+        ...(action === "profile-review" ? { language: reviewLanguage } : {}),
       });
       record(data.profile);
       setMessage(
-        action === "profile-publish"
-          ? "Perfil publicado nos três idiomas. Atualiza a página pública para ver o resultado."
-          : action === "profile-unpublish"
-            ? "Perfil retirado da página pública. O rascunho continua guardado."
-            : action === "profile-restore"
-              ? "Perfil recuperado como rascunho."
-              : "Perfil arquivado e retirado do site.",
+        action === "profile-review"
+          ? `Tradução de ${reviewLanguage === "es" ? "espanhol" : "inglês"} marcada como revista.`
+          : action === "profile-publish"
+            ? "Perfil publicado nos três idiomas. Atualiza a página pública para ver o resultado."
+            : action === "profile-unpublish"
+              ? "Perfil retirado da página pública. O rascunho continua guardado."
+              : action === "profile-restore"
+                ? "Perfil recuperado como rascunho."
+                : "Perfil arquivado e retirado do site.",
       );
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Não foi possível alterar o perfil.");
@@ -576,19 +592,79 @@ export function ProfileManager({
                   </div>
                 )}
               </div>
+              <aside
+                aria-label="Revisão das traduções"
+                className={`rounded-sm border p-4 text-sm ${pendingReviews.length ? "border-primary/60" : "border-border"}`}
+              >
+                <p className="font-semibold">
+                  {portugueseChanged
+                    ? "Alteraste o português. As traduções precisam de revisão."
+                    : pendingReviews.length
+                      ? "Há traduções por rever antes de publicar."
+                      : "Traduções revistas e atualizadas."}
+                </p>
+                {pendingReviews.length > 0 && (
+                  <p className="mt-2 text-muted-foreground">
+                    Revê {pendingReviews.map((lang) => labels[lang].toLowerCase()).join(" e ")}.
+                    Podes atualizar automaticamente ou editar os textos. Guarda e marca cada idioma
+                    como revisto.
+                  </p>
+                )}
+              </aside>
               <div className="flex flex-wrap gap-2" role="group" aria-label="Idioma dos textos">
                 {profileLanguages.map((lang) => (
                   <button
                     type="button"
                     key={lang}
                     aria-pressed={language === lang}
+                    aria-label={labels[lang]}
                     className={`${button} ${language === lang ? "border-primary text-primary" : ""}`}
                     onClick={() => setLanguage(lang)}
                   >
                     {labels[lang]}
+                    {lang !== "pt" && (
+                      <span
+                        aria-hidden="true"
+                        className={`text-[10px] ${pendingReviews.includes(lang) ? "text-primary" : "text-muted-foreground"}`}
+                      >
+                        {translationReviewState(
+                          editor.data,
+                          lang,
+                          editor.current?.translationReviews?.[lang],
+                        ) === "outdated"
+                          ? "Desatualizada"
+                          : pendingReviews.includes(lang)
+                            ? "Por rever"
+                            : "Revista"}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
+              {language !== "pt" && (
+                <div className="text-sm">
+                  <button
+                    type="button"
+                    className={button}
+                    disabled={
+                      busy ||
+                      dirty ||
+                      !editor.current ||
+                      !translationComplete(editor.data, "pt") ||
+                      !translationComplete(editor.data, language) ||
+                      !pendingReviews.includes(language)
+                    }
+                    onClick={() => void action(editor.current!, "profile-review", language)}
+                  >
+                    Marcar {language === "es" ? "espanhol" : "inglês"} como revisto
+                  </button>
+                  {dirty && (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Guarda o rascunho antes de confirmar a revisão.
+                    </p>
+                  )}
+                </div>
+              )}
               <label className="block text-sm">
                 País — {labels[language]}
                 <input
@@ -709,7 +785,7 @@ export function ProfileManager({
                   type="checkbox"
                   checked={permission}
                   onChange={(event) => setPermission(event.target.checked)}
-                  disabled={busy || dirty}
+                  disabled={busy || dirty || pendingReviews.length > 0}
                   className="mt-1 h-4 w-4 shrink-0 accent-primary"
                 />
                 <span>
@@ -720,7 +796,13 @@ export function ProfileManager({
               <div className="mt-5 flex flex-wrap gap-3">
                 <button
                   className="btn-primary disabled:opacity-50"
-                  disabled={busy || dirty || !permission || incomplete.length > 0}
+                  disabled={
+                    busy ||
+                    dirty ||
+                    !permission ||
+                    incomplete.length > 0 ||
+                    pendingReviews.length > 0
+                  }
                   onClick={() => void action(editor.current!, "profile-publish")}
                 >
                   Publicar no site
@@ -791,6 +873,9 @@ export function ProfileManager({
                   {profile.data.city ? ` · ${profile.data.city}` : ""}
                 </p>
                 <p className="mt-2 text-sm text-primary">{status(profile)}</p>
+                {!profile.archivedAt &&
+                  pendingTranslationReviews(profile.data, profile.translationReviews).length >
+                    0 && <p className="mt-2 text-xs text-primary">Traduções por rever</p>}
               </div>
               <div className="flex flex-wrap gap-3">
                 {profile.archivedAt ? (

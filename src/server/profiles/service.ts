@@ -4,6 +4,10 @@ import {
   publicationErrors,
   type ProfileData,
   type ManagedProfile,
+  type TranslationReviews,
+  translationSnapshot,
+  translationComplete,
+  pendingTranslationReviews,
 } from "../../lib/profile-data";
 import type { FormsDatabase } from "../forms/service";
 import type { MemberProfile } from "../../components/site/member-profiles";
@@ -26,6 +30,9 @@ export async function ensureProfileSchema(db: FormsDatabase) {
       db.prepare(
         "CREATE TABLE IF NOT EXISTS member_profile_images (id TEXT PRIMARY KEY,content_type TEXT NOT NULL,bytes BLOB NOT NULL,created_at INTEGER NOT NULL)",
       ),
+      db.prepare(
+        "CREATE TABLE IF NOT EXISTS profile_translation_reviews (profile_id TEXT NOT NULL REFERENCES member_profiles(id) ON DELETE CASCADE,language TEXT NOT NULL CHECK(language IN ('es','en')),source_snapshot TEXT NOT NULL,target_snapshot TEXT NOT NULL,reviewed_at INTEGER NOT NULL,PRIMARY KEY(profile_id,language))",
+      ),
     ]);
     initialized.set(db, pending);
   }
@@ -42,6 +49,12 @@ export const profileActionSchema = z.discriminatedUnion("action", [
     id: z.string().uuid(),
     revision: z.number().int().min(0),
     data: profileSchema,
+  }),
+  z.object({
+    action: z.literal("profile-review"),
+    id: z.string().uuid(),
+    revision: z.number().int().min(1),
+    language: z.enum(["es", "en"]),
   }),
   z.object({
     action: z.literal("profile-publish"),
@@ -64,7 +77,34 @@ type Row = {
   published_at: number | null;
   archived_at: number | null;
 };
-function managed(row: Row): ManagedProfile {
+type ReviewRow = {
+  profile_id: string;
+  language: "es" | "en";
+  source_snapshot: string;
+  target_snapshot: string;
+  reviewed_at: number;
+};
+function managed(row: Row, reviews: ReviewRow[] = []): ManagedProfile {
+  const published = row.published_payload
+    ? profileSchema.parse(JSON.parse(row.published_payload))
+    : null;
+  const translationReviews: TranslationReviews = { es: null, en: null };
+  for (const language of ["es", "en"] as const) {
+    const review = reviews.find((item) => item.language === language);
+    translationReviews[language] = review
+      ? {
+          source: review.source_snapshot,
+          target: review.target_snapshot,
+          reviewedAt: review.reviewed_at,
+        }
+      : published
+        ? {
+            source: translationSnapshot(published, "pt"),
+            target: translationSnapshot(published, language),
+            reviewedAt: row.published_at ?? 0,
+          }
+        : null;
+  }
   return {
     id: row.id,
     data: profileSchema.parse(JSON.parse(row.payload)),
@@ -75,6 +115,7 @@ function managed(row: Row): ManagedProfile {
     updatedAt: row.updated_at,
     publishedAt: row.published_at,
     archivedAt: row.archived_at,
+    translationReviews,
   };
 }
 export async function listManagedProfiles(db: FormsDatabase) {
@@ -84,7 +125,17 @@ export async function listManagedProfiles(db: FormsDatabase) {
       "SELECT id,payload,published_payload,revision,updated_at,published_at,archived_at FROM member_profiles ORDER BY updated_at DESC,id LIMIT 500",
     )
     .all<Row>();
-  return rows.results.map(managed);
+  const reviews = await db
+    .prepare(
+      "SELECT profile_id,language,source_snapshot,target_snapshot,reviewed_at FROM profile_translation_reviews",
+    )
+    .all<ReviewRow>();
+  return rows.results.map((row) =>
+    managed(
+      row,
+      reviews.results.filter((review) => review.profile_id === row.id),
+    ),
+  );
 }
 function publicProfile(id: string, data: ProfileData): MemberProfile {
   return {
@@ -167,12 +218,72 @@ export async function mutateProfile(body: z.infer<typeof profileActionSchema>, d
         },
         409,
       );
-    if (body.action === "profile-publish") {
+    if (body.action === "profile-review") {
+      const data = profileSchema.parse(JSON.parse(current.payload));
+      if (
+        current.archived_at ||
+        !translationComplete(data, "pt") ||
+        !translationComplete(data, body.language)
+      )
+        return json(
+          {
+            error: "incomplete",
+            message: "Preenche e guarda o português e a tradução antes de confirmar a revisão.",
+          },
+          400,
+        );
+      const locked = await db
+        .prepare(
+          "UPDATE member_profiles SET revision=revision+1,updated_at=? WHERE id=? AND revision=? AND archived_at IS NULL RETURNING revision",
+        )
+        .bind(now, body.id, body.revision)
+        .first<{ revision: number }>();
+      if (!locked) return json({ error: "conflict" }, 409);
+      const reviewed = await db
+        .prepare(
+          "INSERT INTO profile_translation_reviews(profile_id,language,source_snapshot,target_snapshot,reviewed_at) SELECT id,?,?,?,? FROM member_profiles WHERE id=? AND revision=? ON CONFLICT(profile_id,language) DO UPDATE SET source_snapshot=excluded.source_snapshot,target_snapshot=excluded.target_snapshot,reviewed_at=excluded.reviewed_at RETURNING language",
+        )
+        .bind(
+          body.language,
+          translationSnapshot(data, "pt"),
+          translationSnapshot(data, body.language),
+          now,
+          body.id,
+          locked.revision,
+        )
+        .first();
+      if (!reviewed)
+        return json(
+          {
+            error: "conflict",
+            message:
+              "O perfil foi alterado noutra janela. Atualiza a lista antes de confirmar a revisão.",
+          },
+          409,
+        );
+    } else if (body.action === "profile-publish") {
       if (current.archived_at)
         return json({ error: "archived", message: "Recupera o perfil antes de publicar." }, 400);
       const data = profileSchema.parse(JSON.parse(current.payload));
       const errors = publicationErrors(data);
       if (errors.length) return json({ error: "incomplete", message: errors.join(" ") }, 400);
+      const reviews = await db
+        .prepare(
+          "SELECT profile_id,language,source_snapshot,target_snapshot,reviewed_at FROM profile_translation_reviews WHERE profile_id=?",
+        )
+        .bind(body.id)
+        .all<ReviewRow>();
+      if (
+        pendingTranslationReviews(data, managed(current, reviews.results).translationReviews).length
+      )
+        return json(
+          {
+            error: "translations_need_review",
+            message:
+              "Revê espanhol e inglês e marca as traduções pendentes como revistas antes de publicar.",
+          },
+          400,
+        );
       const changed = await db
         .prepare(
           "UPDATE member_profiles SET published_payload=payload,published_at=?,permission_confirmed_at=?,updated_at=?,revision=revision+1 WHERE id=? AND revision=? AND archived_at IS NULL RETURNING id",
@@ -206,5 +317,11 @@ export async function mutateProfile(body: z.infer<typeof profileActionSchema>, d
     )
     .bind(body.id)
     .first<Row>();
-  return json({ profile: managed(saved!) });
+  const reviews = await db
+    .prepare(
+      "SELECT profile_id,language,source_snapshot,target_snapshot,reviewed_at FROM profile_translation_reviews WHERE profile_id=?",
+    )
+    .bind(body.id)
+    .all<ReviewRow>();
+  return json({ profile: managed(saved!, reviews.results) });
 }

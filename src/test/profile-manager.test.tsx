@@ -1,7 +1,25 @@
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { ProfileManager } from "@/components/site/ProfileManager";
-import { emptyProfile, type ManagedProfile } from "@/lib/profile-data";
+import { emptyProfile, translationSnapshot, type ManagedProfile } from "@/lib/profile-data";
+
+function reviewed(profile: ManagedProfile): ManagedProfile {
+  return {
+    ...profile,
+    translationReviews: {
+      es: {
+        source: translationSnapshot(profile.data, "pt"),
+        target: translationSnapshot(profile.data, "es"),
+        reviewedAt: Date.now(),
+      },
+      en: {
+        source: translationSnapshot(profile.data, "pt"),
+        target: translationSnapshot(profile.data, "en"),
+        reviewedAt: Date.now(),
+      },
+    },
+  };
+}
 
 vi.mock("@/i18n", () => ({ useLanguage: () => "pt", translateText: (value: string) => value }));
 afterEach(() => {
@@ -26,6 +44,7 @@ it("saves edits as drafts and enables publication only after saving and confirmi
     archivedAt: null,
   };
   const calls: Array<{ action: string; data?: ManagedProfile["data"] }> = [];
+  profile = reviewed(profile);
   vi.stubGlobal(
     "fetch",
     vi.fn(async (_url: string, init?: RequestInit) => {
@@ -78,6 +97,67 @@ it("does not allow an expired session to read managed profiles", async () => {
   render(<ProfileManager onUnauthorized={expired} onLogout={vi.fn(async () => {})} />);
   await waitFor(() => expect(expired).toHaveBeenCalledOnce());
   expect(await screen.findByRole("alert")).toHaveTextContent("A sessão terminou");
+});
+
+it("marks Portuguese edits immediately, keeps the warning after saving and requires review of each language", async () => {
+  const draft = portugueseDraft();
+  draft.data.country.en = "Portugal";
+  draft.data.description.en = "Running sessions.";
+  draft.data.sports.en = ["Running"];
+  let profile = reviewed(draft);
+  const actions: string[] = [];
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (_url: string, init?: RequestInit) => {
+      if (!init?.body) return Response.json({ profiles: [profile] });
+      const body = JSON.parse(String(init.body));
+      actions.push(body.action);
+      if (body.action === "profile-save")
+        profile = { ...profile, data: body.data, revision: profile.revision + 1 };
+      if (body.action === "profile-review") {
+        const language = body.language as "es" | "en";
+        profile = {
+          ...profile,
+          revision: profile.revision + 1,
+          translationReviews: {
+            ...profile.translationReviews!,
+            [language]: {
+              source: translationSnapshot(profile.data, "pt"),
+              target: translationSnapshot(profile.data, language),
+              reviewedAt: Date.now(),
+            },
+          },
+        };
+      }
+      return Response.json({ profile });
+    }),
+  );
+  render(<ProfileManager onUnauthorized={vi.fn()} onLogout={vi.fn(async () => {})} />);
+  fireEvent.click(await screen.findByRole("button", { name: "Editar / publicar" }));
+  expect(screen.getByText("Traduções revistas e atualizadas.")).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("Apresentação — Português"), {
+    target: { value: "Novo texto português." },
+  });
+  expect(
+    screen.getByText("Alteraste o português. As traduções precisam de revisão."),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Publicar no site" })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Guardar rascunho" }));
+  await screen.findByText(/Rascunho guardado/);
+  expect(
+    screen.getByText("Alteraste o português. As traduções precisam de revisão."),
+  ).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "Espanhol" }));
+  fireEvent.click(screen.getByRole("button", { name: "Marcar espanhol como revisto" }));
+  await screen.findByText("Tradução de espanhol marcada como revista.");
+  expect(screen.getByRole("button", { name: "Publicar no site" })).toBeDisabled();
+  fireEvent.click(screen.getByRole("button", { name: "Inglês" }));
+  fireEvent.click(screen.getByRole("button", { name: "Marcar inglês como revisto" }));
+  await screen.findByText("Tradução de inglês marcada como revista.");
+  expect(screen.getByText("Traduções revistas e atualizadas.")).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("checkbox", { name: /Confirmo que o participante/ }));
+  expect(screen.getByRole("button", { name: "Publicar no site" })).toBeEnabled();
+  expect(actions).toEqual(["profile-save", "profile-review", "profile-review"]);
 });
 
 function portugueseDraft(): ManagedProfile {

@@ -44,7 +44,42 @@ export type ManagedProfile = {
   updatedAt: number;
   publishedAt: number | null;
   archivedAt: number | null;
+  translationReviews?: TranslationReviews;
 };
+export type TranslationReview = { source: string; target: string; reviewedAt: number };
+export type TranslationReviews = Record<"es" | "en", TranslationReview | null>;
+export function translationSnapshot(data: ProfileData, language: Language) {
+  return JSON.stringify({
+    country: data.country[language].trim(),
+    description: data.description[language].trim(),
+    sports: data.sports[language].map((value) => value.trim()).filter(Boolean),
+    imageAlt: data.imageId ? data.imageAlt[language].trim() : "",
+  });
+}
+export function translationReviewState(
+  data: ProfileData,
+  language: "es" | "en",
+  review: TranslationReview | null | undefined,
+) {
+  if (!review) return "pending" as const;
+  if (review.source !== translationSnapshot(data, "pt")) return "outdated" as const;
+  return review.target === translationSnapshot(data, language)
+    ? ("reviewed" as const)
+    : ("pending" as const);
+}
+export function pendingTranslationReviews(data: ProfileData, reviews?: TranslationReviews) {
+  return (["es", "en"] as const).filter(
+    (language) => translationReviewState(data, language, reviews?.[language]) !== "reviewed",
+  );
+}
+export function translationComplete(data: ProfileData, language: Language) {
+  return !!(
+    data.country[language].trim() &&
+    data.description[language].trim() &&
+    data.sports[language].some((value) => value.trim()) &&
+    (!data.imageId || data.imageAlt[language].trim())
+  );
+}
 export const profileLanguages: Language[] = ["pt", "es", "en"];
 export function publicationErrors(profile: ProfileData) {
   const errors: string[] = [];

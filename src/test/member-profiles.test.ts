@@ -6,7 +6,12 @@ import { handleAdmin } from "@/server/forms/admin";
 import { handleProfileImages } from "@/server/profiles/images";
 import { listPublicProfiles } from "@/server/profiles/service";
 import { type ProfileTranslationRequest } from "@/server/profiles/translate";
-import { emptyProfile, type ProfileData } from "@/lib/profile-data";
+import {
+  emptyProfile,
+  pendingTranslationReviews,
+  translationReviewState,
+  type ProfileData,
+} from "@/lib/profile-data";
 import type { FormsDatabase, FormsEnvironment } from "@/server/forms/service";
 
 let db: DatabaseSync, env: FormsEnvironment;
@@ -76,6 +81,16 @@ async function save(cookie: string, data = complete(), id = crypto.randomUUID(),
   return (await response.json()).profile;
 }
 async function action(cookie: string, profile: { id: string; revision: number }, action: string) {
+  if (action === "profile-publish") {
+    for (const language of ["es", "en"]) {
+      const reviewed = await post(
+        { action: "profile-review", id: profile.id, revision: profile.revision, language },
+        cookie,
+      );
+      expect(reviewed.status).toBe(200);
+      profile = (await reviewed.json()).profile;
+    }
+  }
   const response = await post(
     { action, id: profile.id, revision: profile.revision, permission: true },
     cookie,
@@ -106,6 +121,114 @@ beforeEach(() => {
           )
         : mail(url, init),
     ),
+  );
+});
+
+it("persists stale translation warnings after Portuguese edits and blocks publishing until both languages are reviewed", async () => {
+  const cookie = await login();
+  let profile = await save(cookie);
+  expect(
+    (
+      await post(
+        { action: "profile-publish", id: profile.id, revision: profile.revision, permission: true },
+        cookie,
+      )
+    ).status,
+  ).toBe(400);
+  profile = await action(cookie, profile, "profile-publish");
+  expect(pendingTranslationReviews(profile.data, profile.translationReviews)).toEqual([]);
+  profile = await save(
+    cookie,
+    {
+      ...profile.data,
+      description: { ...profile.data.description, pt: "Nova apresentação portuguesa." },
+    },
+    profile.id,
+    profile.revision,
+  );
+  expect(pendingTranslationReviews(profile.data, profile.translationReviews)).toEqual(["es", "en"]);
+  expect(translationReviewState(profile.data, "es", profile.translationReviews.es)).toBe(
+    "outdated",
+  );
+  const reopened = (await (await list(cookie)).json()).profiles[0];
+  expect(pendingTranslationReviews(reopened.data, reopened.translationReviews)).toEqual([
+    "es",
+    "en",
+  ]);
+  expect(
+    (
+      await post(
+        { action: "profile-publish", id: profile.id, revision: profile.revision, permission: true },
+        cookie,
+      )
+    ).status,
+  ).toBe(400);
+  profile = (
+    await (
+      await post(
+        { action: "profile-review", id: profile.id, revision: profile.revision, language: "es" },
+        cookie,
+      )
+    ).json()
+  ).profile;
+  expect(pendingTranslationReviews(profile.data, profile.translationReviews)).toEqual(["en"]);
+  expect(
+    (
+      await post(
+        { action: "profile-publish", id: profile.id, revision: profile.revision, permission: true },
+        cookie,
+      )
+    ).status,
+  ).toBe(400);
+  const oldRevision = profile.revision;
+  profile = (
+    await (
+      await post(
+        { action: "profile-review", id: profile.id, revision: profile.revision, language: "en" },
+        cookie,
+      )
+    ).json()
+  ).profile;
+  expect(
+    (
+      await post(
+        { action: "profile-review", id: profile.id, revision: oldRevision, language: "es" },
+        cookie,
+      )
+    ).status,
+  ).toBe(409);
+  expect(
+    (
+      await post(
+        { action: "profile-publish", id: profile.id, revision: profile.revision, permission: true },
+        cookie,
+      )
+    ).status,
+  ).toBe(200);
+  expect((await listPublicProfiles(env.FORMS_DB!))[0]?.description.pt).toBe(
+    "Nova apresentação portuguesa.",
+  );
+});
+it("flags only the edited translation and ignores identity changes and whitespace", async () => {
+  const cookie = await login();
+  let profile = await save(cookie);
+  profile = await action(cookie, profile, "profile-publish");
+  const identityChange = {
+    ...profile.data,
+    name: "Novo nome",
+    city: "Porto",
+    description: { ...profile.data.description, pt: ` ${profile.data.description.pt} ` },
+  };
+  expect(pendingTranslationReviews(identityChange, profile.translationReviews)).toEqual([]);
+  profile = await save(
+    cookie,
+    { ...profile.data, description: { ...profile.data.description, es: "Descripción revisada." } },
+    profile.id,
+    profile.revision,
+  );
+  expect(pendingTranslationReviews(profile.data, profile.translationReviews)).toEqual(["es"]);
+  expect(translationReviewState(profile.data, "en", profile.translationReviews.en)).toBe(
+    "reviewed",
   );
 });
 afterEach(() => {
