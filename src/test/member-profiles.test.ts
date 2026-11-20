@@ -154,14 +154,16 @@ it("translates selected fields without saving or publishing profiles and reuses 
   expect(first.status).toBe(200);
   const result = await first.json();
   expect(result.translations.es.description).toBe("es: Treinos de corrida para iniciantes.");
+  expect(result.translations.en.country).toBe("Portugal");
+  expect(result.translations.es.country).toBe("Portugal");
   expect(result.translations.en.sports).toEqual(["Running", "HYROX"]);
   expect(result.translations.es.sports).toEqual(["Running", "HYROX"]);
-  expect(run).toHaveBeenCalledTimes(6);
+  expect(run).toHaveBeenCalledTimes(4);
   for (const [, input] of run.mock.calls) expect(input.source_lang).toBe("pt");
   expect(db.prepare("SELECT COUNT(*) AS total FROM member_profiles").get()?.["total"]).toBe(0);
   vi.setSystemTime(Date.now() + 4000);
   expect((await post(translationRequest(), cookie)).status).toBe(200);
-  expect(run).toHaveBeenCalledTimes(6);
+  expect(run).toHaveBeenCalledTimes(4);
 });
 it("does not translate fields that are being preserved and limits retries", async () => {
   const run = vi.fn(async () => ({ translated_text: "Tradução" }));

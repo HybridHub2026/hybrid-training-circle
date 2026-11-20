@@ -27,6 +27,33 @@ export const translationActionSchema = z
 export type ProfileTranslationRequest = z.infer<typeof translationActionSchema>;
 export type ProfileTranslations = Record<"es" | "en", Partial<z.infer<typeof sourceSchema>>>;
 const MODEL = "@cf/meta/m2m100-1.2b";
+const normalize = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("pt")
+    .trim();
+let countryCodes: Map<string, string> | undefined;
+function countryName(text: string, language: "es" | "en") {
+  if (!countryCodes) {
+    countryCodes = new Map();
+    const portuguese = new Intl.DisplayNames(["pt-PT"], { type: "region", fallback: "none" });
+    for (let first = 65; first <= 90; first++)
+      for (let second = 65; second <= 90; second++) {
+        const code = String.fromCharCode(first, second),
+          name = portuguese.of(code);
+        if (name) {
+          countryCodes.set(normalize(name), code);
+          countryCodes.set(code.toLowerCase(), code);
+        }
+      }
+    countryCodes.set("eua", "US");
+    countryCodes.set("estados unidos da america", "US");
+    countryCodes.set("republica checa", "CZ");
+  }
+  const code = countryCodes.get(normalize(text));
+  return code ? new Intl.DisplayNames([language], { type: "region" }).of(code) : undefined;
+}
 const sportsTerms: Record<string, { es: string; en: string }> = {
   corrida: { es: "Running", en: "Running" },
   running: { es: "Running", en: "Running" },
@@ -167,7 +194,10 @@ export async function translateProfile(body: ProfileTranslationRequest, env: For
       ] as const)
         if (body.fields[language][field])
           jobs.push(async () => {
-            translations[language][field] = await translate(body.source[field], language, max);
+            const country =
+              field === "country" ? countryName(body.source.country, language) : undefined;
+            translations[language][field] =
+              country ?? (await translate(body.source[field], language, max));
           });
       if (body.fields[language].sports) {
         const sports = Array<string>(body.source.sports.length);
