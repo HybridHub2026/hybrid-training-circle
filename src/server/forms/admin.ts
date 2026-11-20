@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { partnerSubjects } from "./partners";
 import { formsConfigured, readLimitedJson, type FormsEnvironment } from "./service";
+import { profileActionSchema, listManagedProfiles, mutateProfile } from "../profiles/service";
 
 const OWNER = "hybridhubadmin@gmail.com";
 const COOKIE = "__Host-hh_admin";
@@ -43,6 +44,7 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const action = url.searchParams.get("action") ?? "session";
       if (action === "session") return json({ authenticated: Boolean(auth), expiresAt: auth?.expiresAt ?? null });
       if (!auth) return json({ error: "unauthorized" }, 401);
+      if (action === "profiles") return json({ profiles: await listManagedProfiles(db) });
       if (!["list", "export"].includes(action)) return json({ error: "invalid_action" }, 400);
       const q = (url.searchParams.get("q") ?? "").trim().slice(0, 254);
       const language = url.searchParams.get("language") ?? "";
@@ -73,8 +75,12 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
     if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
     if (!validOrigin(request)) return json({ error: "forbidden" }, 403);
     if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ error: "invalid_request" }, 415);
-    let body: z.infer<typeof bodySchema>;
-    try { body = bodySchema.parse(await readLimitedJson(request)); } catch { return json({ error: "invalid_request" }, 400); }
+    let body: z.infer<typeof bodySchema> | z.infer<typeof profileActionSchema>;
+    try { body = z.union([bodySchema, profileActionSchema]).parse(await readLimitedJson(request, 65536)); } catch { return json({ error: "invalid_request", message: "Confirma os campos e os links HTTPS do perfil." }, 400); }
+    if ("revision" in body) {
+      if (!await session(request, env)) return json({ error: "unauthorized" }, 401);
+      return await mutateProfile(body, db);
+    }
     if (body.action === "logout") {
       const auth = await session(request, env);
       if (auth) await db.prepare("DELETE FROM admin_sessions WHERE token_hash=?").bind(auth.tokenHash).run();
@@ -116,3 +122,5 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
     return json({ challenge, expiresAt: now + 10 * 60000 });
   } catch { return json({ error: "unavailable" }, 503); }
 }
+
+export { session as adminSession, validOrigin as adminOrigin };

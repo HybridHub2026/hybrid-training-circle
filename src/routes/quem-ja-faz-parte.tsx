@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Dumbbell, Users, MapPin, ArrowRight } from "lucide-react";
+import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { Dumbbell, Users, ArrowRight } from "lucide-react";
 import { Link, T, useLanguage } from "@/i18n";
+import { loadPublicProfiles } from "@/lib/public-profiles";
+import { ProfileCard } from "@/components/site/ProfileCard";
 import { languageAlternates } from "@/i18n/language";
-import { memberProfiles, type MemberProfile } from "@/components/site/member-profiles";
+import { type MemberProfile } from "@/components/site/member-profiles";
 
-export const Route = createFileRoute("/quem-ja-faz-parte")({
-  head: () => ({
+export function memberPageHead(memberProfiles: MemberProfile[]) {
+  return {
     meta: [
       { title: "Quem já faz parte | Coaches e comunidades Hybrid Hub" },
       {
@@ -26,80 +28,22 @@ export const Route = createFileRoute("/quem-ja-faz-parte")({
       { rel: "canonical", href: "https://hybridhub.pt/quem-ja-faz-parte" },
       ...languageAlternates("/quem-ja-faz-parte"),
     ],
-  }),
+  };
+}
+
+export const Route = createFileRoute("/quem-ja-faz-parte")({
+  loader: () => loadPublicProfiles(),
+  staleTime: 0,
+  head: ({
+    loaderData,
+  }: {
+    loaderData?: import("@/components/site/member-profiles").MemberProfile[];
+  }) => memberPageHead(loaderData ?? []),
   component: MembersPage,
 });
 
-function ProfileCard({ profile }: { profile: MemberProfile }) {
-  const language = useLanguage();
-  const Icon = profile.kind === "coach" ? Dumbbell : Users;
-  return (
-    <article className="flex h-full flex-col overflow-hidden rounded-sm border border-border bg-card">
-      {profile.image ? (
-        <img
-          src={profile.image.src}
-          alt={profile.image.alt[language]}
-          loading="lazy"
-          className="aspect-[4/3] w-full object-cover"
-        />
-      ) : (
-        <div className="flex aspect-[4/3] items-center justify-center bg-muted">
-          <Icon className="h-14 w-14 text-primary" aria-hidden="true" />
-        </div>
-      )}
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="break-words text-2xl">{profile.name}</h3>
-        <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
-          <MapPin size={16} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-          {profile.city}, {profile.country[language]}
-        </p>
-        <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">
-          {profile.description[language]}
-        </p>
-        <ul
-          className="mt-5 flex flex-wrap gap-2"
-          aria-label={language === "es" ? "Deportes" : language === "en" ? "Sports" : "Modalidades"}
-        >
-          {profile.sports[language].map((sport) => (
-            <li
-              key={sport}
-              className="rounded-sm border border-primary/30 px-3 py-1 text-xs text-primary"
-            >
-              {sport}
-            </li>
-          ))}
-        </ul>
-        {(profile.instagram || profile.website) && (
-          <div className="mt-6 flex flex-wrap gap-5 border-t border-border pt-4 text-sm">
-            {profile.instagram && (
-              <a
-                href={profile.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2 text-primary underline underline-offset-4"
-              >
-                Instagram<span className="sr-only"> — {profile.name}</span>
-              </a>
-            )}
-            {profile.website && (
-              <a
-                href={profile.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2 text-primary underline underline-offset-4"
-              >
-                <T>{"Visitar site"}</T>
-                <span className="sr-only"> — {profile.name}</span>
-              </a>
-            )}
-          </div>
-        )}
-      </div>
-    </article>
-  );
-}
-
 export function MembersPage() {
+  const memberProfiles = useLoaderData({ strict: false }) as MemberProfile[];
   const language = useLanguage();
   return (
     <div className="mx-auto max-w-7xl px-5 pb-12 pt-28 md:px-10 md:pb-20 md:pt-36">

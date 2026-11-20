@@ -42,7 +42,7 @@ export function formsConfigured(env: FormsEnvironment) {
   return Boolean(env.FORMS_DB && env.BREVO_API_KEY && env.BREVO_SENDER_EMAIL && env.FORMS_TURNSTILE_SITE_KEY && env.FORMS_TURNSTILE_SECRET);
 }
 
-export async function readLimitedJson(request: Request) {
+export async function readLimitedJson(request: Request, limit = 16384) {
   const reader = request.body?.getReader();
   if (!reader) throw new Error("empty_body");
   const chunks: Uint8Array[] = [];
@@ -51,7 +51,7 @@ export async function readLimitedJson(request: Request) {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.byteLength;
-    if (size > 16384) { await reader.cancel(); throw new Error("body_too_large"); }
+    if (size > limit) { await reader.cancel(); throw new Error("body_too_large"); }
     chunks.push(value);
   }
   const buffer = new Uint8Array(size);

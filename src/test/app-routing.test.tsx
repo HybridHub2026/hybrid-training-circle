@@ -1,6 +1,9 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, rootRouteId } from "@tanstack/react-router";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+// Routing tests don't run Cloudflare-backed loaders.
+vi.mock("@/lib/public-profiles", () => ({ loadPublicProfiles: vi.fn(async () => []) }));
 
 import { routeTree } from "@/routeTree.gen";
 

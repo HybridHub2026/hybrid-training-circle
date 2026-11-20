@@ -3,6 +3,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Download, LogOut, LockKeyhole, Search, Users } from "lucide-react";
 import wordmark from "@/assets/hybrid-hub-wordmark.webp";
 import { FormProtection, useWebsiteForm } from "@/components/site/WebsiteForm";
+import { ProfileManager } from "@/components/site/ProfileManager";
 
 export const Route = createFileRoute("/inscritos")({
   head: () => ({ meta: [{ title: "Inscritos | Hybrid Hub — área privada" }, { name: "robots", content: "noindex, nofollow, noarchive" }, { name: "referrer", content: "no-referrer" }] }),
@@ -54,7 +55,7 @@ function SubscribersPage() {
   const filters = new URLSearchParams({ q: query, language, group, tests: tests ? "1" : "0" });
   const filterString = filters.toString();
   useEffect(() => {
-    if (!authenticated) return;
+    if (!authenticated || group === "profiles") return;
     const controller = new AbortController(); setLoading(true); setError(""); setList(empty);
     fetch(`/api/admin?action=list&page=${page}&${filterString}`, { signal: controller.signal, cache: "no-store" }).then(async response => {
       if (response.status === 401) { clearAccess(); throw new Error("A sessão terminou. Pede um novo código."); }
@@ -97,7 +98,7 @@ function SubscribersPage() {
     <header className="border-b border-border"><div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5"><a href="/" aria-label="Ir para o site Hybrid Hub"><img src={wordmark} alt="Hybrid Hub" className="w-40" /></a><span className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground"><LockKeyhole size={14} />Área privada</span></div></header>
     <section className="mx-auto max-w-6xl px-5 py-10 md:py-14">
       <p className="eyebrow">Hybrid Hub</p><h1 className="mt-3 text-3xl md:text-5xl">LISTA DE <span className="text-primary">INSCRITOS.</span></h1>
-      <p className="mt-4 max-w-2xl text-muted-foreground">Consulta os pedidos de aviso de lançamento e o interesse de coaches e comunidades.</p>
+      <p className="mt-4 max-w-2xl text-muted-foreground">Consulta as inscrições e gere os perfis públicos dos coaches e comunidades.</p>
       {checking ? <p role="status" className="mt-10">A verificar o acesso…</p> : !authenticated ? <div className="mt-9 max-w-lg rounded-sm border border-border bg-card p-6 md:p-8">
         <h2 className="text-xl">{challenge ? "CONFIRMA O TEU ACESSO" : "ENTRA COM O TEU EMAIL"}</h2>
         <p className="mt-4 break-words text-sm leading-relaxed text-muted-foreground">{challenge ? "Enviámos um código para hybridhubadmin@gmail.com. Introduz os 8 algarismos abaixo. O código é válido durante 10 minutos. Verifica também o spam." : "O código de acesso será enviado apenas para hybridhubadmin@gmail.com. Não precisas de criar uma palavra-passe."}</p>
@@ -108,7 +109,8 @@ function SubscribersPage() {
         {challenge && <button className="mt-5 text-sm text-primary underline" disabled={busy} onClick={() => { setChallenge(""); setCode(""); setError(""); form.resetProtection(); }}>Pedir um novo código</button>}
         <p className="mt-5 text-xs text-muted-foreground">A sessão termina ao fim de uma hora. Não partilhes o código de acesso.</p>
       </div> : <>
-        <div className="mt-7 flex flex-wrap gap-3" role="group" aria-label="Lista a consultar">{([["launch", "Aviso de lançamento"], ["partners", "Coaches e comunidades"]] as const).map(([value, label]) => <button key={value} aria-pressed={group === value} className={`min-h-11 rounded-sm border px-4 py-3 text-sm ${group === value ? "border-primary text-primary" : "border-border"}`} onClick={() => { setGroup(value); setPage(1); setList(empty); }}>{label}</button>)}</div>
+        <div className="mt-7 flex flex-wrap gap-3" role="group" aria-label="Lista a consultar">{([["launch", "Aviso de lançamento"], ["partners", "Coaches e comunidades"], ["profiles", "Gerir perfis públicos"]] as const).map(([value, label]) => <button key={value} aria-pressed={group === value} className={`min-h-11 rounded-sm border px-4 py-3 text-sm ${group === value ? "border-primary text-primary" : "border-border"}`} onClick={() => { setGroup(value); setPage(1); setList(empty); }}>{label}</button>)}</div>
+        {group === "profiles" ? <ProfileManager onUnauthorized={clearAccess} onLogout={logout} /> : <>
         <div className="mt-9 flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><Users className="text-primary" /><p><strong className="text-3xl">{loading ? "…" : list.total}</strong><span className="ml-2 text-muted-foreground">{query || language || tests ? "inscrições nesta vista" : "inscrições reais"}</span></p></div><div className="flex flex-wrap gap-3"><button onClick={() => setRefresh(value => value + 1)} className="rounded-sm border border-border px-4 py-3 text-sm" disabled={loading}>Atualizar</button><button onClick={download} className="btn-primary inline-flex items-center gap-2 disabled:opacity-50" disabled={busy || loading || !list.total}><Download size={16} />Exportar para Excel</button><button onClick={logout} className="flex items-center gap-2 rounded-sm border border-border px-4 py-3 text-sm" disabled={busy}><LogOut size={16} />Sair</button></div></div>
         <div className="mt-7 grid gap-4 md:grid-cols-[1fr_220px]"><div><label htmlFor="subscriber-search" className="mb-2 flex items-center gap-2 text-sm"><Search size={14} />Pesquisar por email</label><input id="subscriber-search" type="search" className={field} value={q} maxLength={254} onChange={event => setQ(event.target.value)} placeholder="Escreve parte do email" /></div><div><label htmlFor="subscriber-language" className="mb-2 block text-sm">Idioma</label><select id="subscriber-language" className={field} value={language} onChange={event => { setLanguage(event.target.value); setPage(1); }}><option value="">Todos os idiomas</option><option value="pt">Português</option><option value="es">Espanhol</option><option value="en">Inglês</option></select></div></div>
         <label className="mt-5 flex items-center gap-3 text-sm text-muted-foreground"><input type="checkbox" className="h-4 w-4 accent-primary" checked={tests} onChange={event => { setTests(event.target.checked); setPage(1); }} />Incluir inscrições de teste</label>
@@ -119,6 +121,7 @@ function SubscribersPage() {
         </div>
         {list.total > list.pageSize && <div className="mt-5 flex items-center justify-between gap-3 text-sm"><button className="rounded-sm border border-border px-4 py-2 disabled:opacity-40" disabled={loading || page <= 1} onClick={() => setPage(value => value - 1)}>Anterior</button><span>Página {page} de {Math.ceil(list.total / list.pageSize)}</span><button className="rounded-sm border border-border px-4 py-2 disabled:opacity-40" disabled={loading || page * list.pageSize >= list.total} onClick={() => setPage(value => value + 1)}>Seguinte</button></div>}
         <p className="mt-5 text-xs leading-relaxed text-muted-foreground">Datas na hora de Lisboa. O ficheiro CSV abre no Excel e inclui a lista e os filtros escolhidos. As inscrições antigas do Formspree continuam nessa conta. Os pedidos de coaches e comunidades são manifestações de interesse; os perfis só devem ser publicados após confirmação com cada pessoa.</p>
+        </>}
       </>}
       {error && <p role="alert" className="mt-5 max-w-2xl rounded-sm border border-primary/40 p-4 text-sm">{error}</p>}
     </section>

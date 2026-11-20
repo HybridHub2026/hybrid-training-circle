@@ -1,11 +1,27 @@
-# Perfis públicos de coaches e comunidades
+# Gestão dos perfis públicos
 
-Página: `/quem-ja-faz-parte`, `/es/quem-ja-faz-parte` e `/en/quem-ja-faz-parte`.
+A gestão está em https://hybridhub.pt/inscritos, opção **Gerir perfis públicos**, protegida pela sessão do proprietário. As candidaturas dos formulários permanecem separadas.
 
-Os perfis são editados em `src/components/site/member-profiles.ts`. A lista começa vazia: a página mostra uma apresentação de cada área e um convite para o formulário de interesse. Não há perfis fictícios nem ligação automática à base privada de candidaturas.
+## Fluxo
 
-Antes de adicionar um perfil, confirmar com o participante os dados públicos, a fotografia/logótipo e a autorização de publicação no site (distinta da manifestação de interesse no formulário e da futura publicação na app). Nunca copiar emails, respostas privadas ou contactos pessoais para o módulo público.
+1. Adicionar perfil, escolher PT/coach ou comunidade e preencher os dados públicos.
+2. Carregar opcionalmente fotografia ou logótipo (o navegador ajusta para WebP até 960 px; o servidor valida tipo, assinatura e tamanho até 800 KB).
+3. Preencher país, apresentação e modalidades em português, espanhol e inglês; com imagem, preencher também os três textos alternativos.
+4. Guardar rascunho. A pré-visualização permite rever cada idioma.
+5. Confirmar a autorização do participante para os dados e imagem no site e publicar.
 
-Cada perfil tem ID único, tipo `coach` ou `community`, nome, cidade, país, apresentação e modalidades nos três idiomas. Fotografia/logótipo, Instagram e site são opcionais. Importar imagens locais otimizadas para o campo `image.src` e fornecer texto alternativo em português, espanhol e inglês. O componente apresenta os perfis automaticamente na área correspondente, em grelha adaptada ao computador e ao telemóvel.
+Guardar alterações num perfil publicado mantém a versão pública anterior. Só Publicar substitui a versão visível. Retirar do site conserva o rascunho. Arquivar retira o perfil do site e permite recuperá-lo como rascunho. Não existe eliminação definitiva no painel.
 
-Enquanto não houver perfis, as três versões ficam com `noindex, follow` e fora do sitemap. Ao publicar os primeiros perfis confirmados, a diretiva `noindex` desaparece automaticamente; acrescentar também `/quem-ja-faz-parte` a `src/i18n/pages.json` para incluir as três versões no sitemap e na verificação de idiomas. Executar o build antes de publicar.
+## Dados e segurança
+
+O esquema está em migrations/0003_member_profiles.sql. A aplicação cria estas duas tabelas de forma aditiva e idempotente no primeiro acesso, usando a ligação D1 existente; não exige novas credenciais nem alterações manuais na Cloudflare.
+
+member_profiles guarda o rascunho e uma cópia publicada distinta, revisão, datas e confirmação de autorização. As escritas com revisão antiga recebem HTTP 409. As mutações exigem a sessão privada do proprietário e origem HTTPS autorizada. A publicação exige textos completos nos três idiomas e confirmação explícita. Não colocar contactos privados nos campos públicos.
+
+member_profile_images guarda imagens binárias. Imagens de rascunhos e arquivos só são acessíveis com sessão privada e preview=1. O acesso público só funciona quando existe uma versão publicada que usa essa imagem. As imagens são servidas sem cache para respeitar a retirada do site. Uploads temporários sem qualquer referência são limpos após 24 horas em uploads seguintes; imagens associadas a rascunhos, arquivos ou versões publicadas são preservadas.
+
+A consulta pública /api/member-profiles e os loaders SSR devolvem exclusivamente as versões publicadas, sem metadados privados, candidaturas ou confirmações. As páginas PT/ES/EN consultam a D1 a cada navegação; um refresh apresenta as alterações publicadas sem novo deploy. Não usar cache de página ou CDN para estas rotas sem invalidação na publicação.
+
+Enquanto não houver perfis publicados, as páginas usam noindex, follow. A diretiva desaparece automaticamente quando houver pelo menos um perfil público. As páginas são descobertas pelas ligações públicas do site; o sitemap estático pode ser ampliado com /quem-ja-faz-parte após os primeiros perfis, se pretendido.
+
+Limite atual: 500 perfis, incluindo arquivados. A sessão privada continua a expirar após uma hora. O painel e todas as respostas privadas usam no-store.
