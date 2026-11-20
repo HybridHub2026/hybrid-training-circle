@@ -32,6 +32,7 @@ export function Footer() {
           <Link to="/faq" className="hover:text-foreground"><T>{"FAQ"}</T></Link>
           <Link to="/contactos" className="hover:text-foreground"><T>{"Contacto"}</T></Link>
           <Link to="/coaches-comunidades" className="hover:text-foreground"><T>{"Coaches e comunidades"}</T></Link>
+          <Link to="/quem-ja-faz-parte" className="hover:text-foreground"><T>{"Quem já faz parte"}</T></Link>
         </div>
         <div className="justify-self-end md:justify-self-start">
           <span className="eyebrow"><T>{"Instagram"}</T></span>

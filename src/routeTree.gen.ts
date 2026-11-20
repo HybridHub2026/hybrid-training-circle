@@ -21,6 +21,7 @@ import { Route as InscritosRouteImport } from './routes/inscritos'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as ParceirosDeTreinoRouteImport } from './routes/parceiros-de-treino'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as QuemJaFazParteRouteImport } from './routes/quem-ja-faz-parte'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as EnIndexRouteImport } from './routes/en.index'
 import { Route as EnAppRouteImport } from './routes/en.app'
@@ -33,6 +34,7 @@ import { Route as EnFaqRouteImport } from './routes/en.faq'
 import { Route as EnLojaRouteImport } from './routes/en.loja'
 import { Route as EnParceirosDeTreinoRouteImport } from './routes/en.parceiros-de-treino'
 import { Route as EnPrivacidadeRouteImport } from './routes/en.privacidade'
+import { Route as EnQuemJaFazParteRouteImport } from './routes/en.quem-ja-faz-parte'
 import { Route as EnTermosRouteImport } from './routes/en.termos'
 import { Route as EsIndexRouteImport } from './routes/es.index'
 import { Route as EsAppRouteImport } from './routes/es.app'
@@ -45,6 +47,7 @@ import { Route as EsFaqRouteImport } from './routes/es.faq'
 import { Route as EsLojaRouteImport } from './routes/es.loja'
 import { Route as EsParceirosDeTreinoRouteImport } from './routes/es.parceiros-de-treino'
 import { Route as EsPrivacidadeRouteImport } from './routes/es.privacidade'
+import { Route as EsQuemJaFazParteRouteImport } from './routes/es.quem-ja-faz-parte'
 import { Route as EsTermosRouteImport } from './routes/es.termos'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +110,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuemJaFazParteRoute = QuemJaFazParteRouteImport.update({
+  id: '/quem-ja-faz-parte',
+  path: '/quem-ja-faz-parte',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
   path: '/termos',
@@ -165,6 +173,11 @@ const EnParceirosDeTreinoRoute = EnParceirosDeTreinoRouteImport.update({
 const EnPrivacidadeRoute = EnPrivacidadeRouteImport.update({
   id: '/en/privacidade',
   path: '/en/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnQuemJaFazParteRoute = EnQuemJaFazParteRouteImport.update({
+  id: '/en/quem-ja-faz-parte',
+  path: '/en/quem-ja-faz-parte',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnTermosRoute = EnTermosRouteImport.update({
@@ -227,6 +240,11 @@ const EsPrivacidadeRoute = EsPrivacidadeRouteImport.update({
   path: '/es/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsQuemJaFazParteRoute = EsQuemJaFazParteRouteImport.update({
+  id: '/es/quem-ja-faz-parte',
+  path: '/es/quem-ja-faz-parte',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EsTermosRoute = EsTermosRouteImport.update({
   id: '/es/termos',
   path: '/es/termos',
@@ -246,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-ja-faz-parte': typeof QuemJaFazParteRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
   '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
@@ -257,6 +276,7 @@ export interface FileRoutesByFullPath {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/quem-ja-faz-parte': typeof EnQuemJaFazParteRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
   '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
@@ -268,6 +288,7 @@ export interface FileRoutesByFullPath {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/quem-ja-faz-parte': typeof EsQuemJaFazParteRoute
   '/es/termos': typeof EsTermosRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
@@ -285,6 +306,7 @@ export interface FileRoutesByTo {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-ja-faz-parte': typeof QuemJaFazParteRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
   '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
@@ -296,6 +318,7 @@ export interface FileRoutesByTo {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/quem-ja-faz-parte': typeof EnQuemJaFazParteRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
   '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
@@ -307,6 +330,7 @@ export interface FileRoutesByTo {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/quem-ja-faz-parte': typeof EsQuemJaFazParteRoute
   '/es/termos': typeof EsTermosRoute
   '/en': typeof EnIndexRoute
   '/es': typeof EsIndexRoute
@@ -325,6 +349,7 @@ export interface FileRoutesById {
   '/loja': typeof LojaRoute
   '/parceiros-de-treino': typeof ParceirosDeTreinoRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-ja-faz-parte': typeof QuemJaFazParteRoute
   '/termos': typeof TermosRoute
   '/en/app': typeof EnAppRoute
   '/en/coaches-comunidades': typeof EnCoachesComunidadesRoute
@@ -336,6 +361,7 @@ export interface FileRoutesById {
   '/en/loja': typeof EnLojaRoute
   '/en/parceiros-de-treino': typeof EnParceirosDeTreinoRoute
   '/en/privacidade': typeof EnPrivacidadeRoute
+  '/en/quem-ja-faz-parte': typeof EnQuemJaFazParteRoute
   '/en/termos': typeof EnTermosRoute
   '/es/app': typeof EsAppRoute
   '/es/coaches-comunidades': typeof EsCoachesComunidadesRoute
@@ -347,6 +373,7 @@ export interface FileRoutesById {
   '/es/loja': typeof EsLojaRoute
   '/es/parceiros-de-treino': typeof EsParceirosDeTreinoRoute
   '/es/privacidade': typeof EsPrivacidadeRoute
+  '/es/quem-ja-faz-parte': typeof EsQuemJaFazParteRoute
   '/es/termos': typeof EsTermosRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
@@ -366,6 +393,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/quem-ja-faz-parte'
     | '/termos'
     | '/en/app'
     | '/en/coaches-comunidades'
@@ -377,6 +405,7 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/quem-ja-faz-parte'
     | '/en/termos'
     | '/es/app'
     | '/es/coaches-comunidades'
@@ -388,6 +417,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/quem-ja-faz-parte'
     | '/es/termos'
     | '/en/'
     | '/es/'
@@ -405,6 +435,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/quem-ja-faz-parte'
     | '/termos'
     | '/en/app'
     | '/en/coaches-comunidades'
@@ -416,6 +447,7 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/quem-ja-faz-parte'
     | '/en/termos'
     | '/es/app'
     | '/es/coaches-comunidades'
@@ -427,6 +459,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/quem-ja-faz-parte'
     | '/es/termos'
     | '/en'
     | '/es'
@@ -444,6 +477,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/parceiros-de-treino'
     | '/privacidade'
+    | '/quem-ja-faz-parte'
     | '/termos'
     | '/en/app'
     | '/en/coaches-comunidades'
@@ -455,6 +489,7 @@ export interface FileRouteTypes {
     | '/en/loja'
     | '/en/parceiros-de-treino'
     | '/en/privacidade'
+    | '/en/quem-ja-faz-parte'
     | '/en/termos'
     | '/es/app'
     | '/es/coaches-comunidades'
@@ -466,6 +501,7 @@ export interface FileRouteTypes {
     | '/es/loja'
     | '/es/parceiros-de-treino'
     | '/es/privacidade'
+    | '/es/quem-ja-faz-parte'
     | '/es/termos'
     | '/en/'
     | '/es/'
@@ -484,6 +520,7 @@ export interface RootRouteChildren {
   LojaRoute: typeof LojaRoute
   ParceirosDeTreinoRoute: typeof ParceirosDeTreinoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  QuemJaFazParteRoute: typeof QuemJaFazParteRoute
   TermosRoute: typeof TermosRoute
   EnAppRoute: typeof EnAppRoute
   EnCoachesComunidadesRoute: typeof EnCoachesComunidadesRoute
@@ -495,6 +532,7 @@ export interface RootRouteChildren {
   EnLojaRoute: typeof EnLojaRoute
   EnParceirosDeTreinoRoute: typeof EnParceirosDeTreinoRoute
   EnPrivacidadeRoute: typeof EnPrivacidadeRoute
+  EnQuemJaFazParteRoute: typeof EnQuemJaFazParteRoute
   EnTermosRoute: typeof EnTermosRoute
   EsAppRoute: typeof EsAppRoute
   EsCoachesComunidadesRoute: typeof EsCoachesComunidadesRoute
@@ -506,6 +544,7 @@ export interface RootRouteChildren {
   EsLojaRoute: typeof EsLojaRoute
   EsParceirosDeTreinoRoute: typeof EsParceirosDeTreinoRoute
   EsPrivacidadeRoute: typeof EsPrivacidadeRoute
+  EsQuemJaFazParteRoute: typeof EsQuemJaFazParteRoute
   EsTermosRoute: typeof EsTermosRoute
   EnIndexRoute: typeof EnIndexRoute
   EsIndexRoute: typeof EsIndexRoute
@@ -597,6 +636,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quem-ja-faz-parte': {
+      id: '/quem-ja-faz-parte'
+      path: '/quem-ja-faz-parte'
+      fullPath: '/quem-ja-faz-parte'
+      preLoaderRoute: typeof QuemJaFazParteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/termos': {
       id: '/termos'
       path: '/termos'
@@ -679,6 +725,13 @@ declare module '@tanstack/react-router' {
       path: '/en/privacidade'
       fullPath: '/en/privacidade'
       preLoaderRoute: typeof EnPrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/quem-ja-faz-parte': {
+      id: '/en/quem-ja-faz-parte'
+      path: '/en/quem-ja-faz-parte'
+      fullPath: '/en/quem-ja-faz-parte'
+      preLoaderRoute: typeof EnQuemJaFazParteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/termos': {
@@ -765,6 +818,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EsPrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/es/quem-ja-faz-parte': {
+      id: '/es/quem-ja-faz-parte'
+      path: '/es/quem-ja-faz-parte'
+      fullPath: '/es/quem-ja-faz-parte'
+      preLoaderRoute: typeof EsQuemJaFazParteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/es/termos': {
       id: '/es/termos'
       path: '/es/termos'
@@ -788,6 +848,7 @@ const rootRouteChildren: RootRouteChildren = {
   LojaRoute: LojaRoute,
   ParceirosDeTreinoRoute: ParceirosDeTreinoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  QuemJaFazParteRoute: QuemJaFazParteRoute,
   TermosRoute: TermosRoute,
   EnAppRoute: EnAppRoute,
   EnCoachesComunidadesRoute: EnCoachesComunidadesRoute,
@@ -799,6 +860,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnLojaRoute: EnLojaRoute,
   EnParceirosDeTreinoRoute: EnParceirosDeTreinoRoute,
   EnPrivacidadeRoute: EnPrivacidadeRoute,
+  EnQuemJaFazParteRoute: EnQuemJaFazParteRoute,
   EnTermosRoute: EnTermosRoute,
   EsAppRoute: EsAppRoute,
   EsCoachesComunidadesRoute: EsCoachesComunidadesRoute,
@@ -810,6 +872,7 @@ const rootRouteChildren: RootRouteChildren = {
   EsLojaRoute: EsLojaRoute,
   EsParceirosDeTreinoRoute: EsParceirosDeTreinoRoute,
   EsPrivacidadeRoute: EsPrivacidadeRoute,
+  EsQuemJaFazParteRoute: EsQuemJaFazParteRoute,
   EsTermosRoute: EsTermosRoute,
   EnIndexRoute: EnIndexRoute,
   EsIndexRoute: EsIndexRoute,

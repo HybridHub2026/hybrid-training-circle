@@ -45,6 +45,7 @@ export const Route = createFileRoute("/comunidade")({
           </div>
         </div>
         <p className="mt-10 text-sm text-muted-foreground"><T>{"A app para iOS e Android está em preparação. As oportunidades disponíveis dependem das atividades criadas pelos membros."}</T></p>
+        <Link to="/quem-ja-faz-parte" className="mt-5 inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-4"><T>{"Conhece quem já faz parte"}</T></Link>
         <div className="mt-7 flex flex-wrap gap-4">
           <Link to="/app" className="btn-primary"><T>{"Conhece a app"}</T></Link>
           <Link to="/coaches-comunidades" className="btn-primary"><T>{"És coach ou representas uma comunidade?"}</T></Link>

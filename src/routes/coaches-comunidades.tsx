@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { Dumbbell, Users, ArrowRight } from "lucide-react";
-import { Link, useLanguage } from "@/i18n";
+import { Link, T, useLanguage } from "@/i18n";
 import { languageAlternates, localizedPath, type Language } from "@/i18n/language";
 import { partnerCopy } from "@/i18n/partners";
 import { FormProtection, useWebsiteForm } from "@/components/site/WebsiteForm";
@@ -117,6 +117,7 @@ export function ParticipationPage() {
         </ol>
       </section>
       <section id="participar" className="scroll-mt-24 border-t border-border pt-8 md:pt-10">
+        <Link to="/quem-ja-faz-parte" className="mb-6 inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-4"><T>{"Conhece quem já faz parte"}</T></Link>
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-4xl">{c.formTitle}</h2>
           <p className="mt-3 text-sm text-muted-foreground">{c.formHint}</p>
