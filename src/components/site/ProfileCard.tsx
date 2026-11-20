@@ -31,7 +31,7 @@ export function ProfileCard({
         <h3 className="break-words text-2xl">{profile.name}</h3>
         <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
           <MapPin size={16} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
-          {profile.city}, {profile.country[language]}
+          {[profile.city, profile.country[language]].filter(Boolean).join(", ")}
         </p>
         <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">
           {profile.description[language]}
