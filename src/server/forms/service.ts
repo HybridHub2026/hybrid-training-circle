@@ -13,6 +13,7 @@ export interface FormsDatabase {
   batch(statements: Statement[]): Promise<unknown>;
 }
 export interface FormsEnvironment {
+  PROFILE_TRANSLATOR?: { run(model: string, input: { text: string; source_lang: string; target_lang: string }): Promise<{ translated_text?: string }> };
   FORMS_DB?: FormsDatabase;
   BREVO_API_KEY?: string;
   BREVO_SENDER_EMAIL?: string;

@@ -5,6 +5,7 @@ import { beforeEach, afterEach, it, expect, vi } from "vitest";
 import { handleAdmin } from "@/server/forms/admin";
 import { handleProfileImages } from "@/server/profiles/images";
 import { listPublicProfiles } from "@/server/profiles/service";
+import { type ProfileTranslationRequest } from "@/server/profiles/translate";
 import { emptyProfile, type ProfileData } from "@/lib/profile-data";
 import type { FormsDatabase, FormsEnvironment } from "@/server/forms/service";
 
@@ -110,6 +111,81 @@ beforeEach(() => {
 afterEach(() => {
   db.close();
   vi.unstubAllGlobals();
+  vi.useRealTimers();
+});
+
+function translationRequest(): ProfileTranslationRequest {
+  const fields = { country: true, description: true, sports: true, imageAlt: true };
+  return {
+    action: "profile-translate",
+    source: {
+      country: "Portugal",
+      description: "Treinos de corrida para iniciantes.",
+      sports: ["Corrida", "HYROX"],
+      imageAlt: "Fotografia do coach",
+    },
+    fields: { es: fields, en: fields },
+  };
+}
+it("requires the owner session and validates the Portuguese-only translation request", async () => {
+  const body = translationRequest();
+  expect((await post(body)).status).toBe(401);
+  const cookie = await login();
+  expect((await post(body, cookie, "https://attacker.example")).status).toBe(403);
+  expect(
+    (await post({ ...body, source: { ...body.source, description: "" } }, cookie)).status,
+  ).toBe(400);
+  expect(
+    (await post({ ...body, source: { ...body.source, email: "private@example.com" } }, cookie))
+      .status,
+  ).toBe(400);
+});
+it("translates selected fields without saving or publishing profiles and reuses cached results", async () => {
+  vi.useFakeTimers({ toFake: ["Date"] });
+  const run = vi.fn(
+    async (_model: string, input: { text: string; source_lang: string; target_lang: string }) => ({
+      translated_text: `${input.target_lang}: ${input.text}`,
+    }),
+  );
+  env.PROFILE_TRANSLATOR = { run };
+  const cookie = await login();
+  await listPublicProfiles(env.FORMS_DB!);
+  const first = await post(translationRequest(), cookie);
+  expect(first.status).toBe(200);
+  const result = await first.json();
+  expect(result.translations.es.description).toBe("es: Treinos de corrida para iniciantes.");
+  expect(result.translations.en.sports).toEqual(["en: Corrida", "HYROX"]);
+  expect(run).toHaveBeenCalledTimes(8);
+  for (const [, input] of run.mock.calls) expect(input.source_lang).toBe("pt");
+  expect(db.prepare("SELECT COUNT(*) AS total FROM member_profiles").get()?.["total"]).toBe(0);
+  vi.setSystemTime(Date.now() + 4000);
+  expect((await post(translationRequest(), cookie)).status).toBe(200);
+  expect(run).toHaveBeenCalledTimes(8);
+});
+it("does not translate fields that are being preserved and limits retries", async () => {
+  const run = vi.fn(async () => ({ translated_text: "Tradução" }));
+  env.PROFILE_TRANSLATOR = { run };
+  const cookie = await login();
+  const body = translationRequest();
+  body.fields = {
+    es: { country: false, description: true, sports: false, imageAlt: false },
+    en: { country: false, description: false, sports: false, imageAlt: false },
+  };
+  const result = await (await post(body, cookie)).json();
+  expect(result.translations).toEqual({ es: { description: "Tradução" }, en: {} });
+  expect(run).toHaveBeenCalledOnce();
+  expect((await post(body, cookie)).status).toBe(429);
+  db.prepare("UPDATE profile_translation_budget SET used=30,last_at=?").run(Date.now() - 5000);
+  expect((await post(body, cookie)).status).toBe(429);
+  expect(run).toHaveBeenCalledOnce();
+});
+it("fails safely on provider failures or malformed output", async () => {
+  const cookie = await login();
+  expect((await post(translationRequest(), cookie)).status).toBe(503);
+  env.PROFILE_TRANSLATOR = { run: vi.fn(async () => ({ translated_text: "" })) };
+  const response = await post(translationRequest(), cookie);
+  expect(response.status).toBe(503);
+  expect(await response.text()).not.toContain("Treinos de corrida");
 });
 
 it("protects list and mutations with the owner session and origin checks", async () => {

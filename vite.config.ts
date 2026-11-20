@@ -15,6 +15,7 @@ export default defineConfig({
     serverDir: "./src/server",
     cloudflare: {
       wrangler: {
+        ai: { binding: "PROFILE_TRANSLATOR" },
         previews: {},
         triggers: { crons: ["*/5 * * * *"] },
         d1_databases: [{

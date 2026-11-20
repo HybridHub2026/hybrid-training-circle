@@ -25,3 +25,13 @@ A consulta pública /api/member-profiles e os loaders SSR devolvem exclusivament
 Enquanto não houver perfis publicados, as páginas usam noindex, follow. A diretiva desaparece automaticamente quando houver pelo menos um perfil público. As páginas são descobertas pelas ligações públicas do site; o sitemap estático pode ser ampliado com /quem-ja-faz-parte após os primeiros perfis, se pretendido.
 
 Limite atual: 500 perfis, incluindo arquivados. A sessão privada continua a expirar após uma hora. O painel e todas as respostas privadas usam no-store.
+
+## Tradução automática
+
+O editor preenche os campos vazios de espanhol e inglês ao guardar um rascunho com país, apresentação e modalidades em português. A opção pode ser desativada. Textos já preenchidos são preservados; o botão Traduzir PT → ES e EN permite gerar tudo novamente, com confirmação explícita antes de substituir revisões existentes. A geração manual não guarda nem publica. Todas as traduções podem ser editadas e a publicação continua a exigir a confirmação de revisão e autorização.
+
+O Worker usa a ligação PROFILE_TRANSLATOR ao Workers AI, modelo @cf/meta/m2m100-1.2b. Só os textos portugueses desses campos e da descrição da imagem são enviados; nomes, cidades, links, imagens e contactos não são enviados ao tradutor. As traduções são guardadas em cache privada durante sete dias, com chave derivada de hash, para evitar repetições. O esquema aditivo está em migrations/0004_profile_translations.sql e é criado automaticamente.
+
+Limites locais: 30 pedidos por dia UTC, intervalo mínimo de três segundos, até quatro inferências em simultâneo, textos limitados pelos campos do editor. A tradução usa a quota do serviço existente, sem contratar planos pagos. Se o serviço ou quota estiver indisponível, guardar continua a conservar o rascunho original e permite preencher os idiomas manualmente. Os textos e erros do fornecedor não são registados em logs públicos.
+
+Referências: https://developers.cloudflare.com/workers-ai/models/m2m100-1.2b/ e https://developers.cloudflare.com/workers-ai/platform/pricing/.

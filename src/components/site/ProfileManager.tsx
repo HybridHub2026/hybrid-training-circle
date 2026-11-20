@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Plus, Eye, Save, Upload, ArchiveRestore, Archive, LogOut } from "lucide-react";
+import { Plus, Eye, Save, Upload, ArchiveRestore, Archive, LogOut, Languages } from "lucide-react";
 import {
   emptyProfile,
   profileLanguages,
@@ -16,6 +16,44 @@ const field =
 const button =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-sm border border-border px-4 py-2 text-sm disabled:opacity-50";
 const labels = { pt: "Português", es: "Espanhol", en: "Inglês" };
+const translationLanguages = ["es", "en"] as const;
+function hasPortuguese(data: ProfileData) {
+  return !!(
+    data.country.pt.trim() &&
+    data.description.pt.trim() &&
+    data.sports.pt.some((value) => value.trim())
+  );
+}
+function translationFields(data: ProfileData, replace: boolean) {
+  return Object.fromEntries(
+    translationLanguages.map((language) => [
+      language,
+      {
+        country: replace || !data.country[language].trim(),
+        description: replace || !data.description[language].trim(),
+        sports: replace || !data.sports[language].some((value) => value.trim()),
+        imageAlt:
+          !!data.imageId &&
+          !!data.imageAlt.pt.trim() &&
+          (replace || !data.imageAlt[language].trim()),
+      },
+    ]),
+  ) as Record<"es" | "en", Record<"country" | "description" | "sports" | "imageAlt", boolean>>;
+}
+function needsTranslation(data: ProfileData) {
+  return Object.values(translationFields(data, false)).some((fields) =>
+    Object.values(fields).some(Boolean),
+  );
+}
+function hasOtherTexts(data: ProfileData) {
+  return translationLanguages.some(
+    (language) =>
+      data.country[language].trim() ||
+      data.description[language].trim() ||
+      data.sports[language].some((value) => value.trim()) ||
+      data.imageAlt[language].trim(),
+  );
+}
 function status(profile: ManagedProfile) {
   return profile.archivedAt
     ? "Arquivado"
@@ -47,6 +85,9 @@ export function ProfileManager({
   } | null>(null);
   const [language, setLanguage] = useState<Language>("pt");
   const [permission, setPermission] = useState(false);
+  const [autoTranslate, setAutoTranslate] = useState(true);
+  const [translating, setTranslating] = useState(false);
+  const [overwritePrompt, setOverwritePrompt] = useState(false);
   const dirty =
     !!editor &&
     (!editor.current || JSON.stringify(editor.data) !== JSON.stringify(editor.current.data));
@@ -103,6 +144,7 @@ export function ProfileManager({
     setLanguage("pt");
     setMessage("");
     setError("");
+    setOverwritePrompt(false);
   }
   function record(saved: ManagedProfile) {
     setProfiles((current) => [saved, ...current.filter((profile) => profile.id !== saved.id)]);
@@ -120,18 +162,97 @@ export function ProfileManager({
     setError("");
     setMessage("");
     try {
+      let next = editor.data;
+      let translationError = "";
+      let translated = false;
+      if (autoTranslate && hasPortuguese(next) && needsTranslation(next)) {
+        setTranslating(true);
+        try {
+          next = await translatedData(next, false);
+          update(next);
+          translated = true;
+        } catch (reason) {
+          translationError =
+            reason instanceof Error ? reason.message : "A tradução automática está indisponível.";
+        } finally {
+          setTranslating(false);
+        }
+      }
       const data = await api({
         action: "profile-save",
         id: editor.id,
         revision: editor.current?.revision ?? 0,
-        data: editor.data,
+        data: next,
       });
       record(data.profile);
-      setMessage("Rascunho guardado. A versão pública só muda quando carregares em Publicar.");
+      setMessage(
+        translated
+          ? "Rascunho guardado com traduções automáticas. Revê e ajusta os textos em espanhol e inglês antes de publicar."
+          : "Rascunho guardado. A versão pública só muda quando carregares em Publicar.",
+      );
+      if (translated) setLanguage("es");
+      if (translationError)
+        setError(
+          `O rascunho foi guardado, mas não foi possível preencher as traduções. ${translationError}`,
+        );
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Não foi possível guardar.");
     } finally {
       setBusy(false);
+    }
+  }
+  async function translatedData(data: ProfileData, replace: boolean): Promise<ProfileData> {
+    const result = await api({
+      action: "profile-translate",
+      source: {
+        country: data.country.pt,
+        description: data.description.pt,
+        sports: data.sports.pt.map((value) => value.trim()).filter(Boolean),
+        imageAlt: data.imageAlt.pt,
+      },
+      fields: translationFields(data, replace),
+    });
+    const next = structuredClone(data);
+    for (const language of translationLanguages) {
+      const text = result.translations[language] as Partial<{
+        country: string;
+        description: string;
+        sports: string[];
+        imageAlt: string;
+      }>;
+      if (text.country !== undefined) next.country[language] = text.country;
+      if (text.description !== undefined) next.description[language] = text.description;
+      if (text.sports !== undefined) next.sports[language] = text.sports;
+      if (text.imageAlt !== undefined) next.imageAlt[language] = text.imageAlt;
+    }
+    return next;
+  }
+  async function generateTranslations(confirmed = false) {
+    if (!editor || busy || !hasPortuguese(editor.data)) return;
+    if (!confirmed && hasOtherTexts(editor.data)) {
+      setOverwritePrompt(true);
+      return;
+    }
+    setOverwritePrompt(false);
+    setBusy(true);
+    setTranslating(true);
+    setError("");
+    setMessage("");
+    try {
+      update(await translatedData(editor.data, true));
+      setLanguage("es");
+      setMessage(
+        "Traduções geradas. Revê espanhol e inglês e guarda o rascunho. Nada foi publicado.",
+      );
+    } catch (reason) {
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : "Não foi possível traduzir. Os textos anteriores foram mantidos.",
+      );
+    } finally {
+      setBusy(false);
+      setTranslating(false);
     }
   }
   async function action(profile: ManagedProfile, action: string) {
@@ -404,6 +525,57 @@ export function ProfileManager({
                   </button>
                 )}
               </div>
+              <div className="rounded-sm border border-primary/40 p-4">
+                <p className="flex items-center gap-2 text-sm font-semibold">
+                  <Languages size={17} className="shrink-0 text-primary" />
+                  Tradução automática
+                </p>
+                <label className="mt-3 flex items-start gap-3 text-sm">
+                  <input
+                    type="checkbox"
+                    className="mt-1 h-4 w-4 shrink-0 accent-primary"
+                    checked={autoTranslate}
+                    onChange={(event) => setAutoTranslate(event.target.checked)}
+                  />
+                  <span>Traduzir os campos vazios de espanhol e inglês ao guardar.</span>
+                </label>
+                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                  Preenche país, apresentação e modalidades em português. Podes rever e editar as
+                  traduções antes de publicar. Os textos já preenchidos são preservados ao guardar.
+                </p>
+                <button
+                  type="button"
+                  className={`${button} mt-4 w-full`}
+                  disabled={busy || !hasPortuguese(editor.data)}
+                  onClick={() => void generateTranslations()}
+                >
+                  {translating ? "A traduzir…" : "Traduzir PT → ES e EN"}
+                </button>
+                {overwritePrompt && (
+                  <div className="mt-4 border-t border-border pt-4">
+                    <p className="text-sm">
+                      Queres substituir os textos atuais de espanhol e inglês por novas traduções do
+                      português? As tuas revisões nesses idiomas serão substituídas no editor.
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        className={button}
+                        onClick={() => void generateTranslations(true)}
+                      >
+                        Substituir traduções
+                      </button>
+                      <button
+                        type="button"
+                        className={button}
+                        onClick={() => setOverwritePrompt(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div className="flex flex-wrap gap-2" role="group" aria-label="Idioma dos textos">
                 {profileLanguages.map((lang) => (
                   <button
@@ -506,7 +678,7 @@ export function ProfileManager({
                 disabled={busy}
               >
                 <Save size={16} />
-                {busy ? "A guardar…" : "Guardar rascunho"}
+                {translating ? "A traduzir…" : busy ? "A guardar…" : "Guardar rascunho"}
               </button>
             </fieldset>
             <div className="min-w-0 self-start">
