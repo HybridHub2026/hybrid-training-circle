@@ -76,7 +76,7 @@ describe("website forms", () => {
   });
   it("only exposes public configuration and fails closed until setup is complete", async () => {
     const response = await handleForms(new Request("https://hybridhub.pt/api/forms"), env);
-    expect(await response.json()).toEqual({ ready: true, siteKey: "public-test-key" });
+    expect(await response.json()).toEqual({ ready: true, siteKey: "public-test-key", offer: {available:true,reserved:0,launchedAt:null} });
     expect((await handleForms(request(payload()), {})).status).toBe(503);
     expect(fetchMock).not.toHaveBeenCalled();
   });

@@ -26,12 +26,12 @@ it("submits English consent and confirms success in English", async () => {
   await waitFor(() => expect(screen.getByRole("button")).toBeEnabled());
   fireEvent.change(screen.getByLabelText("Your email"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
-  fireEvent.click(screen.getByRole("button", { name: "Notify me at launch" }));
+  fireEvent.click(screen.getByRole("button", { name: "I'd like to take part" }));
   await waitFor(() => expect(screen.getByText("We've received your request!")).toBeVisible());
   const post = fetch.mock.calls.find(([, options]) => options?.method === "POST");
   expect(post?.[0]).toBe("/api/forms");
   const payload = JSON.parse(post?.[1]?.body as string);
-  expect(payload).toMatchObject({ consent: true, token: "test-proof", kind: "launch" });
+  expect(payload).toMatchObject({ consent: true, campaign: true, token: "test-proof", kind: "launch" });
   expect(payload).toMatchObject({ email: "locale-test@example.com", idioma: "en" });
   expect(payload.consentimento).toMatch(/^I want to receive/);
 });
@@ -42,12 +42,12 @@ it("submits the Spanish consent to the website form service and confirms success
   await waitFor(() => expect(screen.getByRole("button")).toBeEnabled());
   fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
-  fireEvent.click(screen.getByRole("button", { name: "Avísame del lanzamiento" }));
+  fireEvent.click(screen.getByRole("button", { name: "Quiero formar parte" }));
   await waitFor(() => expect(screen.getByText("¡Hemos recibido tu solicitud!")).toBeVisible());
   const post = fetch.mock.calls.find(([, options]) => options?.method === "POST");
   expect(post?.[0]).toBe("/api/forms");
   const payload = JSON.parse(post?.[1]?.body as string);
-  expect(payload).toMatchObject({ consent: true, token: "test-proof", kind: "launch" });
+  expect(payload).toMatchObject({ consent: true, campaign: true, token: "test-proof", kind: "launch" });
   expect(payload).toMatchObject({ email: "locale-test@example.com", idioma: "es" });
   expect(payload.consentimento).toMatch(/^Quiero recibir por correo electrónico/);
 });
@@ -58,7 +58,7 @@ it("shows Spanish failure feedback without clearing the email", async () => {
   await waitFor(() => expect(screen.getByRole("button")).toBeEnabled());
   fireEvent.change(screen.getByLabelText("Tu correo electrónico"), { target: { value: "locale-test@example.com" } });
   fireEvent.click(screen.getByRole("checkbox"));
-  fireEvent.click(screen.getByRole("button", { name: "Avísame del lanzamiento" }));
+  fireEvent.click(screen.getByRole("button", { name: "Quiero formar parte" }));
   await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("No se ha podido enviar la solicitud."));
   expect(screen.getByLabelText("Tu correo electrónico")).toHaveValue("locale-test@example.com");
 });

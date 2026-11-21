@@ -4,6 +4,7 @@ import { Download, LogOut, LockKeyhole, Search, Users } from "lucide-react";
 import wordmark from "@/assets/hybrid-hub-wordmark.webp";
 import { FormProtection, useWebsiteForm } from "@/components/site/WebsiteForm";
 import { ProfileManager } from "@/components/site/ProfileManager";
+import { CampaignManager } from "@/components/site/CampaignManager";
 
 export const Route = createFileRoute("/inscritos")({
   head: () => ({ meta: [{ title: "Inscritos | Hybrid Hub — área privada" }, { name: "robots", content: "noindex, nofollow, noarchive" }, { name: "referrer", content: "no-referrer" }] }),
@@ -55,7 +56,7 @@ function SubscribersPage() {
   const filters = new URLSearchParams({ q: query, language, group, tests: tests ? "1" : "0" });
   const filterString = filters.toString();
   useEffect(() => {
-    if (!authenticated || group === "profiles") return;
+    if (!authenticated || group === "profiles" || group === "campaign") return;
     const controller = new AbortController(); setLoading(true); setError(""); setList(empty);
     fetch(`/api/admin?action=list&page=${page}&${filterString}`, { signal: controller.signal, cache: "no-store" }).then(async response => {
       if (response.status === 401) { clearAccess(); throw new Error("A sessão terminou. Pede um novo código."); }
@@ -109,8 +110,8 @@ function SubscribersPage() {
         {challenge && <button className="mt-5 text-sm text-primary underline" disabled={busy} onClick={() => { setChallenge(""); setCode(""); setError(""); form.resetProtection(); }}>Pedir um novo código</button>}
         <p className="mt-5 text-xs text-muted-foreground">A sessão termina ao fim de uma hora. Não partilhes o código de acesso.</p>
       </div> : <>
-        <div className="mt-7 flex flex-wrap gap-3" role="group" aria-label="Lista a consultar">{([["launch", "Aviso de lançamento"], ["partners", "Coaches e comunidades"], ["profiles", "Gerir perfis públicos"]] as const).map(([value, label]) => <button key={value} aria-pressed={group === value} className={`min-h-11 rounded-sm border px-4 py-3 text-sm ${group === value ? "border-primary text-primary" : "border-border"}`} onClick={() => { setGroup(value); setPage(1); setList(empty); }}>{label}</button>)}</div>
-        {group === "profiles" ? <ProfileManager onUnauthorized={clearAccess} onLogout={logout} /> : <>
+        <div className="mt-7 flex flex-wrap gap-3" role="group" aria-label="Lista a consultar">{([["launch", "Aviso de lançamento"], ["partners", "Coaches e comunidades"], ["profiles", "Gerir perfis públicos"], ["campaign", "Oferta bucket hat"]] as const).map(([value, label]) => <button key={value} aria-pressed={group === value} className={`min-h-11 rounded-sm border px-4 py-3 text-sm ${group === value ? "border-primary text-primary" : "border-border"}`} onClick={() => { setGroup(value); setPage(1); setList(empty); }}>{label}</button>)}</div>
+        {group === "profiles" ? <ProfileManager onUnauthorized={clearAccess} onLogout={logout} /> : group === "campaign" ? <CampaignManager onUnauthorized={clearAccess} onLogout={logout} /> : <>
         <div className="mt-9 flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><Users className="text-primary" /><p><strong className="text-3xl">{loading ? "…" : list.total}</strong><span className="ml-2 text-muted-foreground">{query || language || tests ? "inscrições nesta vista" : "inscrições reais"}</span></p></div><div className="flex flex-wrap gap-3"><button onClick={() => setRefresh(value => value + 1)} className="rounded-sm border border-border px-4 py-3 text-sm" disabled={loading}>Atualizar</button><button onClick={download} className="btn-primary inline-flex items-center gap-2 disabled:opacity-50" disabled={busy || loading || !list.total}><Download size={16} />Exportar para Excel</button><button onClick={logout} className="flex items-center gap-2 rounded-sm border border-border px-4 py-3 text-sm" disabled={busy}><LogOut size={16} />Sair</button></div></div>
         <div className="mt-7 grid gap-4 md:grid-cols-[1fr_220px]"><div><label htmlFor="subscriber-search" className="mb-2 flex items-center gap-2 text-sm"><Search size={14} />Pesquisar por email</label><input id="subscriber-search" type="search" className={field} value={q} maxLength={254} onChange={event => setQ(event.target.value)} placeholder="Escreve parte do email" /></div><div><label htmlFor="subscriber-language" className="mb-2 block text-sm">Idioma</label><select id="subscriber-language" className={field} value={language} onChange={event => { setLanguage(event.target.value); setPage(1); }}><option value="">Todos os idiomas</option><option value="pt">Português</option><option value="es">Espanhol</option><option value="en">Inglês</option></select></div></div>
         <label className="mt-5 flex items-center gap-3 text-sm text-muted-foreground"><input type="checkbox" className="h-4 w-4 accent-primary" checked={tests} onChange={event => { setTests(event.target.checked); setPage(1); }} />Incluir inscrições de teste</label>

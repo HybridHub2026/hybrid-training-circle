@@ -1,4 +1,6 @@
 import { isPartner } from "./partners";
+import { launchOfferCopy } from "../../i18n/launch-offer";
+import type { CampaignMail } from "./campaign";
 export type FormLanguage = "pt" | "es" | "en";
 export type FormKind = "launch" | "contact";
 export type RecipientKind = "user" | "admin";
@@ -63,8 +65,9 @@ function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]!);
 }
 
-export function makeEmail(submission: Submission, recipient: RecipientKind, senderEmail: string, adminEmail: string) {
-  const { kind, language, email, name } = submission;
+export function makeEmail(submission: Submission, recipient: RecipientKind, senderEmail: string, adminEmail: string, offer?:CampaignMail) {
+  const { kind, email, name } = submission;
+  const language=offer?.code ? offer.language : submission.language;
   const text = copy[language];
   const partner = kind === "contact" && isPartner(submission.subject);
   const partnerReply = {
@@ -74,11 +77,24 @@ export function makeEmail(submission: Submission, recipient: RecipientKind, send
   };
   const prefix = language === "pt" ? "" : `/${language}`;
   const privacyUrl = `https://hybridhub.pt${prefix}/privacidade`;
+  const campaign=launchOfferCopy[language];
+  const date=(value:number)=>new Intl.DateTimeFormat({pt:"pt-PT",es:"es-ES",en:"en-GB"}[language],{dateStyle:"long",timeZone:"Europe/Lisbon"}).format(value);
+  const offerParagraphs: string[]=[];
+  if (offer) {
+    if (!offer.code) offerParagraphs.push(campaign.noOffer);
+    else if (offer.launchedAt!==null && Date.now()>=offer.launchedAt+60*86400000) offerParagraphs.push(campaign.expired);
+    else {
+      offerParagraphs.push(campaign.reserved,`${campaign.code}: ${offer.code}`,campaign.mailTerms);
+      if (offer.launchedAt===null) offerParagraphs.push(campaign.waiting);
+      else offerParagraphs.push(Date.now()>=offer.launchedAt ? campaign.opened : `${campaign.opens} ${date(offer.launchedAt)}.`,`${campaign.expires} ${date(offer.launchedAt+60*86400000)}.`,campaign.redeem);
+    }
+  }
   const paragraphs = recipient === "user" ? [
     `${text.hello}${name ? ` ${name}` : ""},`,
-    partner ? partnerReply[language] : text[kind],
+    ...(offer?.opening ? [] : [partner ? partnerReply[language] : text[kind]]),
+    ...offerParagraphs,
     text.reply,
-    ...(kind === "launch" ? [text.unsubscribe] : []),
+    ...(kind === "launch" ? [offer ? campaign.unsubscribe : text.unsubscribe] : []),
     "Hybrid Hub · TRAIN • CONNECT • COMPETE",
   ] : [
     kind === "launch" ? "Nova inscrição para o aviso de lançamento da app." : "Nova mensagem recebida pelo site.",
@@ -89,9 +105,11 @@ export function makeEmail(submission: Submission, recipient: RecipientKind, send
     `Recebido em: ${new Date(submission.created_at).toISOString()}`,
     `Referência: ${submission.id}`,
     `Registo de consentimento/privacidade: ${submission.consent_text}`,
+    ...offerParagraphs,
+    ...(offer?.code ? [`Consentimento da campanha: ${campaign.consent}`] : []),
     ...(kind === "launch" || partner ? ["Consultar a área privada: https://hybridhub.pt/inscritos"] : []),
   ];
-  const subject = recipient === "user" ? (partner ? { pt: "Hybrid Hub — recebemos o teu interesse", es: "Hybrid Hub — hemos recibido tu solicitud", en: "Hybrid Hub — thanks for your interest" }[language] : text[`${kind}Subject`]) : `Hybrid Hub — ${partner ? "novo interesse: coaches e comunidades" : kind === "launch" ? "nova inscrição" : "novo contacto"}`;
+  const subject = recipient === "user" ? (offer?.opening ? {pt:"Hybrid Hub — já podes utilizar a tua oferta",es:"Hybrid Hub — ya puedes utilizar tu regalo",en:"Hybrid Hub — your gift offer is ready to use"}[language] : partner ? { pt: "Hybrid Hub — recebemos o teu interesse", es: "Hybrid Hub — hemos recibido tu solicitud", en: "Hybrid Hub — thanks for your interest" }[language] : text[`${kind}Subject`]) : `Hybrid Hub — ${partner ? "novo interesse: coaches e comunidades" : kind === "launch" ? "nova inscrição" : "novo contacto"}`;
   const body = paragraphs.map(paragraph => `<p style="margin:0 0 18px;line-height:1.6">${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join("");
   return {
     sender: { email: senderEmail, name: "Hybrid Hub" },

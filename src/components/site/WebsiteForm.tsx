@@ -24,6 +24,7 @@ function loadTurnstile() {
 
 export function useWebsiteForm() {
   const [siteKey, setSiteKey] = useState("");
+  const [offer, setOffer] = useState<{available:boolean;reserved:number;launchedAt:number|null}|null>(null);
   const [configurationError, setConfigurationError] = useState(false);
   const [token, setToken] = useState("");
   const [resetNonce, setResetNonce] = useState(0);
@@ -34,9 +35,10 @@ export function useWebsiteForm() {
     fetch("/api/forms", { signal: controller.signal })
       .then(async response => {
         if (!response.ok) throw new Error("service_unavailable");
-        const config = await response.json() as { ready?: boolean; siteKey?: string };
+        const config = await response.json() as { ready?: boolean; siteKey?: string; offer?:typeof offer };
         if (!config.ready || !config.siteKey) throw new Error("service_unavailable");
         setSiteKey(config.siteKey);
+        setOffer(config.offer ?? null);
       })
       .catch(() => { if (!controller.signal.aborted) setConfigurationError(true); });
     return () => controller.abort();
@@ -62,7 +64,7 @@ export function useWebsiteForm() {
       setResetNonce(value => value + 1);
     }
   }
-  return { submit, token, ready: Boolean(token && siteKey), resetProtection: () => { setToken(""); setResetNonce(value => value + 1); }, protection: { siteKey, configurationError, resetNonce, onToken: setToken } };
+  return { submit, token, offer, ready: Boolean(token && siteKey), resetProtection: () => { setToken(""); setResetNonce(value => value + 1); }, protection: { siteKey, configurationError, resetNonce, onToken: setToken } };
 }
 
 export function FormProtection({ siteKey, configurationError, resetNonce, onToken, language }: {

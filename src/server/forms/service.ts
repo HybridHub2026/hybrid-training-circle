@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { partnerSchema, partnerSubjects, partnerMessage, partnerConsent, isPartner } from "./partners";
 import { consentText, makeEmail, type RecipientKind, type Submission } from "./emails";
+import { campaignAvailability, campaignCode, campaignEmailKey, campaignMail, campaignStatements, ensureCampaign, queueOpeningMail } from "./campaign";
+import { launchOfferCopy } from "../../i18n/launch-offer";
 
 interface Statement {
   bind(...values: unknown[]): Statement;
@@ -26,6 +28,7 @@ const schema = z.object({
   id: z.string().uuid(),
   kind: z.enum(["launch", "contact", "partner"]),
   partner: partnerSchema.optional(),
+  campaign: z.boolean().optional(),
   idioma: z.enum(["pt", "es", "en"]),
   email: z.string().trim().email().max(254).transform(value => value.toLowerCase()),
   nome: z.string().trim().max(100).default(""),
@@ -36,7 +39,8 @@ const schema = z.object({
   _gotcha: z.string().max(100).default(""),
 }).refine(value => value.kind !== "contact" || (value.nome && value.assunto && value.mensagem && !isPartner(value.assunto)))
   .refine(value => value.kind !== "partner" || (value.nome && value.partner))
-  .refine(value => value.kind === "partner" || value.partner === undefined);
+  .refine(value => value.kind === "partner" || value.partner === undefined)
+  .refine(value => !value.campaign || value.kind === "launch");
 
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
 export function formsConfigured(env: FormsEnvironment) {
@@ -66,7 +70,10 @@ async function digest(value: string) {
 }
 
 export async function handleForms(request: Request, env: FormsEnvironment, waitUntil?: (promise: Promise<unknown>) => void): Promise<Response> {
-  if (request.method === "GET") return json({ ready: formsConfigured(env), siteKey: env.FORMS_TURNSTILE_SITE_KEY ?? "" });
+  if (request.method === "GET") {
+    try { return json({ ready: formsConfigured(env), siteKey: env.FORMS_TURNSTILE_SITE_KEY ?? "", offer: env.FORMS_DB ? await campaignAvailability(env.FORMS_DB) : null }); }
+    catch { return json({ ready: false, siteKey: "" }, 503); }
+  }
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   if (!formsConfigured(env)) return json({ error: "service_unavailable" }, 503);
   const requestUrl = new URL(request.url);
@@ -97,15 +104,17 @@ export async function handleForms(request: Request, env: FormsEnvironment, waitU
     if (!proof.success || !["hybridhub.pt", "www.hybridhub.pt", ...(["localhost", "127.0.0.1"].includes(requestUrl.hostname) ? [requestUrl.hostname] : [])].includes(proof.hostname ?? "") || proof.action !== "website-form") return json({ error: "verification_failed" }, 403);
     if (body.kind === "launch") {
       const signedUp = await db.prepare("SELECT id FROM form_submissions WHERE kind='launch' AND email=?").bind(body.email).first();
-      if (signedUp) return json({ accepted: true }, 202);
+      if (signedUp && !body.campaign) return json({ accepted: true }, 202);
     }
     const now = Date.now();
     const partner = body.kind === "partner" ? body.partner! : undefined;
     const kind = body.kind === "partner" ? "contact" : body.kind;
-    const submission: Submission = { id: body.id, kind, language: body.idioma, email: body.email, name: body.nome, subject: partner ? partnerSubjects[partner.type] : body.assunto, message: partner ? partnerMessage(partner) : body.mensagem, consent_text: partner ? partnerConsent[body.idioma] : consentText(kind, body.idioma), request_hash: requestHash, created_at: now };
+    const submission: Submission = { id: body.id, kind, language: body.idioma, email: body.email, name: body.nome, subject: partner ? partnerSubjects[partner.type] : body.assunto, message: partner ? partnerMessage(partner) : body.mensagem, consent_text: partner ? partnerConsent[body.idioma] : body.campaign ? launchOfferCopy[body.idioma].consent : consentText(kind, body.idioma), request_hash: requestHash, created_at: now };
+    if (body.campaign) await ensureCampaign(db);
     await db.batch([
       db.prepare("INSERT INTO form_submissions(id,kind,language,email,name,subject,message,consent_text,request_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING").bind(...Object.values(submission)),
-      ...(["user", "admin"] as const).map(recipient => db.prepare("INSERT INTO form_mail_outbox(id,submission_id,recipient) SELECT ?,id,? FROM form_submissions WHERE id=? ON CONFLICT DO NOTHING").bind(`${body.id}:${recipient}`, recipient, body.id)),
+      ...(body.campaign ? campaignStatements(db, {id:body.id,email:body.email,emailKey:await campaignEmailKey(body.email),claimId:body.id,code:campaignCode(),language:body.idioma,now}) : []),
+      ...(["user", "admin"] as const).map(recipient => db.prepare(`INSERT INTO form_mail_outbox(id,submission_id,recipient) SELECT ?,id,? FROM form_submissions WHERE id=? ${body.campaign ? "AND NOT EXISTS(SELECT 1 FROM launch_hat_slots WHERE submission_id=form_submissions.id)" : ""} ON CONFLICT DO NOTHING`).bind(`${body.id}:${recipient}`, recipient, body.id)),
     ]);
     // Acknowledgement means durably saved, even if the email provider is temporarily unavailable.
     const stored = await db.prepare("SELECT id FROM form_submissions WHERE id=? OR (kind='launch' AND email=?)").bind(body.id, body.email).first();
@@ -124,6 +133,7 @@ interface MailJob { id: string; submission_id: string; recipient: RecipientKind;
 export async function deliverPendingMail(env: FormsEnvironment, limit = 10) {
   if (!formsConfigured(env)) return;
   const db = env.FORMS_DB!;
+  await queueOpeningMail(db);
   for (let index = 0; index < limit; index++) {
     const now = Date.now();
     const day = new Date(now).toISOString().slice(0, 10);
@@ -146,10 +156,11 @@ export async function deliverPendingMail(env: FormsEnvironment, limit = 10) {
     let review = false;
     let delay = Math.min(60000 * 2 ** (job.attempts - 1), 3600000);
     try {
+      const offer = submission.kind === "launch" && (job.id.includes(":campaign:") || job.id.startsWith("campaign-open:") || Object.values(launchOfferCopy).some(copy=>copy.consent===submission.consent_text)) ? await campaignMail(db,submission.id,job.id.startsWith("campaign-open:")) : undefined;
       const response = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json", "api-key": env.BREVO_API_KEY! },
-        body: JSON.stringify({ ...makeEmail(submission, job.recipient, env.BREVO_SENDER_EMAIL!, env.FORMS_ADMIN_EMAIL ?? "hybridhubadmin@gmail.com"), headers: { IdempotencyKey: job.id } }),
+        body: JSON.stringify({ ...makeEmail(submission, job.recipient, env.BREVO_SENDER_EMAIL!, env.FORMS_ADMIN_EMAIL ?? "hybridhubadmin@gmail.com", offer), headers: { IdempotencyKey: job.id } }),
         signal: AbortSignal.timeout(10000),
       });
       const result = await response.json().catch(() => ({})) as { messageId?: string; code?: string; message?: string };

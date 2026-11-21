@@ -3,6 +3,7 @@ import { partnerSubjects } from "./partners";
 import { formsConfigured, readLimitedJson, type FormsEnvironment } from "./service";
 import { profileActionSchema, listManagedProfiles, mutateProfile } from "../profiles/service";
 import { translationActionSchema, translateProfile } from "../profiles/translate";
+import { campaignActionSchema, campaignAdmin, mutateCampaign } from "./campaign";
 
 const OWNER = "hybridhubadmin@gmail.com";
 const COOKIE = "__Host-hh_admin";
@@ -45,6 +46,7 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const action = url.searchParams.get("action") ?? "session";
       if (action === "session") return json({ authenticated: Boolean(auth), expiresAt: auth?.expiresAt ?? null });
       if (!auth) return json({ error: "unauthorized" }, 401);
+      if (action === "campaign") return campaignAdmin(db);
       if (action === "profiles") return json({ profiles: await listManagedProfiles(db) });
       if (!["list", "export"].includes(action)) return json({ error: "invalid_action" }, 400);
       const q = (url.searchParams.get("q") ?? "").trim().slice(0, 254);
@@ -76,8 +78,12 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
     if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
     if (!validOrigin(request)) return json({ error: "forbidden" }, 403);
     if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ error: "invalid_request" }, 415);
-    let body: z.infer<typeof bodySchema> | z.infer<typeof profileActionSchema> | z.infer<typeof translationActionSchema>;
-    try { body = z.union([bodySchema, profileActionSchema, translationActionSchema]).parse(await readLimitedJson(request, 65536)); } catch { return json({ error: "invalid_request", message: "Confirma os campos e os links HTTPS do perfil." }, 400); }
+    let body: z.infer<typeof bodySchema> | z.infer<typeof profileActionSchema> | z.infer<typeof translationActionSchema> | z.infer<typeof campaignActionSchema>;
+    try { body = z.union([bodySchema, profileActionSchema, translationActionSchema, campaignActionSchema]).parse(await readLimitedJson(request, 65536)); } catch { return json({ error: "invalid_request", message: "Confirma os campos e os links HTTPS do perfil." }, 400); }
+    if (body.action === "campaign-start" || body.action === "campaign-redeem") {
+      if (!await session(request, env)) return json({ error: "unauthorized" }, 401);
+      return mutateCampaign(db,body);
+    }
     if (body.action === "profile-translate") {
       if (!await session(request, env)) return json({ error: "unauthorized" }, 401);
       return await translateProfile(body, env);
