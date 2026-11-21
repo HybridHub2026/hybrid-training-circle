@@ -5,6 +5,7 @@ export const launchOfferCopy = {
     intro:
       "Recebe o aviso de lançamento da app e reserva um bucket hat de oferta na tua primeira compra de outro produto do merchandising Hybrid Hub.",
     highlight: "1 BUCKET HAT DE OFERTA",
+    heroTerms: "Para os primeiros 100 inscritos nesta campanha, na primeira compra de outro produto do merchandising. Uma oferta por pessoa, utilizável uma única vez.",
     conditions: "Condições da oferta",
     rules: [
       "Oferta para os primeiros 100 inscritos nesta campanha, por ordem de inscrição. A reserva é confirmada por email.",
@@ -40,6 +41,7 @@ export const launchOfferCopy = {
     intro:
       "Recibe el aviso de lanzamiento de la app y reserva un bucket hat de regalo con tu primera compra de otro producto del merchandising Hybrid Hub.",
     highlight: "1 BUCKET HAT DE REGALO",
+    heroTerms: "Para las primeras 100 inscripciones en esta campaña, con la primera compra de otro producto del merchandising. Un regalo por persona, válido una sola vez.",
     conditions: "Condiciones de la oferta",
     rules: [
       "Oferta para las primeras 100 inscripciones en esta campaña, por orden de inscripción. La reserva se confirma por correo electrónico.",
@@ -75,6 +77,7 @@ export const launchOfferCopy = {
     intro:
       "Get the app launch notification and reserve a free bucket hat with your first purchase of another Hybrid Hub merchandise product.",
     highlight: "1 FREE BUCKET HAT",
+    heroTerms: "For the first 100 campaign sign-ups, with your first purchase of another merchandise product. One gift per person, redeemable once.",
     conditions: "Offer conditions",
     rules: [
       "For the first 100 people to sign up for this campaign, in sign-up order. Your reservation is confirmed by email.",

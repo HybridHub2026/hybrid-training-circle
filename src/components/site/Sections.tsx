@@ -2,6 +2,8 @@ import { Link, Localized, T, useLanguage } from "@/i18n";
 
 import { useState, type UIEvent } from "react";
 import { LaunchNotice } from "./LaunchNotice";
+import { useWebsiteForm } from "./WebsiteForm";
+import { launchOfferCopy } from "@/i18n/launch-offer";
 import { Users, Dumbbell, Trophy, Ticket, Globe2, UserCheck, Smartphone, ArrowRight } from "lucide-react";
 import hero from "@/assets/glimpse-hybrid-leiria-runner.jpg";
 import train from "@/assets/hybrid-hub-community-sunset.png";
@@ -11,6 +13,9 @@ import merch from "@/assets/hybrid-hub-em-breve.png";
 const wrap = "mx-auto max-w-7xl px-5 md:px-10";
 
 export function Hero() {
+  const language = useLanguage();
+  const { offer } = useWebsiteForm();
+  const campaign = launchOfferCopy[language];
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <Localized as="img" src={hero} alt="Atleta a correr num evento de corrida ao ar livre" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
@@ -19,7 +24,12 @@ export function Hero() {
           <h1 className="text-5xl sm:text-6xl lg:text-9xl"><T>{"TRAIN•"}</T><br /><span className="text-primary"><T>{"CONNECT•"}</T></span><br /><T>{"COMPETE"}</T></h1>
         <p className="mt-6 max-w-xl text-lg font-medium md:text-xl"><T>{"Encontra companhia para correr, treinar e preparar a tua próxima prova."}</T></p>
         <p className="mt-3 max-w-xl text-muted-foreground"><T>{"Para quem está a começar ou já treina. A app Hybrid Hub está em preparação para iOS e Android."}</T></p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+        {offer?.available !== false && <div className="mt-5 max-w-xl border-l-2 border-primary bg-background/60 px-4 py-3">
+          <p className="text-sm font-bold text-primary sm:text-base">{campaign.highlight}</p>
+          <p className="mt-1 text-sm leading-relaxed">{campaign.heroTerms}</p>
+          <Localized as="a" href="#aviso-lancamento" className="mt-2 inline-block py-1 text-sm text-primary underline underline-offset-4">{campaign.conditions}</Localized>
+        </div>}
+        <div className="mt-5 flex flex-col gap-4 sm:flex-row">
           <Localized as="a" href="#aviso-lancamento" className="btn-primary"><T>{"Avisem-me no lançamento "}</T><ArrowRight size={16} /></Localized>
           <Link to="/como-funciona" className="btn-ghost"><T>{"Como funciona"}</T></Link>
         </div>
