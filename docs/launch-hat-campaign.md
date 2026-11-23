@@ -1,6 +1,6 @@
 # Oferta de lançamento — 100 reservas
 
-O formulário da página inicial permite aderir à campanha em PT/ES/EN: um bucket hat na primeira compra de qualquer outro produto, uma oferta por pessoa, utilizável uma vez, durante 60 dias após o lançamento do merchandising.
+O formulário da página inicial permite aderir à campanha em PT/ES/EN: um bucket hat na compra de qualquer produto do merchandising Hybrid Hub (exceto bucket hats), uma oferta por pessoa, utilizável uma vez, durante 60 dias após o lançamento do merchandising.
 
 A campanha começa na publicação desta funcionalidade. Inscrições anteriores para o aviso da app não recebem marketing novo automaticamente: podem aderir voltando a preencher o formulário com o consentimento alargado. O consentimento original fica intacto e a nova adesão fica registada na reserva. Não se exige nova inscrição para quem já aderiu à campanha.
 
@@ -10,7 +10,7 @@ São criadas 100 posições fixas na D1 existente, preenchidas por atualização
 
 Em `/inscritos`, entrar como habitualmente e selecionar **Oferta bucket hat** para ver reservas, códigos e utilizações. Antes de abrir as vendas não definir a data: o prazo permanece parado. Quando existir uma forma de comprar os produtos, guardar a data/hora real de abertura. A data fica fixa; um email é colocado na fila para cada reserva e enviado a partir da abertura, usando o limite e as retentativas existentes do Brevo. Novos aderentes durante a campanha recebem também as datas corretas.
 
-Ainda não existe checkout. As instruções do email pedem ao titular para responder com o código e o produto pretendido. Depois de confirmar a compra, registar o código e a referência da encomenda na área privada. Verificar a primeira compra e a identidade do beneficiário, incluindo possíveis emails alternativos, antes de confirmar a caixa de verificação. O sistema impede reutilizar um código e atribuir duas ofertas à mesma referência de encomenda. A unicidade do email não prova que são pessoas diferentes.
+Ainda não existe checkout. As instruções do email pedem ao titular para responder com o código e o produto pretendido. Depois de confirmar a compra, registar o código e a referência da encomenda na área privada. Verificar a compra de um produto que não seja um bucket hat e a identidade do beneficiário, incluindo possíveis emails alternativos, antes de confirmar a caixa de verificação. O sistema impede reutilizar um código e atribuir duas ofertas à mesma referência de encomenda. A unicidade do email não prova que são pessoas diferentes.
 
 ## Remoção de dados
 

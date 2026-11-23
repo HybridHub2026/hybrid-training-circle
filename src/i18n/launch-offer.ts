@@ -3,14 +3,14 @@ export const launchOfferCopy = {
     eyebrow: "Oferta de lançamento · Primeiros 100 inscritos",
     title: "FAZ PARTE DESDE O PRIMEIRO DIA.",
     intro:
-      "Recebe o aviso de lançamento da app e reserva um bucket hat de oferta na tua primeira compra de outro produto do merchandising Hybrid Hub.",
+      "Recebe o aviso de lançamento da app e reserva um bucket hat de oferta na compra de qualquer produto do merchandising Hybrid Hub (exceto bucket hats).",
     highlight: "1 BUCKET HAT DE OFERTA",
-    shopTerms: "Para os primeiros 100 inscritos nesta campanha, na primeira compra de outro produto do merchandising. Uma oferta por pessoa, utilizável uma única vez.",
+    shopTerms: "Bucket hat de oferta para os primeiros 100 inscritos nesta campanha, na compra de qualquer produto do merchandising Hybrid Hub (exceto bucket hats). Uma oferta por pessoa, utilizável uma única vez.",
     shopButton: "Inscrever-me e ver condições",
     conditions: "Condições da oferta",
     rules: [
       "Oferta para os primeiros 100 inscritos nesta campanha, por ordem de inscrição. A reserva é confirmada por email.",
-      "Um bucket hat por pessoa, utilizável uma única vez, na primeira compra de qualquer outro produto do merchandising Hybrid Hub.",
+      "Um bucket hat por pessoa, utilizável uma única vez, na compra de qualquer produto do merchandising Hybrid Hub (exceto bucket hats).",
       "Oferta válida durante 60 dias a partir do lançamento do merchandising. O prazo ainda não começou: os produtos ainda não estão à venda.",
       "O código individual e as instruções são enviados por email. A confirmação da compra e da utilização é necessária para entregar a oferta.",
     ],
@@ -26,13 +26,13 @@ export const launchOfferCopy = {
     unsubscribe: "Para cancelar a inscrição e os avisos desta campanha, responde a este email a pedir a remoção.",
     expired: "O prazo de utilização desta oferta terminou.",
     mailTerms:
-      "Recebes um bucket hat de oferta na tua primeira compra de qualquer outro produto do merchandising Hybrid Hub. Uma oferta por pessoa, utilizável uma única vez. A campanha está limitada a 100 reservas.",
+      "Recebes um bucket hat de oferta na compra de qualquer produto do merchandising Hybrid Hub (exceto bucket hats). Uma oferta por pessoa, utilizável uma única vez. A campanha está limitada a 100 reservas.",
     waiting:
       "O merchandising ainda não está à venda. O prazo de 60 dias só começa no lançamento do merchandising. Guarda este código; enviaremos as instruções quando as vendas abrirem.",
     expires: "A oferta termina em",
     opens: "O merchandising abre em",
     opened:
-      "O merchandising Hybrid Hub está disponível. Já podes utilizar a tua oferta na compra de outro produto, dentro do prazo indicado.",
+      "O merchandising Hybrid Hub está disponível. Já podes utilizar a tua oferta na compra de qualquer produto (exceto bucket hats), dentro do prazo indicado.",
     noOffer:
       "A tua inscrição no aviso de lançamento está confirmada. As reservas da oferta do bucket hat já terminaram, pelo que não foi atribuído um código nesta inscrição.",
   },
@@ -40,14 +40,14 @@ export const launchOfferCopy = {
     eyebrow: "Oferta de lanzamiento · Primeras 100 inscripciones",
     title: "FORMA PARTE DESDE EL PRIMER DÍA.",
     intro:
-      "Recibe el aviso de lanzamiento de la app y reserva un bucket hat de regalo con tu primera compra de otro producto del merchandising Hybrid Hub.",
+      "Recibe el aviso de lanzamiento de la app y reserva un bucket hat de regalo con la compra de cualquier producto del merchandising Hybrid Hub (excepto bucket hats).",
     highlight: "1 BUCKET HAT DE REGALO",
-    shopTerms: "Para las primeras 100 inscripciones en esta campaña, con la primera compra de otro producto del merchandising. Un regalo por persona, válido una sola vez.",
+    shopTerms: "Bucket hat de regalo para las primeras 100 inscripciones en esta campaña, con la compra de cualquier producto del merchandising Hybrid Hub (excepto bucket hats). Un regalo por persona, válido una sola vez.",
     shopButton: "Inscribirme y ver condiciones",
     conditions: "Condiciones de la oferta",
     rules: [
       "Oferta para las primeras 100 inscripciones en esta campaña, por orden de inscripción. La reserva se confirma por correo electrónico.",
-      "Un bucket hat por persona, válido una sola vez, con la primera compra de cualquier otro producto del merchandising Hybrid Hub.",
+      "Un bucket hat por persona, válido una sola vez, con la compra de cualquier producto del merchandising Hybrid Hub (excepto bucket hats).",
       "Oferta válida durante 60 días a partir del lanzamiento del merchandising. El plazo aún no ha empezado: los productos todavía no están a la venta.",
       "El código individual y las instrucciones se envían por correo electrónico. Es necesario confirmar la compra y el uso del código para entregar el regalo.",
     ],
@@ -63,13 +63,13 @@ export const launchOfferCopy = {
     unsubscribe: "Para cancelar tu inscripción y los avisos de esta campaña, responde a este correo electrónico para pedir que eliminemos tu inscripción.",
     expired: "El plazo para utilizar esta oferta ha terminado.",
     mailTerms:
-      "Recibirás un bucket hat de regalo con tu primera compra de cualquier otro producto del merchandising Hybrid Hub. Un regalo por persona, válido una sola vez. La campaña está limitada a 100 reservas.",
+      "Recibirás un bucket hat de regalo con la compra de cualquier producto del merchandising Hybrid Hub (excepto bucket hats). Un regalo por persona, válido una sola vez. La campaña está limitada a 100 reservas.",
     waiting:
       "El merchandising todavía no está a la venta. El plazo de 60 días empieza cuando se lance el merchandising. Guarda este código; te enviaremos las instrucciones cuando se abran las ventas.",
     expires: "La oferta termina el",
     opens: "El merchandising estará disponible el",
     opened:
-      "El merchandising Hybrid Hub ya está disponible. Puedes utilizar tu regalo con la compra de otro producto, dentro del plazo indicado.",
+      "El merchandising Hybrid Hub ya está disponible. Puedes utilizar tu regalo con la compra de cualquier producto (excepto bucket hats), dentro del plazo indicado.",
     noOffer:
       "Tu inscripción para el aviso de lanzamiento está confirmada. Las reservas del bucket hat han terminado, por lo que no se ha asignado un código a esta inscripción.",
   },
@@ -77,14 +77,14 @@ export const launchOfferCopy = {
     eyebrow: "Launch offer · First 100 sign-ups",
     title: "BE PART OF IT FROM DAY ONE.",
     intro:
-      "Get the app launch notification and reserve a free bucket hat with your first purchase of another Hybrid Hub merchandise product.",
+      "Get the app launch notification and reserve a free bucket hat when you buy any Hybrid Hub merchandise product (except bucket hats).",
     highlight: "1 FREE BUCKET HAT",
-    shopTerms: "For the first 100 campaign sign-ups, with your first purchase of another merchandise product. One gift per person, redeemable once.",
+    shopTerms: "A free bucket hat for the first 100 campaign sign-ups when you buy any Hybrid Hub merchandise product (except bucket hats). One gift per person, redeemable once.",
     shopButton: "Sign up and view conditions",
     conditions: "Offer conditions",
     rules: [
       "For the first 100 people to sign up for this campaign, in sign-up order. Your reservation is confirmed by email.",
-      "One bucket hat per person, redeemable once, with your first purchase of any other Hybrid Hub merchandise product.",
+      "One bucket hat per person, redeemable once, when you buy any Hybrid Hub merchandise product (except bucket hats).",
       "Valid for 60 days from the merchandise launch. The countdown has not started: the products are not on sale yet.",
       "Your individual code and instructions are sent by email. The purchase and code redemption must be confirmed before the gift is supplied.",
     ],
@@ -100,13 +100,13 @@ export const launchOfferCopy = {
     unsubscribe: "To cancel your sign-up and this campaign's notifications, reply to this email to ask us to remove your sign-up.",
     expired: "The redemption period for this offer has ended.",
     mailTerms:
-      "You'll receive a free bucket hat with your first purchase of any other Hybrid Hub merchandise product. One gift per person, redeemable once. This campaign is limited to 100 reservations.",
+      "You'll receive a free bucket hat when you buy any Hybrid Hub merchandise product (except bucket hats). One gift per person, redeemable once. This campaign is limited to 100 reservations.",
     waiting:
       "The merchandise is not on sale yet. Your 60-day window starts when the merchandise launches. Keep this code; we'll send instructions when sales open.",
     expires: "The offer ends on",
     opens: "The merchandise launches on",
     opened:
-      "Hybrid Hub merchandise is now available. You can use your gift offer when buying another product, within the stated period.",
+      "Hybrid Hub merchandise is now available. You can use your gift offer when buying any product (except bucket hats), within the stated period.",
     noOffer:
       "Your app launch notification sign-up is confirmed. Bucket hat reservations have closed, so no code has been assigned to this sign-up.",
   },

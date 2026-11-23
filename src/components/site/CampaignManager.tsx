@@ -108,7 +108,7 @@ export function CampaignManager({
       </div>
       <p className="text-muted-foreground">
         Primeiros 100 inscritos nesta campanha. Uma oferta por pessoa, uma utilização, na primeira
-        compra de outro produto. As inscrições anteriores só entram na campanha se voltarem a
+        compra de qualquer produto (exceto bucket hats). As inscrições anteriores só entram na campanha se voltarem a
         preencher o formulário com o novo consentimento.
       </p>
       {error && (
@@ -185,7 +185,7 @@ export function CampaignManager({
             </div>
             <label className="mt-4 flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
               <input type="checkbox" name="confirmed" required disabled={busy} className="mt-1" />
-              Verifiquei que é a primeira compra de outro produto, que esta pessoa ainda não recebeu
+              Verifiquei a compra de um produto (exceto bucket hats), que esta pessoa ainda não recebeu
               a oferta (mesmo usando outro email) e que será entregue apenas um bucket hat.
             </label>
             <button
