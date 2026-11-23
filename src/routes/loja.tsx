@@ -1,5 +1,7 @@
 import { languageAlternates } from "@/i18n/language";
-import { T } from "@/i18n";
+import { T, Localized, useLanguage } from "@/i18n";
+import { launchOfferCopy } from "@/i18n/launch-offer";
+import { useWebsiteForm } from "@/components/site/WebsiteForm";
 import { ProductImage } from "@/components/site/ProductImage";
 import { createFileRoute } from "@tanstack/react-router";
 import bucketHat from "@/assets/merch/bucket-hat-reversivel.jpg";
@@ -28,6 +30,9 @@ const products = [
 ];
 
 function Loja() {
+  const language = useLanguage();
+  const { offer } = useWebsiteForm();
+  const campaign = launchOfferCopy[language];
   return (
     <section className="mx-auto max-w-7xl px-5 pb-16 pt-24 md:px-10 md:pb-20 md:pt-28">
       <p className="eyebrow"><T>{"Loja · Em breve"}</T></p>
@@ -44,6 +49,16 @@ function Loja() {
           </article>
         ))}</T>
       </div>
+      {offer?.available !== false && <aside className="mt-8 rounded-sm border border-primary/50 bg-muted p-5 md:mt-10 md:p-6" aria-labelledby="shop-launch-offer">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-3xl">
+            <h2 id="shop-launch-offer" className="text-lg text-primary">{campaign.highlight}</h2>
+            <p className="mt-2 text-sm leading-relaxed">{campaign.shopTerms}</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground"><T>{"Pré-visualização da coleção. Estes produtos ainda não estão à venda."}</T></p>
+          </div>
+          <Localized as="a" href="/#aviso-lancamento" className="btn-primary shrink-0 text-center">{campaign.shopButton}</Localized>
+        </div>
+      </aside>}
     </section>
   );
 }
