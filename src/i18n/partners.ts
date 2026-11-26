@@ -55,7 +55,7 @@ const text = {
     "Confirmamos contigo los datos y tu autorización antes de publicarlos en la app.",
     "We'll confirm your details and permission before publishing in the app.",
   ],
-  formTitle: ["FALAMOS SOBRE TI.", "HABLEMOS DE TI.", "LET'S TALK ABOUT YOU."],
+  formTitle: ["FALA-NOS SOBRE TI.", "HÁBLANOS DE TI.", "TELL US ABOUT YOURSELF."],
   formHint: [
     "Demora cerca de 2 minutos. Os campos assinalados com * são obrigatórios.",
     "Solo te llevará unos 2 minutos. Los campos con * son obligatorios.",
