@@ -4,6 +4,7 @@ import { formsConfigured, readLimitedJson, type FormsEnvironment } from "./servi
 import { profileActionSchema, listManagedProfiles, mutateProfile } from "../profiles/service";
 import { translationActionSchema, translateProfile } from "../profiles/translate";
 import { campaignActionSchema, campaignAdmin, mutateCampaign } from "./campaign";
+import { ensurePartnerImages, readPartnerImage } from "./partner-images";
 
 const OWNER = "hybridhubadmin@gmail.com";
 const COOKIE = "__Host-hh_admin";
@@ -46,6 +47,7 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const action = url.searchParams.get("action") ?? "session";
       if (action === "session") return json({ authenticated: Boolean(auth), expiresAt: auth?.expiresAt ?? null });
       if (!auth) return json({ error: "unauthorized" }, 401);
+      if (action === "partner-image") return readPartnerImage(db,url.searchParams.get("id")??"",url.searchParams.get("download")==="1");
       if (action === "campaign") return campaignAdmin(db);
       if (action === "profiles") return json({ profiles: await listManagedProfiles(db) });
       if (!["list", "export"].includes(action)) return json({ error: "invalid_action" }, 400);
@@ -56,6 +58,7 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const group = url.searchParams.get("group") ?? "launch";
       if (!["launch", "partners"].includes(group)) return json({ error: "invalid_filter" }, 400);
       const partners = group === "partners";
+      if (partners) await ensurePartnerImages(db);
       const conditions = [partners ? "(kind='contact' AND subject IN (?,?))" : "kind='launch'"];
       const values: unknown[] = partners ? Object.values(partnerSubjects) : [];
       if (!showTests) { conditions.push(`email NOT IN (${TEST_EMAILS.map(() => "?").join(",")})`); values.push(...TEST_EMAILS); }
@@ -67,7 +70,7 @@ export async function handleAdmin(request: Request, env: FormsEnvironment): Prom
       const page = Math.max(1, Math.min(100000, Number.parseInt(url.searchParams.get("page") ?? "1", 10) || 1));
       const limit = action === "export" ? 10000 : 50;
       if (action === "export" && total > limit) return json({ error: "export_too_large" }, 422);
-      const rows = await db.prepare(`SELECT ${partners ? "id,name,subject,message," : ""}email,language,created_at FROM form_submissions WHERE ${where} ORDER BY created_at DESC,id DESC LIMIT ? OFFSET ?`).bind(...values, limit, action === "export" ? 0 : (page - 1) * limit).all<{ id?: string; name?: string; subject?: string; message?: string; email: string; language: string; created_at: number }>();
+      const rows = await db.prepare(`SELECT ${partners ? "id,name,subject,message,EXISTS(SELECT 1 FROM partner_application_images WHERE submission_id=form_submissions.id) AS hasImage," : ""}email,language,created_at FROM form_submissions WHERE ${where} ORDER BY created_at DESC,id DESC LIMIT ? OFFSET ?`).bind(...values, limit, action === "export" ? 0 : (page - 1) * limit).all<{ id?: string; name?: string; subject?: string; message?: string; email: string; language: string; created_at: number }>();
       if (action === "export") {
         const cell = (text: string) => `"${(/^[=+@\-\t\r\n]/.test(text) ? `'${text}` : text).replace(/"/g, '""')}"`;
         const csv = "\uFEFF" + [partners ? ["Nome", "Tipo", "Respostas", "Email", "Idioma", "Data de inscrição (UTC)"] : ["Email", "Idioma", "Data de inscrição (UTC)"], ...rows.results.map(row => [...(partners ? [row.name ?? "", row.subject ?? "", row.message ?? ""] : []), row.email, row.language.toUpperCase(), new Date(row.created_at).toISOString()])].map(row => row.map(cell).join(";")).join("\r\n");

@@ -24,7 +24,7 @@ const text = {
     "The app is in development. This form lets us know you're interested; we'll agree on your involvement and profile publication with you afterwards.",
   ],
   coach: ["Sou PT / coach", "Soy entrenador/a", "I'm a PT / coach"],
-  community: ["Represento uma comunidade", "Represento una comunidad", "I represent a community"],
+  community: ["Comunidade / box", "Comunidad / box", "Community / box"],
   coachBody: [
     "Apresenta o teu trabalho, as modalidades e o tipo de acompanhamento que ofereces. Ajuda futuros atletas a descobrir profissionais na sua zona.",
     "Cuéntanos qué haces, en qué deportes trabajas y cómo acompañas a tus clientes. Ayuda a los deportistas a descubrir profesionales en su zona.",
@@ -55,7 +55,7 @@ const text = {
     "Confirmamos contigo los datos y tu autorización antes de publicarlos en la app.",
     "We'll confirm your details and permission before publishing in the app.",
   ],
-  formTitle: ["CONTA-NOS SOBRE TI.", "CUÉNTANOS SOBRE TI.", "TELL US ABOUT YOURSELF."],
+  formTitle: ["FALAMOS SOBRE TI.", "HABLEMOS DE TI.", "LET'S TALK ABOUT YOU."],
   formHint: [
     "Demora cerca de 2 minutos. Os campos assinalados com * são obrigatórios.",
     "Solo te llevará unos 2 minutos. Los campos con * son obligatorios.",
@@ -106,6 +106,13 @@ const text = {
     "Instagram o web (opcional)",
     "Instagram or website (optional)",
   ],
+  imageCoach: ["Fotografia (opcional)", "Fotografía (opcional)", "Photo (optional)"],
+  imageCommunity: ["Logótipo ou fotografia da comunidade (opcional)", "Logotipo o fotografía de la comunidad (opcional)", "Community logo or photo (optional)"],
+  imageHint: ["JPG, PNG ou WebP, até 5 MB. A imagem será otimizada e ficará associada à candidatura, apenas para revisão na área privada. Não será publicada automaticamente. Envia apenas uma imagem que tenhas autorização para utilizar.", "JPG, PNG o WebP, hasta 5 MB. Optimizaremos la imagen y la guardaremos con tu solicitud, solo para su revisión en el área privada. No se publicará automáticamente. Envía solo una imagen que tengas permiso para utilizar.", "JPG, PNG or WebP, up to 5 MB. We'll optimise the image and keep it with your application for review in the private area. It won't be published automatically. Only upload an image you have permission to use."],
+  imageError: ["Não foi possível preparar esta imagem. Usa um JPG, PNG ou WebP até 5 MB; se necessário, escolhe uma versão mais pequena.", "No se ha podido preparar esta imagen. Usa un JPG, PNG o WebP de hasta 5 MB; si hace falta, elige una versión más pequeña.", "We couldn't prepare this image. Use a JPG, PNG or WebP up to 5 MB; try a smaller version if needed."],
+  imageProcessing: ["A preparar a imagem…", "Preparando la imagen…", "Preparing your image…"],
+  imagePreview: ["Pré-visualização da imagem selecionada", "Vista previa de la imagen seleccionada", "Preview of your selected image"],
+  imageRemove: ["Remover imagem", "Quitar imagen", "Remove image"],
   consent: [
     "Li a Política de Privacidade e aceito ser contactado sobre a minha participação na Hybrid Hub. Os meus dados não serão publicados na app sem confirmação prévia.",
     "He leído la Política de Privacidad y acepto que me contactéis sobre mi participación en Hybrid Hub. Mis datos no se publicarán en la app sin confirmación previa.",

@@ -3,6 +3,7 @@ import { partnerSchema, partnerSubjects, partnerMessage, partnerConsent, isPartn
 import { consentText, makeEmail, type RecipientKind, type Submission } from "./emails";
 import { campaignAvailability, campaignCode, campaignEmailKey, campaignMail, campaignStatements, ensureCampaign, queueOpeningMail } from "./campaign";
 import { launchOfferCopy } from "../../i18n/launch-offer";
+import { decodePartnerImage, ensurePartnerImages } from "./partner-images";
 
 interface Statement {
   bind(...values: unknown[]): Statement;
@@ -83,11 +84,14 @@ export async function handleForms(request: Request, env: FormsEnvironment, waitU
   if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ error: "invalid_content_type" }, 415);
   let body: z.infer<typeof schema>;
   try {
-    const result = schema.safeParse(await readLimitedJson(request));
+    const result = schema.safeParse(await readLimitedJson(request, 700000));
     if (!result.success) return json({ error: "invalid_form" }, 400);
     body = result.data;
   } catch { return json({ error: "invalid_form" }, 400); }
   if (body._gotcha) return json({ accepted: true }, 202);
+  let imageBytes: Uint8Array | undefined;
+  try { if (body.partner?.image) imageBytes=decodePartnerImage(body.partner.image); }
+  catch {return json({error:"invalid_image"},400);}
   const db = env.FORMS_DB!;
   const { token, _gotcha, ...content } = body;
   const requestHash = await digest(JSON.stringify(content));
@@ -111,8 +115,10 @@ export async function handleForms(request: Request, env: FormsEnvironment, waitU
     const kind = body.kind === "partner" ? "contact" : body.kind;
     const submission: Submission = { id: body.id, kind, language: body.idioma, email: body.email, name: body.nome, subject: partner ? partnerSubjects[partner.type] : body.assunto, message: partner ? partnerMessage(partner) : body.mensagem, consent_text: partner ? partnerConsent[body.idioma] : body.campaign ? launchOfferCopy[body.idioma].consent : consentText(kind, body.idioma), request_hash: requestHash, created_at: now };
     if (body.campaign) await ensureCampaign(db);
+    if (imageBytes) await ensurePartnerImages(db);
     await db.batch([
       db.prepare("INSERT INTO form_submissions(id,kind,language,email,name,subject,message,consent_text,request_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING").bind(...Object.values(submission)),
+      ...(imageBytes ? [db.prepare("INSERT INTO partner_application_images(submission_id,content_type,bytes,created_at) SELECT id,'image/webp',?,? FROM form_submissions WHERE id=? ON CONFLICT DO NOTHING").bind(imageBytes.buffer,now,body.id)] : []),
       ...(body.campaign ? campaignStatements(db, {id:body.id,email:body.email,emailKey:await campaignEmailKey(body.email),claimId:body.id,code:campaignCode(),language:body.idioma,now}) : []),
       ...(["user", "admin"] as const).map(recipient => db.prepare(`INSERT INTO form_mail_outbox(id,submission_id,recipient) SELECT ?,id,? FROM form_submissions WHERE id=? ${body.campaign ? "AND NOT EXISTS(SELECT 1 FROM launch_hat_slots WHERE submission_id=form_submissions.id)" : ""} ON CONFLICT DO NOTHING`).bind(`${body.id}:${recipient}`, recipient, body.id)),
     ]);

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { partnerImageSchema } from "./partner-images";
 
 // Stored as classified contacts so the existing durable inbox and delivery queue apply.
 export const partnerSubjects = {
@@ -6,6 +7,7 @@ export const partnerSubjects = {
   community: "[Participação] Comunidade",
 } as const;
 export const partnerSchema = z.object({
+  image: partnerImageSchema.optional(),
   type: z.enum(["coach", "community"]),
   city: z.string().trim().min(1).max(100),
   country: z.string().trim().min(1).max(100),
@@ -26,6 +28,7 @@ export function partnerMessage(value: z.infer<typeof partnerSchema>) {
     `Apresentação: ${value.description}`,
     `${value.type === "coach" ? "Acompanhamento" : "Atividades e frequência"}: ${value.activities}`,
     ...(value.website ? [`Instagram / site: ${value.website}`] : []),
+    ...(value.image ? ["Imagem enviada: disponível para revisão na área privada (não publicada)."] : []),
   ].join("\n\n");
 }
 export const partnerConsent = {

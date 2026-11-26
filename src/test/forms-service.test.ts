@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { DatabaseSync } from "node:sqlite";
 import { readFileSync } from "node:fs";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
+import { handleAdmin } from "@/server/forms/admin";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { handleForms, deliverPendingMail, type FormsDatabase, type FormsEnvironment } from "@/server/forms/service";
 
@@ -13,7 +14,7 @@ function databaseAdapter(db: DatabaseSync): FormsDatabase {
   function statement(sql: string, values: unknown[] = []) {
     const execute = () => db.prepare(sql);
     return {
-      bind: (...args: unknown[]) => statement(sql, args),
+      bind: (...args: unknown[]) => statement(sql, args.map(value=>value instanceof ArrayBuffer?new Uint8Array(value):value)),
       first: async <T>() => (execute().get(...values as never[]) ?? null) as T | null,
       all: async <T>() => ({ results: execute().all(...values as never[]) as T[] }),
       run: async () => execute().run(...values as never[]),
@@ -48,6 +49,56 @@ const mailCalls = () => fetchMock.mock.calls.filter(([url]) => String(url).inclu
 
 describe("website forms", () => {
   const partner = { type: "coach", city: "Maia", country: "Portugal", sports: "Corrida", description: "Treino para iniciantes", activities: "Individual e em grupo", website: "@coach" };
+  it("stores an optional image atomically, retries without duplicates and restricts preview/download to the owner",async()=>{
+    sqlite.exec(readFileSync("migrations/0002_subscribers_admin.sql","utf8"));
+    const bytes=readFileSync("src/assets/hybrid-hub-wordmark.webp");
+    const body=payload({kind:"partner",nome:"Coach Test",partner:{...partner,image:{contentType:"image/webp",data:bytes.toString("base64")}}});
+    expect((await handleForms(request(body),env)).status).toBe(202);
+    expect((await handleForms(request(body),env)).status).toBe(202);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM partner_application_images").get()?.['n']).toBe(1);
+    const image=sqlite.prepare("SELECT bytes FROM partner_application_images").get()?.['bytes'];
+    expect(Buffer.from(image as Uint8Array)).toEqual(bytes);
+    expect(sqlite.prepare("SELECT name FROM sqlite_master WHERE name='member_profiles'").get()).toBeUndefined();
+    const messages=mailCalls().map(call=>String((call[1] as RequestInit).body));
+    expect(messages).toHaveLength(2);expect(messages.join("")).not.toContain(bytes.toString("base64"));
+    const privateUrl=`https://hybridhub.pt/api/admin?action=partner-image&id=${body.id}`;
+    expect((await handleAdmin(new Request(privateUrl),env)).status).toBe(401);
+    const token="a".repeat(64);
+    sqlite.prepare("INSERT INTO admin_sessions(token_hash,expires_at) VALUES(?,?)").run(createHash("sha256").update(token).digest("hex"),Date.now()+3600000);
+    const headers={Cookie:`__Host-hh_admin=${token}`};
+    const preview=await handleAdmin(new Request(privateUrl,{headers}),env);
+    expect(preview.status).toBe(200);expect(preview.headers.get("Content-Type")).toBe("image/webp");
+    expect(preview.headers.get("Cache-Control")).toContain("no-store");expect(preview.headers.get("X-Content-Type-Options")).toBe("nosniff");
+    expect(Buffer.from(await preview.arrayBuffer())).toEqual(bytes);
+    const download=await handleAdmin(new Request(privateUrl+"&download=1",{headers}),env);expect(download.headers.get("Content-Disposition")).toContain("attachment");
+    expect((await handleAdmin(new Request(privateUrl,{headers:{...headers,"sec-fetch-site":"cross-site"}}),env)).status).toBe(403);
+    const list=await(await handleAdmin(new Request("https://hybridhub.pt/api/admin?action=list&group=partners",{headers}),env)).json();
+    expect(list.subscribers[0]).toMatchObject({id:body.id,hasImage:1});expect(JSON.stringify(list)).not.toContain(bytes.toString("base64"));
+    expect((await handleForms(request({...body,partner:{...partner}}),env)).status).toBe(409);
+    sqlite.prepare("DELETE FROM form_submissions WHERE id=?").run(body.id);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM partner_application_images").get()?.['n']).toBe(0);
+    expect((await handleAdmin(new Request(privateUrl,{headers}),env)).status).toBe(404);
+  });
+  it("rejects disguised, oversized and misplaced images before saving or sending",async()=>{
+    for (const image of [{contentType:"image/svg+xml",data:Buffer.from("<svg></svg>").toString("base64")},{contentType:"image/webp",data:Buffer.alloc(64,65).toString("base64")},{contentType:"image/webp",data:"a".repeat(666672)}]) {
+      expect((await handleForms(request(payload({kind:"partner",nome:"Test",partner:{...partner,image}})),env)).status).toBe(400);
+    }
+    const bytes=readFileSync("src/assets/hybrid-hub-wordmark.webp");
+    const image={contentType:"image/webp",data:bytes.toString("base64")};
+    expect((await handleForms(request(payload({partner:{...partner,image}})),env)).status).toBe(400);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM form_submissions").get()?.['n']).toBe(0);expect(fetchMock).not.toHaveBeenCalled();
+    fetchMock.mockResolvedValueOnce(Response.json({success:false}));
+    expect((await handleForms(request(payload({kind:"partner",nome:"Test",partner:{...partner,image}})),env)).status).toBe(403);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM form_submissions").get()?.['n']).toBe(0);
+  });
+  it("rolls back both the image and application if the delivery queue cannot be saved",async()=>{
+    sqlite.exec("CREATE TRIGGER reject_mail BEFORE INSERT ON form_mail_outbox BEGIN SELECT RAISE(ABORT,'test failure'); END;");
+    const image={contentType:"image/webp",data:readFileSync("src/assets/hybrid-hub-wordmark.webp").toString("base64")};
+    expect((await handleForms(request(payload({kind:"partner",nome:"Test",partner:{...partner,image}})),env)).status).toBe(503);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM form_submissions").get()?.['n']).toBe(0);
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM partner_application_images").get()?.['n']).toBe(0);
+    expect(mailCalls()).toHaveLength(0);
+  });
   it.each(["pt", "es", "en"])("durably stores partner interest separately from launch and confirms next steps in %s", async idioma => {
     const body = payload({ kind: "partner", idioma, nome: "Coach Test", partner });
     expect((await handleForms(request(body), env)).status).toBe(202);

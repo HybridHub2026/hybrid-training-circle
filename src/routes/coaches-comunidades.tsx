@@ -5,6 +5,7 @@ import { Link, T, useLanguage } from "@/i18n";
 import { languageAlternates, localizedPath, type Language } from "@/i18n/language";
 import { partnerCopy } from "@/i18n/partners";
 import { FormProtection, useWebsiteForm } from "@/components/site/WebsiteForm";
+import { ApplicationImageField, type ApplicationImage } from "@/components/site/ApplicationImageField";
 
 export function participationHead(language: Language) {
   const copy = partnerCopy(language);
@@ -33,6 +34,8 @@ export function ParticipationPage() {
   const c = partnerCopy(language);
   const form = useWebsiteForm();
   const [type, setType] = useState<"coach" | "community">("coach");
+  const [image,setImage]=useState<ApplicationImage|null>(null);
+  const [imageBusy,setImageBusy]=useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   function choose(value: typeof type) {
     setType(value);
@@ -40,7 +43,7 @@ export function ParticipationPage() {
   }
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status === "sending" || !form.ready) return;
+    if (status === "sending" || imageBusy || !form.ready) return;
     const data = new FormData(event.currentTarget);
     if (data.get("_gotcha")) return;
     const value = (name: string) => String(data.get(name) ?? "").trim();
@@ -60,6 +63,7 @@ export function ParticipationPage() {
           description: value("description"),
           activities: value("activities"),
           website: value("website"),
+          ...(image?{image}:{}),
         },
       });
       setStatus("success");
@@ -252,6 +256,7 @@ export function ParticipationPage() {
                     className={field}
                   />
                 </label>
+                <ApplicationImageField copy={c} type={type} onChange={setImage} onBusy={setImageBusy}/>
                 <label className="flex items-start gap-3 text-sm text-muted-foreground">
                   <input
                     name="consent"
@@ -273,7 +278,7 @@ export function ParticipationPage() {
               )}
               <button
                 type="submit"
-                disabled={!form.ready || status === "sending"}
+                disabled={!form.ready || imageBusy || status === "sending"}
                 className="btn-primary w-full disabled:opacity-50 sm:w-auto"
               >
                 {status === "sending" ? c.sending : c.cta}
