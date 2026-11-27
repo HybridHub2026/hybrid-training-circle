@@ -35,7 +35,7 @@ export function Header() {
             }
           }}
         >
-          <Logo />
+          <Logo size={48} />
           <Localized as="img" src={wordmark} alt="Hybrid Hub" className="h-auto w-[84px] min-[360px]:w-[104px] sm:w-[160px] lg:w-[138px] xl:w-[160px]" width={1920} height={500} />
         </Link>
         <nav className="hidden items-center gap-4 xl:gap-7 lg:flex">

@@ -1,11 +1,14 @@
 import logoAsset from "@/assets/hybrid-hub-logo.png";
 
-export function Logo({ src, className = "" }: { src?: string; className?: string }) {
+export function Logo({ src, className = "", size = 40 }: { src?: string; className?: string; size?: number }) {
   return (
     <img
       src={src ?? logoAsset}
       alt="Hybrid Hub"
-      className={`h-10 w-10 rounded-full object-cover ${className}`}
+      width={size}
+      height={size}
+      style={{ width: size, height: size }}
+      className={`shrink-0 rounded-full object-cover ${className}`}
     />
   );
 }
