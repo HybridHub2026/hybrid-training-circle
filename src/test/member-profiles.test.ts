@@ -5,6 +5,14 @@ import { beforeEach, afterEach, it, expect, vi } from "vitest";
 import { handleAdmin } from "@/server/forms/admin";
 import { handleProfileImages } from "@/server/profiles/images";
 import { listPublicProfiles } from "@/server/profiles/service";
+import { ensurePartnerImages } from "@/server/forms/partner-images";
+import { partnerMessage } from "@/server/forms/partners";
+import {
+  applicationExportHeaders,
+  applicationExportRow,
+  applicationProfile,
+  excelCsv,
+} from "@/lib/partner-application";
 import { type ProfileTranslationRequest } from "@/server/profiles/translate";
 import {
   emptyProfile,
@@ -522,4 +530,193 @@ it("validates image uploads and exposes a photograph only while its profile is p
   expect(new Uint8Array(await visible.arrayBuffer())).toEqual(png);
   await action(cookie, profile, "profile-unpublish");
   expect((await imageGet(id)).status).toBe(404);
+});
+
+async function application(kind: "coach" | "community" = "coach") {
+  const id = crypto.randomUUID();
+  const message = partnerMessage({
+    type: kind,
+    city: "Maia",
+    country: "Portugal",
+    sports: "HYROX; Corrida",
+    description: "Treino para todos.\nUma segunda linha.",
+    activities: "Sessões semanais",
+    website: "@coach_test",
+  });
+  db.prepare(
+    "INSERT INTO form_submissions(id,kind,language,email,name,subject,message,consent_text,request_hash,created_at) VALUES(?,'contact','pt',?,?,?,?,?,?,?)",
+  ).run(
+    id,
+    "private@example.com",
+    kind === "coach" ? "Novo coach" : "Nova comunidade",
+    kind === "coach" ? "[Participação] PT / coach" : "[Participação] Comunidade",
+    message,
+    "Aceito ser contactado",
+    "hash",
+    Date.now(),
+  );
+  await ensurePartnerImages(env.FORMS_DB!);
+  const bytes = new Uint8Array([82, 73, 70, 70, 22, 0, 0, 0, 87, 69, 66, 80, 0, 0, 0, 0]);
+  db.prepare(
+    "INSERT INTO partner_application_images(submission_id,content_type,bytes,created_at) VALUES(?,'image/webp',?,?)",
+  ).run(id, bytes, Date.now());
+  return { id, bytes };
+}
+it("creates community drafts without images and respects capacity without leaving orphan images", async () => {
+  const { id } = await application("community"),
+    cookie = await login();
+  db.prepare("DELETE FROM partner_application_images WHERE submission_id=?").run(id);
+  const response = await post({ action: "profile-from-application", submissionId: id }, cookie);
+  expect(response.status).toBe(201);
+  const profiles = (await (await list(cookie)).json()).profiles;
+  expect(profiles[0]).toMatchObject({
+    publishedData: null,
+    data: { kind: "community", imageId: null },
+  });
+  const coach = await application();
+  const insert = db.prepare("INSERT INTO member_profiles(id,payload,updated_at) VALUES(?,?,?)");
+  for (let i = 0; i < 499; i++)
+    insert.run(
+      crypto.randomUUID(),
+      JSON.stringify({ ...complete(), name: `Other ${i}` }),
+      Date.now(),
+    );
+  expect(
+    (await post({ action: "profile-from-application", submissionId: coach.id }, cookie)).status,
+  ).toBe(409);
+  expect(db.prepare("SELECT COUNT(*) AS n FROM member_profile_images").get()?.["n"]).toBe(0);
+  expect(db.prepare("SELECT COUNT(*) AS n FROM member_profile_applications").get()?.["n"]).toBe(1);
+});
+it("imports application text and image atomically into one private draft and preserves edits on retry", async () => {
+  const { id, bytes } = await application(),
+    cookie = await login();
+  const body = { action: "profile-from-application", submissionId: id };
+  expect((await post(body)).status).toBe(401);
+  expect((await post(body, cookie, "https://attacker.example")).status).toBe(403);
+  const response = await post(body, cookie);
+  expect(response.status).toBe(201);
+  const imported = await response.json();
+  const profiles = (await (await list(cookie)).json()).profiles;
+  expect(profiles).toHaveLength(1);
+  expect(profiles[0]).toMatchObject({
+    id: imported.profileId,
+    publishedData: null,
+    publishedAt: null,
+    translationReviews: { es: null, en: null },
+    data: {
+      name: "Novo coach",
+      city: "Maia",
+      description: {
+        pt: "Treino para todos.\nUma segunda linha.\n\nSessões semanais",
+        es: "",
+        en: "",
+      },
+      sports: { pt: ["HYROX", "Corrida"] },
+      instagram: "https://www.instagram.com/coach_test/",
+    },
+  });
+  const imageId = profiles[0].data.imageId;
+  const imageRequest = (preview: boolean) =>
+    handleProfileImages(
+      new Request(
+        `https://hybridhub.pt/api/profile-images?id=${imageId}${preview ? "&preview=1" : ""}`,
+        { headers: { Cookie: cookie } },
+      ),
+      env,
+    );
+  expect((await imageRequest(false)).status).toBe(404);
+  expect(new Uint8Array(await (await imageRequest(true)).arrayBuffer())).toEqual(bytes);
+  expect(await listPublicProfiles(env.FORMS_DB!)).toEqual([]);
+  const edited = await save(
+    cookie,
+    { ...profiles[0].data, name: "Revisto" },
+    imported.profileId,
+    profiles[0].revision,
+  );
+  const retry = await (await post(body, cookie)).json();
+  expect(retry).toMatchObject({ profileId: imported.profileId, created: false });
+  expect((await (await list(cookie)).json()).profiles).toHaveLength(1);
+  expect((await (await list(cookie)).json()).profiles[0].data.name).toBe(edited.data.name);
+  expect(db.prepare("SELECT COUNT(*) AS n FROM member_profile_images").get()?.["n"]).toBe(1);
+  expect(db.prepare("SELECT COUNT(*) AS n FROM partner_application_images").get()?.["n"]).toBe(1);
+  const inbox = await handleAdmin(
+    new Request("https://hybridhub.pt/api/admin?action=list&group=partners", {
+      headers: { Cookie: cookie },
+    }),
+    env,
+  );
+  expect((await inbox.json()).subscribers[0].profileId).toBe(imported.profileId);
+});
+it("rejects missing or ordinary contact requests and flags manually prepared duplicate profiles", async () => {
+  const { id } = await application(),
+    cookie = await login();
+  await save(cookie, { ...complete(), name: "Novo coach" });
+  expect(
+    (await post({ action: "profile-from-application", submissionId: id }, cookie)).status,
+  ).toBe(409);
+  expect(
+    (await post({ action: "profile-from-application", submissionId: crypto.randomUUID() }, cookie))
+      .status,
+  ).toBe(404);
+  db.prepare("UPDATE form_submissions SET subject='Contacto geral' WHERE id=?").run(id);
+  expect(
+    (await post({ action: "profile-from-application", submissionId: id }, cookie)).status,
+  ).toBe(404);
+});
+it("rolls the draft back if copying the private image fails", async () => {
+  const { id } = await application(),
+    cookie = await login();
+  await list(cookie);
+  db.exec(
+    "CREATE TRIGGER refuse_copy BEFORE INSERT ON member_profile_images BEGIN SELECT RAISE(ABORT,'failed image copy'); END;",
+  );
+  expect(
+    (await post({ action: "profile-from-application", submissionId: id }, cookie)).status,
+  ).toBe(503);
+  expect((await (await list(cookie)).json()).profiles).toHaveLength(0);
+  expect(db.prepare("SELECT COUNT(*) AS n FROM member_profile_applications").get()?.["n"]).toBe(0);
+});
+it("exports private applications with the exact workbook columns, complete answers and blank publication permissions", async () => {
+  const coach = await application(),
+    community = await application("community"),
+    cookie = await login();
+  for (const kind of ["coach", "community"] as const) {
+    const url = `https://hybridhub.pt/api/admin?action=export&group=partners&template=${kind}`;
+    expect((await handleAdmin(new Request(url), env)).status).toBe(401);
+    const response = await handleAdmin(new Request(url, { headers: { Cookie: cookie } }), env);
+    expect(response.status).toBe(200);
+    const csv = await response.text();
+    expect(csv).toContain(applicationExportHeaders[kind].map((value) => `"${value}"`).join(";"));
+    expect(csv).toContain(kind === "coach" ? coach.id : community.id);
+    expect(csv).not.toContain(kind === "coach" ? community.id : coach.id);
+    expect(csv).toContain("Sessões semanais");
+    expect(csv).toContain("partner-image");
+  }
+  const row = {
+    id: coach.id,
+    name: "=Formula",
+    subject: "[Participação] PT / coach",
+    message: "Cidade: Maia\n\nApresentação: Texto completo",
+    email: "test@example.com",
+    language: "pt",
+    created_at: Date.now(),
+    consent_text: "consent",
+  };
+  const exported = applicationExportRow(row);
+  expect(exported).toHaveLength(23);
+  expect(exported[18]).toBe("Sim");
+  expect(exported.slice(19, 22)).toEqual(["", "", ""]);
+  expect(excelCsv([exported])).toContain("'=Formula");
+  expect(excelCsv([["  =HYPERLINK(1)"]])).toContain("'  =HYPERLINK");
+  const long = applicationProfile(
+    {
+      ...row,
+      language: "es",
+      message: `Ciudad ignorada\n\nCidade: Madrid\n\nApresentação: ${"x".repeat(1000)}`,
+    },
+    null,
+  );
+  expect(long.data.description.es).toHaveLength(900);
+  expect(long.data.description.pt).toBe("");
+  expect(long.warnings.join(" ")).toContain("encurtados");
 });

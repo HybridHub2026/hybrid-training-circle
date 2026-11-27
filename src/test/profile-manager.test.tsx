@@ -26,6 +26,35 @@ afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
 });
+it("opens an imported draft directly for review with publication still disabled", async () => {
+  const draft: ManagedProfile = {
+    id: crypto.randomUUID(),
+    data: {
+      ...emptyProfile(),
+      name: "Novo pedido",
+      city: "Maia",
+      description: { pt: "Apresentação enviada", es: "", en: "" },
+    },
+    publishedData: null,
+    revision: 1,
+    updatedAt: Date.now(),
+    publishedAt: null,
+    archivedAt: null,
+  };
+  const fetcher = vi.fn(async () => Response.json({ profiles: [draft] }));
+  vi.stubGlobal("fetch", fetcher);
+  render(
+    <ProfileManager
+      initialProfileId={draft.id}
+      onUnauthorized={vi.fn()}
+      onLogout={vi.fn(async () => {})}
+    />,
+  );
+  expect(await screen.findByLabelText("Nome", { exact: true })).toHaveValue("Novo pedido");
+  expect(screen.getByRole("button", { name: "Publicar no site" })).toBeDisabled();
+  expect(screen.getByRole("checkbox", { name: /Confirmo que o participante/ })).not.toBeChecked();
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});
 it("saves edits as drafts and enables publication only after saving and confirming permission", async () => {
   let profile: ManagedProfile = {
     id: crypto.randomUUID(),

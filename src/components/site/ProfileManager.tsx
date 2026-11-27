@@ -71,9 +71,11 @@ function status(profile: ManagedProfile) {
 export function ProfileManager({
   onUnauthorized,
   onLogout,
+  initialProfileId,
 }: {
   onUnauthorized: () => void;
   onLogout: () => Promise<void>;
+  initialProfileId?: string | undefined;
 }) {
   const [profiles, setProfiles] = useState<ManagedProfile[]>([]);
   const [directoryPreview, setDirectoryPreview] = useState(false);
@@ -131,7 +133,13 @@ export function ProfileManager({
     let active = true;
     api()
       .then((data) => {
-        if (active) setProfiles(data.profiles);
+        if (active) {
+          setProfiles(data.profiles);
+          const initial = data.profiles.find(
+            (profile: ManagedProfile) => profile.id === initialProfileId,
+          );
+          if (initial) open(initial);
+        }
       })
       .catch((reason) => {
         if (active) setError(reason.message);
@@ -142,7 +150,7 @@ export function ProfileManager({
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialProfileId]);
   function update(next: Partial<ProfileData>) {
     setEditor((value) => (value ? { ...value, data: { ...value.data, ...next } } : value));
     setPermission(false);
