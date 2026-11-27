@@ -13,6 +13,7 @@ import {
 import { ProfileCard } from "./ProfileCard";
 import type { MemberProfile } from "./member-profiles";
 import type { Language } from "@/i18n/language";
+import { DirectoryPreview } from "./DirectoryPreview";
 
 const field =
   "mt-2 w-full rounded-sm border border-border bg-background px-3 py-3 text-base focus:border-primary focus:outline-none";
@@ -75,6 +76,7 @@ export function ProfileManager({
   onLogout: () => Promise<void>;
 }) {
   const [profiles, setProfiles] = useState<ManagedProfile[]>([]);
+  const [directoryPreview, setDirectoryPreview] = useState(false);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -429,6 +431,21 @@ export function ProfileManager({
         </div>
         <div className="flex flex-wrap gap-3">
           <button
+            className={button}
+            onClick={() => setDirectoryPreview(true)}
+            disabled={
+              busy || loading || dirty || !profiles.some((profile) => profile.archivedAt === null)
+            }
+            title={
+              dirty
+                ? "Guarda o rascunho para incluir as alterações na pré-visualização."
+                : undefined
+            }
+          >
+            <Eye size={16} />
+            Pré-visualizar página
+          </button>
+          <button
             className="btn-primary inline-flex items-center gap-2"
             onClick={() => open()}
             disabled={busy}
@@ -445,6 +462,9 @@ export function ProfileManager({
           </button>
         </div>
       </div>
+      {directoryPreview && (
+        <DirectoryPreview profiles={profiles} onClose={() => setDirectoryPreview(false)} />
+      )}
       {message && (
         <p role="status" className="mt-5 border border-primary/50 p-4 text-sm">
           {message}
